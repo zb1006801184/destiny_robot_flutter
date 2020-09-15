@@ -1,6 +1,6 @@
 # destiny_robot
 
-A new Flutter project.
+一款有趣的缘分app，让你找到不一样的他/她
 
 ## Getting Started
 
