@@ -1,4 +1,7 @@
 import 'package:destiny_robot/rotues/main/home_page.dart';
+import 'package:destiny_robot/state/provider_store.dart';
+import 'package:destiny_robot/state/them_model.dart';
+import 'package:destiny_robot/unitls/them_util.dart';
 import 'package:flutter/material.dart';
 import 'package:rongcloud_im_plugin/rongcloud_im_plugin.dart' as prefix;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -7,6 +10,7 @@ import 'im/util/event_bus.dart';
 import 'user_data.dart';
 import 'router.dart';
 import 'dart:developer' as developer;
+
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -48,18 +52,22 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       String hasP = hasPackage ? "true" : "false";
       String off = offline ? "true" : "false";
       if (msg.content != null) {
-        developer.log("object onMessageReceivedWrapper objName:" +
-            msg.content.getObjectName() +
-            " msgContent:" +
-            msg.content.encode() +
-            " left:" +
-            left.toString() +
-            " hasPackage:" +
-            hasP +
-            " offline:" +
-            off, name: pageName);
+        developer.log(
+            "object onMessageReceivedWrapper objName:" +
+                msg.content.getObjectName() +
+                " msgContent:" +
+                msg.content.encode() +
+                " left:" +
+                left.toString() +
+                " hasPackage:" +
+                hasP +
+                " offline:" +
+                off,
+            name: pageName);
       } else {
-        developer.log("object onMessageReceivedWrapper objName: ${msg.objectName} content is null left:${left.toString()} hasPackage:$hasP offline:$off", name: pageName);
+        developer.log(
+            "object onMessageReceivedWrapper objName: ${msg.objectName} content is null left:${left.toString()} hasPackage:$hasP offline:$off",
+            name: pageName);
       }
       if (currentState == AppLifecycleState.paused &&
           !checkNoficationQuietStatus()) {
@@ -84,17 +92,20 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     prefix.RongIMClient.onMessageReceiptRequest = (Map map) {
       EventBus.instance.commit(EventKeys.ReceiveReceiptRequest, map);
-      developer.log("object onMessageReceiptRequest " + map.toString(), name: pageName);
+      developer.log("object onMessageReceiptRequest " + map.toString(),
+          name: pageName);
     };
 
     prefix.RongIMClient.onMessageReceiptResponse = (Map map) {
       EventBus.instance.commit(EventKeys.ReceiveReceiptResponse, map);
-      developer.log("object onMessageReceiptResponse " + map.toString(), name: pageName);
+      developer.log("object onMessageReceiptResponse " + map.toString(),
+          name: pageName);
     };
 
     prefix.RongIMClient.onReceiveReadReceipt = (Map map) {
       EventBus.instance.commit(EventKeys.ReceiveReadReceipt, map);
-      developer.log("object onReceiveReadReceipt " + map.toString(), name: pageName);
+      developer.log("object onReceiveReadReceipt " + map.toString(),
+          name: pageName);
     };
   }
 
@@ -165,8 +176,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     appContext = context;
     return MaterialApp(
       onGenerateRoute: onGenerateRoute,
-      theme: ThemeData(primaryColor: Colors.red),
+      themeMode: Store.value<ThemModel>(context).getThemeModel()
+          ? ThemeMode.dark
+          : ThemeMode.light,
+      darkTheme: ThemUntil().darktData,
       home: HomePage(),
+            theme: ThemUntil().linghtData,
     );
   }
 
