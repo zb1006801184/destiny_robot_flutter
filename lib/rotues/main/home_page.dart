@@ -112,6 +112,8 @@ class _HomePageState extends State<HomePage> {
           });
         },
         currentIndex: curIndex,
+        selectedItemColor: Color(0xFFFF6371),
+        unselectedItemColor: Color(0xFF6F6763),
       ),
       body: IndexedStack(
         index: curIndex,

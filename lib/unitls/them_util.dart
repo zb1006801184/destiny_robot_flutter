@@ -8,7 +8,7 @@ class ThemUntil {
  final ThemeData linghtData = ThemeData(
       textTheme: TextTheme(bodyText2: TextStyle(color: Color(0xFF181818))),
       scaffoldBackgroundColor: Color(0xFFEDEDED),
-      primaryColor: Color(0xFFff6472)); //日间模式
+      primaryColor: Colors.white); //日间模式
   final ThemeData darktData = ThemeData(
       scaffoldBackgroundColor: Color(0xFF121212),
       textTheme: TextTheme(bodyText2: TextStyle(color: Colors.white))); //夜间模式
@@ -23,7 +23,7 @@ class ThemUntil {
   //部分widget颜色
   Color widgetColor(BuildContext context) {
     return Store.value<ThemModel>(context).getThemeModel()
-        ? Color(0xFFF4F5F7)
+        ? Colors.white
         : Color(0xFF121212);
   }
 

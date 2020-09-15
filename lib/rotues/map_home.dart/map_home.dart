@@ -9,7 +9,7 @@ class _MapHomeState extends State<MapHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBarConfig().configAppBar('首页', context),
+      appBar: NavBarConfig().configTabbarAppBar('首页', context),
       body: Center(child: Text('首页'),),
     );
   }
