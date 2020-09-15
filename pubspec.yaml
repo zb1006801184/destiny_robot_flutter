@@ -51,6 +51,10 @@ dependencies:
   flutter_cache_manager: ^1.2.0
   connectivity: ^0.4.8+2
   rongcloud_im_plugin: ^4.0.2+1
+    # 共享状态管理
+  provider: 4.3.2+1
+    # 网络接口缓存
+  dio_http_cache: ^0.2.8
 
 dev_dependencies:
   flutter_test:

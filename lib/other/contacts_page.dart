@@ -96,7 +96,7 @@ class _ContactsPageState extends State<ContactsPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("RongCloud IM"),
+        title: Text("通讯录"),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.more),

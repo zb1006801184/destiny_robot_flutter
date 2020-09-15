@@ -168,7 +168,7 @@ class _ConversationListPageState extends State<ConversationListPage>
     _addScroolListener();
     return new Scaffold(
       appBar: AppBar(
-        title: Text("RongCloud IM"),
+        title: Text("消息"),
       ),
       key: UniqueKey(),
       body: _buildConversationListView(),

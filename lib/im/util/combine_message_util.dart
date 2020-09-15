@@ -9,8 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:rongcloud_im_plugin/rongcloud_im_plugin.dart';
 import 'package:path_provider/path_provider.dart';
 import 'http_util.dart';
-import '../../main.dart';
-
+import '../../app.dart';
 import 'file.dart';
 import 'style.dart';
 import 'user_info_datesource.dart';

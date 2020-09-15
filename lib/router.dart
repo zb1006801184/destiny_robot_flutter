@@ -1,3 +1,4 @@
+import 'package:destiny_robot/rotues/main/home_page.dart';
 import 'package:flutter/material.dart';
 import 'im/pages/file_preview_page.dart';
 import 'other/search_message_page.dart';
@@ -8,7 +9,6 @@ import 'im/pages/sight/video_play_page.dart';
 import 'im/pages/sight/video_record_page.dart';
 import 'im/pages/webview_page.dart';
 
-import 'other/home_page.dart';
 import 'other/debug_page.dart';
 import 'other/message_read_page.dart';
 import 'other/chat_debug_page.dart';

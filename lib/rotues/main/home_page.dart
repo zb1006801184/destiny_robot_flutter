@@ -1,13 +1,14 @@
+import 'package:destiny_robot/im/pages/conversation_list_page.dart';
+import 'package:destiny_robot/im/util/db_manager.dart';
+import 'package:destiny_robot/im/util/event_bus.dart';
+import 'package:destiny_robot/im/util/user_info_datesource.dart';
+import 'package:destiny_robot/other/contacts_page.dart';
+import 'package:destiny_robot/other/login_page.dart';
+import 'package:destiny_robot/rotues/map_home.dart/map_home.dart';
+import 'package:destiny_robot/rotues/mine/mine.dart';
 import 'package:flutter/material.dart';
-import '../im/util/db_manager.dart';
-import '../im/util/user_info_datesource.dart';
-import '../im/pages/conversation_list_page.dart';
-import 'contacts_page.dart';
 import 'package:rongcloud_im_plugin/rongcloud_im_plugin.dart';
-
-import 'login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../im/util/event_bus.dart';
 import 'dart:developer' as developer;
 
 class HomePage extends StatefulWidget {
@@ -21,8 +22,12 @@ class _HomePageState extends State<HomePage> {
   String pageName = "example.HomePage";
   final List<BottomNavigationBarItem> tabbarList = [
     new BottomNavigationBarItem(
+      icon: new Icon(Icons.home, color: Colors.grey),
+      title: new Text("首页"),
+    ),
+    new BottomNavigationBarItem(
       icon: new Icon(Icons.chat, color: Colors.grey),
-      title: new Text("会话"),
+      title: new Text("消息"),
     ),
     new BottomNavigationBarItem(
       icon: new Icon(
@@ -31,10 +36,16 @@ class _HomePageState extends State<HomePage> {
       ),
       title: new Text("通讯录"),
     ),
+    new BottomNavigationBarItem(
+      icon: new Icon(Icons.youtube_searched_for, color: Colors.grey),
+      title: new Text("我"),
+    ),
   ];
-  final List<StatefulWidget> vcList = [
-    new ConversationListPage(),
-    new ContactsPage()
+  final List<Widget> vcList = [
+    MapHome(),
+    ConversationListPage(),
+    ContactsPage(),
+    Mine(),
   ];
 
   int curIndex = 0;
@@ -104,7 +115,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: IndexedStack(
         index: curIndex,
-        children: <Widget>[new ConversationListPage(), new ContactsPage()],
+        children: vcList,
       ),
     );
   }

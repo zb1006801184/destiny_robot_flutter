@@ -1,7 +1,7 @@
+import 'package:destiny_robot/rotues/main/home_page.dart';
 import 'package:flutter/material.dart';
 import '../im/util/http_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'home_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:developer' as developer;
 
@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
           Map result = body["result"];
           String id = result["id"];
           String token = result["token"];
-          _saveUserInfo(id, token);
+          _saveUserInfo(_assount.text, token);
           developer.log("Login Success, $map", name: pageName);
           Navigator.of(context).pushAndRemoveUntil(
               new MaterialPageRoute(builder: (context) => new HomePage()),
