@@ -15,6 +15,9 @@ import 'other/chat_debug_page.dart';
 import 'other/chatroom_debug_page.dart';
 import 'other/select_conversation_page.dart';
 
+import 'rotues/mine/edit_data_page.dart';
+import 'rotues/mine/personal_data.page.dart';
+
 final routes = {
   '/': (context) => HomePage(),
   '/conversation': (context, {arguments}) =>
@@ -36,6 +39,8 @@ final routes = {
       SearchMessagePage(arguments: arguments),
   '/select_conversation_page': (context, {arguments}) =>
       SelectConversationPage(arguments: arguments),
+  '/edit_data_page': (context, {arguments}) => EditDataPage(),
+  '/PersonalDataPage': (context, {arguments}) => PersonalDataPage(),
 };
 
 var onGenerateRoute = (RouteSettings settings) {

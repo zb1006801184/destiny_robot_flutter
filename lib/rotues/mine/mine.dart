@@ -1,12 +1,23 @@
 import 'package:destiny_robot/unitls/global.dart';
+import 'package:destiny_robot/unitls/nav_bar_config.dart';
 import 'package:flutter/material.dart';
-
+//tabbar - 我
 class Mine extends StatefulWidget {
   @override
   _MineState createState() => _MineState();
 }
 
 class _MineState extends State<Mine> {
+  //编辑个人资料点击
+  void _editDataClick() {
+    Navigator.of(context).pushNamed("/edit_data_page");
+  }
+
+  //喜欢我的/我喜欢的 点击
+  void _mineLikeClick({String title}) {
+    print(title);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,65 +109,73 @@ class _MineState extends State<Mine> {
     return Positioned(
         bottom: 0,
         left: 12,
-        child: Container(
-          height: 114.5,
-          width: Global.ksWidth - 12 * 2,
-          padding: EdgeInsets.only(top: 20, bottom: 20),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(5)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    constraints: BoxConstraints(
-                        maxWidth: Global.ksWidth - 12 * 2 - 111 - 15),
-                    margin: EdgeInsets.only(left: 111),
-                    child: Text(
-                      '迪士尼在逃公主',
-                      overflow: TextOverflow.ellipsis,
+        child: InkWell(
+          child: Container(
+            height: 114.5,
+            width: Global.ksWidth - 12 * 2,
+            padding: EdgeInsets.only(top: 20, bottom: 20),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(5)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(
+                          maxWidth: Global.ksWidth - 12 * 2 - 111 - 15),
+                      margin: EdgeInsets.only(left: 111),
+                      child: Text(
+                        '迪士尼在逃公主',
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  ),
-                  Container(
-                    width: 15,
-                    height: 15,
-                    color: Colors.black,
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildLikeWidget(title: '我喜欢的', numString: '2'),
-                  _buildLikeWidget(title: '喜欢我的', numString: '5'),
-                ],
-              ),
-            ],
+                    Container(
+                      width: 15,
+                      height: 15,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildLikeWidget(title: '我喜欢的', numString: '2'),
+                    _buildLikeWidget(title: '喜欢我的', numString: '5'),
+                  ],
+                ),
+              ],
+            ),
           ),
+          onTap: _editDataClick,
         ));
   }
 
   //我喜欢的/喜欢我的
   Widget _buildLikeWidget({String title, String numString = '0'}) {
-    return Container(
-      child: Column(
-        children: [
-          Container(
-            child: Text(
-              numString,
-              style: TextStyle(color: Color(0xFFff8989), fontSize: 15),
+    return InkWell(
+      child: Container(
+        child: Column(
+          children: [
+            Container(
+              child: Text(
+                numString,
+                style: TextStyle(color: Color(0xFFff8989), fontSize: 15),
+              ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 3),
-            child: Text(
-              title,
-              style: TextStyle(color: Color(0xFFff8989), fontSize: 13),
+            Container(
+              margin: EdgeInsets.only(top: 3),
+              child: Text(
+                title,
+                style: TextStyle(color: Color(0xFFff8989), fontSize: 13),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
+      onTap: () {
+        _mineLikeClick(title: title);
+      },
     );
   }
 

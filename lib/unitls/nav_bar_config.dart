@@ -33,7 +33,6 @@ class NavBarConfig {
         title,
         style: TextStyle(color: ThemUntil().widgetColor(context), fontSize: 18),
       ),
-      // leading: null,
       backgroundColor: ThemUntil().mainColor(context),
       elevation: 0, //阴影辐射范围
       brightness: ThemUntil().stateBarColor(context),
