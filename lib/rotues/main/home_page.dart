@@ -22,11 +22,15 @@ class _HomePageState extends State<HomePage> {
   String pageName = "example.HomePage";
   final List<BottomNavigationBarItem> tabbarList = [
     new BottomNavigationBarItem(
-      icon: new Icon(Icons.home, color: Colors.grey),
+      icon: Image(image: AssetImage("assets/images/tabar_index_normal.png")),
+      activeIcon:
+          Image(image: AssetImage("assets/images/tabar_index_selected.png")),
       title: new Text("首页"),
     ),
     new BottomNavigationBarItem(
-      icon: new Icon(Icons.chat, color: Colors.grey),
+      icon: Image(image: AssetImage("assets/images/tabar_message_normal.png")),
+      activeIcon:
+          Image(image: AssetImage("assets/images/tabar_message_selected.png")),
       title: new Text("消息"),
     ),
     new BottomNavigationBarItem(
@@ -37,7 +41,9 @@ class _HomePageState extends State<HomePage> {
       title: new Text("通讯录"),
     ),
     new BottomNavigationBarItem(
-      icon: new Icon(Icons.youtube_searched_for, color: Colors.grey),
+      icon: Image(image: AssetImage("assets/images/tabar_me_normal.png")),
+      activeIcon:
+          Image(image: AssetImage("assets/images/tabar_me_selected.png")),
       title: new Text("我"),
     ),
   ];

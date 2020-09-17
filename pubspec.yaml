@@ -55,6 +55,10 @@ dependencies:
   provider: 4.3.2+1
     # 网络接口缓存
   dio_http_cache: ^0.2.8
+    #高德地图
+  amap_map_fluttify: 
+    path: ../amap_map_fluttify
+  amap_location_fluttify: ^0.14.0+1
 
 dev_dependencies:
   flutter_test:

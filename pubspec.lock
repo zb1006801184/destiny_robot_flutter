@@ -8,6 +8,27 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "7.0.0"
+  amap_core_fluttify:
+    dependency: transitive
+    description:
+      name: amap_core_fluttify
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.9.5"
+  amap_location_fluttify:
+    dependency: "direct main"
+    description:
+      name: amap_location_fluttify
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.14.0+1"
+  amap_map_fluttify:
+    dependency: "direct main"
+    description:
+      path: "../amap_map_fluttify"
+      relative: true
+    source: path
+    version: "0.24.0+2"
   analyzer:
     dependency: transitive
     description:
@@ -28,14 +49,14 @@ packages:
       name: async
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.5.0-nullsafety"
+    version: "2.4.2"
   boolean_selector:
     dependency: transitive
     description:
       name: boolean_selector
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.1.0-nullsafety"
+    version: "2.0.0"
   build:
     dependency: transitive
     description:
@@ -70,14 +91,14 @@ packages:
       name: characters
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.1.0-nullsafety.2"
+    version: "1.0.0"
   charcode:
     dependency: transitive
     description:
       name: charcode
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.2.0-nullsafety"
+    version: "1.1.3"
   checked_yaml:
     dependency: transitive
     description:
@@ -98,14 +119,14 @@ packages:
       name: clock
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.1.0-nullsafety"
+    version: "1.0.1"
   collection:
     dependency: transitive
     description:
       name: collection
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.15.0-nullsafety.2"
+    version: "1.14.13"
   connectivity:
     dependency: "direct main"
     description:
@@ -141,6 +162,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.1"
+  core_location_fluttify:
+    dependency: transitive
+    description:
+      name: core_location_fluttify
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.2.4"
   crypto:
     dependency: transitive
     description:
@@ -189,7 +217,7 @@ packages:
       name: fake_async
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.1.0-nullsafety"
+    version: "1.1.0"
   ffi:
     dependency: transitive
     description:
@@ -289,6 +317,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.1.3"
+  foundation_fluttify:
+    dependency: transitive
+    description:
+      name: foundation_fluttify
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.8.12"
   glob:
     dependency: transitive
     description:
@@ -366,6 +401,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.4.1"
+  latlng:
+    dependency: transitive
+    description:
+      name: latlng
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.2"
   logging:
     dependency: transitive
     description:
@@ -379,14 +421,14 @@ packages:
       name: matcher
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.12.10-nullsafety"
+    version: "0.12.8"
   meta:
     dependency: transitive
     description:
       name: meta
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.3.0-nullsafety.2"
+    version: "1.1.8"
   nested:
     dependency: transitive
     description:
@@ -435,7 +477,7 @@ packages:
       name: path
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.8.0-nullsafety"
+    version: "1.7.0"
   path_provider:
     dependency: "direct main"
     description:
@@ -615,7 +657,7 @@ packages:
       name: source_span
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.8.0-nullsafety"
+    version: "1.7.0"
   sqflite:
     dependency: transitive
     description:
@@ -636,21 +678,21 @@ packages:
       name: stack_trace
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.10.0-nullsafety"
+    version: "1.9.5"
   stream_channel:
     dependency: transitive
     description:
       name: stream_channel
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.1.0-nullsafety"
+    version: "2.0.0"
   string_scanner:
     dependency: transitive
     description:
       name: string_scanner
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.1.0-nullsafety"
+    version: "1.0.5"
   synchronized:
     dependency: transitive
     description:
@@ -664,21 +706,21 @@ packages:
       name: term_glyph
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.2.0-nullsafety"
+    version: "1.1.0"
   test_api:
     dependency: transitive
     description:
       name: test_api
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.19-nullsafety"
+    version: "0.2.17"
   typed_data:
     dependency: transitive
     description:
       name: typed_data
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.3.0-nullsafety.2"
+    version: "1.2.0"
   url_launcher:
     dependency: "direct main"
     description:
@@ -727,7 +769,7 @@ packages:
       name: vector_math
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.1.0-nullsafety.2"
+    version: "2.0.8"
   video_player:
     dependency: "direct main"
     description:
@@ -778,5 +820,5 @@ packages:
     source: hosted
     version: "2.2.1"
 sdks:
-  dart: ">=2.10.0-0.0.dev <2.10.0"
+  dart: ">=2.9.0-14.0.dev <3.0.0"
   flutter: ">=1.20.0 <2.0.0"

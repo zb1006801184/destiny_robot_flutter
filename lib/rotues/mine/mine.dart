@@ -1,6 +1,7 @@
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
 import 'package:flutter/material.dart';
+
 //tabbar - 我
 class Mine extends StatefulWidget {
   @override
@@ -8,6 +9,12 @@ class Mine extends StatefulWidget {
 }
 
 class _MineState extends State<Mine> {
+  final _iconList = [
+    'assets/images/me_icon_shiming.png',
+    'assets/images/me_icon_shaixuan.png',
+    'assets/images/me_icon_kefu.png',
+    'assets/images/me_icon_set.png'
+  ];
   //编辑个人资料点击
   void _editDataClick() {
     Navigator.of(context).pushNamed("/edit_data_page");
@@ -68,10 +75,10 @@ class _MineState extends State<Mine> {
       physics: const NeverScrollableScrollPhysics(),
       children: [
         _buildTopItemMessageWidget(),
-        _buildCommonItemWidget(title: '实名认证'),
-        _buildCommonItemWidget(title: '筛选条件'),
-        _buildCommonItemWidget(title: '人工客服'),
-        _buildCommonItemWidget(title: '设置'),
+        _buildCommonItemWidget(title: '实名认证',iconSting:_iconList[0] ),
+        _buildCommonItemWidget(title: '筛选条件',iconSting:_iconList[1]),
+        _buildCommonItemWidget(title: '人工客服',iconSting:_iconList[2]),
+        _buildCommonItemWidget(title: '设置',iconSting:_iconList[3]),
       ],
     );
   }
@@ -207,7 +214,7 @@ class _MineState extends State<Mine> {
                 margin: EdgeInsets.only(left: 20),
                 width: 15,
                 height: 15,
-                color: Colors.greenAccent,
+              child: Image.asset(iconSting,fit: BoxFit.cover,),
               ),
               Container(
                 margin: EdgeInsets.only(left: 20),
