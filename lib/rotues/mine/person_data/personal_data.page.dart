@@ -1,9 +1,9 @@
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
+import 'package:destiny_robot/widgets/edit_detai_widget.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/edit_detai_widget.dart';
 
-//个人信息
+//我-编辑资料-个人信息
 class PersonalDataPage extends StatefulWidget {
   @override
   _PersonalDataPageState createState() => _PersonalDataPageState();
@@ -21,7 +21,9 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
                                       Animation secondaryAnimation) =>
                                   FadeTransition(
                                       opacity: animation,
-                                      child: EditDetailWidget(title: _titles[index],))));
+                                      child: EditDetailWidget(title: _titles[index],)))).then((e){
+                                        print(e+'zz');
+                                      });
   }
   @override
   Widget build(BuildContext context) {

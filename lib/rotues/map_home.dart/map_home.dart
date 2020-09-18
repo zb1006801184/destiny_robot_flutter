@@ -22,24 +22,22 @@ class _MapHomeState extends State<MapHome> {
 //地图相关回调
 
   void _mapBackAction() async {
-    // Location location = await AmapLocation.instance.fetchLocation();
-    // _centerLatLng = location.latLng;
-    // _controller.setCenterCoordinate(location.latLng);
-    int index = 0;
-
-    Stream<Location> stream = await AmapLocation.instance.listenLocation();
-
-    stream.takeWhile((e) {
-       _controller.setCenterCoordinate(e.latLng);
-      index += 1;
-      print('zzz${e.address}:${index}');
-    });
-
+    //单次定位
+    Location location = await AmapLocation.instance.fetchLocation();
+    _centerLatLng = location.latLng;
+    _controller.setCenterCoordinate(location.latLng);
+    //连续定位
+    // int index = 0;
+    // Stream<Location> stream = await AmapLocation.instance.listenLocation();
     // await for (final location in stream) {
     //   _controller.setCenterCoordinate(location.latLng);
     //   index += 1;
     //   print('zzz${location.address}:${index}');
     // }
+
+    await _controller?.showMyLocation(MyLocationOption(
+      myLocationType: MyLocationType.Follow,
+    ));
   }
 
   @override

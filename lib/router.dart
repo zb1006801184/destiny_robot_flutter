@@ -1,4 +1,7 @@
 import 'package:destiny_robot/rotues/main/home_page.dart';
+import 'package:destiny_robot/rotues/mine/person_data/edit_data_page.dart';
+import 'package:destiny_robot/rotues/mine/person_data/personal_base_data_page.dart';
+import 'package:destiny_robot/rotues/mine/person_data/personal_data.page.dart';
 import 'package:flutter/material.dart';
 import 'im/pages/file_preview_page.dart';
 import 'other/search_message_page.dart';
@@ -14,9 +17,6 @@ import 'other/message_read_page.dart';
 import 'other/chat_debug_page.dart';
 import 'other/chatroom_debug_page.dart';
 import 'other/select_conversation_page.dart';
-
-import 'rotues/mine/edit_data_page.dart';
-import 'rotues/mine/personal_data.page.dart';
 
 final routes = {
   '/': (context) => HomePage(),
@@ -41,6 +41,7 @@ final routes = {
       SelectConversationPage(arguments: arguments),
   '/edit_data_page': (context, {arguments}) => EditDataPage(),
   '/PersonalDataPage': (context, {arguments}) => PersonalDataPage(),
+  '/PersonalBaseDataPage': (context, {arguments}) => PersonalBaseDataPage(),
 };
 
 var onGenerateRoute = (RouteSettings settings) {

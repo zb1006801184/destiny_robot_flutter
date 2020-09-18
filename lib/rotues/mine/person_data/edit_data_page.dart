@@ -1,7 +1,7 @@
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
 import 'package:flutter/material.dart';
-//编辑资料
+//我-编辑资料
 class EditDataPage extends StatefulWidget {
   @override
   _EditDataPageState createState() => _EditDataPageState();
@@ -9,7 +9,7 @@ class EditDataPage extends StatefulWidget {
 
 class _EditDataPageState extends State<EditDataPage> {
   final List _titles = ['个人信息', '基本信息', '自我介绍', '相册'];
-  final pushVc = ['/PersonalDataPage'];
+  final pushVc = ['/PersonalDataPage','/PersonalBaseDataPage'];
   //item 的点击
   void _itemClick(int index) {
     if (pushVc[index] != null) Navigator.of(context).pushNamed(pushVc[index]);
