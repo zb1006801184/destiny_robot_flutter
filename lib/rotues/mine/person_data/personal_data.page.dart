@@ -2,6 +2,7 @@ import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
 import 'package:destiny_robot/widgets/edit_detai_widget.dart';
 import 'package:flutter/material.dart';
+import '../../../widgets/mine_common_item.dart';
 
 //我-编辑资料-个人信息
 class PersonalDataPage extends StatefulWidget {
@@ -13,18 +14,22 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
   final _titles = ['昵称', '性别', '生辰', '身高', '现居住地'];
   final _placerTitles = ['请输入小于16个字的昵称', '请选择性别', '请选择生辰', '请选择身高', '请选择居住地'];
   //item 点击
-  void _itemClick(int index){
-    Navigator.of(context).push(PageRouteBuilder(
-                              opaque: false,
-                              pageBuilder: (BuildContext context,
-                                      Animation animation,
-                                      Animation secondaryAnimation) =>
-                                  FadeTransition(
-                                      opacity: animation,
-                                      child: EditDetailWidget(title: _titles[index],)))).then((e){
-                                        print(e+'zz');
-                                      });
+  void _itemClick(int index) {
+    Navigator.of(context)
+        .push(PageRouteBuilder(
+            opaque: false,
+            pageBuilder: (BuildContext context, Animation animation,
+                    Animation secondaryAnimation) =>
+                FadeTransition(
+                    opacity: animation,
+                    child: EditDetailWidget(
+                      title: _titles[index],
+                    ))))
+        .then((e) {
+      print(e + 'zz');
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,52 +84,14 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
   Widget _buildList() {
     return ListView.builder(
       itemBuilder: (context, index) {
-        return _buildListItem(index);
+        return MineCommonItem(
+          title: _titles[index],
+          placerTitle: _placerTitles[index],
+          index: index,
+          itemClick: _itemClick,
+        );
       },
       itemCount: _titles.length,
-    );
-  }
-
-  Widget _buildListItem(int index) {
-    return GestureDetector(
-      child: Container(
-        height: 55,
-        width: Global.ksWidth,
-        padding: EdgeInsets.only(left: 19.5, right: 17.5),
-        margin: EdgeInsets.only(top: index == 0 ? 5 : 1.5),
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              _titles[index],
-              style: TextStyle(fontSize: 15, color: Color(0xFF706863)),
-            ),
-            Row(
-              children: [
-                Container(
-                  constraints: BoxConstraints(
-                      maxWidth: Global.ksWidth - 79 - 17.5 - 5 - 20),
-                  child: Text(
-                    _placerTitles[index],
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 10, color: Color(0xFFD1D1D1)),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 17),
-                  width: 5,
-                  height: 15,
-                  color: Colors.black,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-      onTap: (){
-        _itemClick(index);
-      },
     );
   }
 }
