@@ -10,7 +10,8 @@ class ThemUntil {
       scaffoldBackgroundColor: Color.fromRGBO(248, 251, 254, 1),
       primaryColor: Colors.white,
       primarySwatch: createMaterialColor(Color(0xFFFF6A70)),
-      splashColor: Colors.green); //日间模式
+      // splashColor: Colors.green
+      ); //日间模式
   final ThemeData darktData = ThemeData(
       scaffoldBackgroundColor: Color(0xFF121212),
       textTheme: TextTheme(bodyText2: TextStyle(color: Colors.white))); //夜间模式

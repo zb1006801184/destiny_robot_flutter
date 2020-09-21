@@ -43,11 +43,18 @@ class _MineState extends State<Mine> {
   //顶部背景
   Widget _buildTopBgWidget() {
     return Positioned(
+        top: -0.5,
+        left: -0.5,
         child: Container(
-      width: Global.ksWidth,
-      height: 173,
-      color: Colors.red,
-    ));
+          width: Global.ksWidth,
+          height: 173,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                    'assets/images/me_bg.png',
+                  ),
+                  fit: BoxFit.fill)),
+        ));
   }
 
 //标题
@@ -144,7 +151,7 @@ class _MineState extends State<Mine> {
                     Container(
                       width: 15,
                       height: 15,
-                      color: Colors.black,
+                      child: Image.asset('assets/images/user_icon_female.png'),
                     ),
                   ],
                 ),
@@ -197,13 +204,14 @@ class _MineState extends State<Mine> {
         bottom: 53,
         child: Container(
           width: 5,
-          height: 10,
-          color: Colors.red,
+          height: 9,
+          child: Image.asset('assets/images/list_icon_retu.png'),
         ));
   }
 
 //列表相同的Item
-  Widget _buildCommonItemWidget({String title, String iconSting,String subtitleString}) {
+  Widget _buildCommonItemWidget(
+      {String title, String iconSting, String subtitleString}) {
     return Container(
       height: 52,
       width: Global.ksWidth - 12 * 2,
@@ -235,8 +243,8 @@ class _MineState extends State<Mine> {
           Container(
             margin: EdgeInsets.only(right: 27.5),
             width: 5,
-            height: 10,
-            color: Colors.black,
+            height: 9,
+            child: Image.asset('assets/images/list_icon_retu.png'),
           )
         ],
       ),

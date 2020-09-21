@@ -1,8 +1,10 @@
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
 import 'package:destiny_robot/widgets/edit_detai_widget.dart';
+import 'package:destiny_robot/widgets/single_select_picker.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/mine_common_item.dart';
+import '../../../widgets/edit_detai_widget.dart';
 
 //我-编辑资料-个人信息
 class PersonalDataPage extends StatefulWidget {
@@ -13,21 +15,27 @@ class PersonalDataPage extends StatefulWidget {
 class _PersonalDataPageState extends State<PersonalDataPage> {
   final _titles = ['昵称', '性别', '生辰', '身高', '现居住地'];
   final _placerTitles = ['请输入小于16个字的昵称', '请选择性别', '请选择生辰', '请选择身高', '请选择居住地'];
+
+  final _heights = ['155CM','160CM','165CM','170CM','175CM','180CM','190CM',];
+
   //item 点击
   void _itemClick(int index) {
-    Navigator.of(context)
-        .push(PageRouteBuilder(
-            opaque: false,
-            pageBuilder: (BuildContext context, Animation animation,
-                    Animation secondaryAnimation) =>
-                FadeTransition(
-                    opacity: animation,
-                    child: EditDetailWidget(
-                      title: _titles[index],
-                    ))))
-        .then((e) {
-      print(e + 'zz');
-    });
+    if (index == 3) {
+      //身高
+      showPicker(context, (e) {
+        if (e != null) {
+          print(e);
+        }
+      },
+      dataList: _heights
+      );
+    } else {
+      showEditeBox(context, (e) {
+        if (e != null) {
+          print(e);
+        }
+      }, title: _titles[index]);
+    }
   }
 
   @override

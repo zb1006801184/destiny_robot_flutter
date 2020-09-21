@@ -46,8 +46,8 @@ class _MineCommonItemState extends State<MineCommonItem> {
                 Container(
                   margin: EdgeInsets.only(left: 17),
                   width: 5,
-                  height: 15,
-                  color: Colors.black,
+                  height: 9,
+                  child: Image.asset('assets/images/list_icon_retu.png'),
                 ),
               ],
             ),

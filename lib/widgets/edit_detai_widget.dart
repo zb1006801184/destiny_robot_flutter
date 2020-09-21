@@ -2,6 +2,28 @@ import 'package:destiny_robot/unitls/global.dart';
 import 'package:flutter/material.dart';
 
 //编辑资料-个人信息- 编辑(昵称/现居住地)
+
+void showEditeBox(
+  BuildContext context,
+  Function callBackHandler,
+  {String title}
+) {
+  Navigator.of(context)
+          .push(PageRouteBuilder(
+              opaque: false,
+              pageBuilder: (BuildContext context, Animation animation,
+                      Animation secondaryAnimation) =>
+                  FadeTransition(
+                      opacity: animation,
+                      child: EditDetailWidget(
+                        title: title,
+                      ))))
+          .then((e) {
+            callBackHandler(e);
+      });
+}
+
+
 class EditDetailWidget extends StatefulWidget {
   String title;
   EditDetailWidget({this.title});

@@ -2,26 +2,37 @@ import 'package:destiny_robot/unitls/global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void showPicker(BuildContext context, Function callBackHandler) {
+void showPicker(BuildContext context, Function callBackHandler,
+    {List dataList}) {
   Navigator.of(context)
       .push(PageRouteBuilder(
           opaque: false,
           pageBuilder: (BuildContext context, Animation animation,
                   Animation secondaryAnimation) =>
-              FadeTransition(opacity: animation, child: SingleSelectPicker())))
+              FadeTransition(
+                  opacity: animation,
+                  child: SingleSelectPicker(
+                    dataList: dataList,
+                  ))))
       .then((e) {
     callBackHandler(e);
   });
 }
 
 class SingleSelectPicker extends StatefulWidget {
-  List dataList ;
-  SingleSelectPicker({this.dataList});
+  //数据源
+  List dataList;
+  //确定回调
+  Function sureClick;
+
+  SingleSelectPicker({this.dataList, this.sureClick});
   @override
   _SingleSelectPickerState createState() => _SingleSelectPickerState();
 }
 
 class _SingleSelectPickerState extends State<SingleSelectPicker> {
+  int _position;
+  String _selectStr;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,33 +41,67 @@ class _SingleSelectPickerState extends State<SingleSelectPicker> {
         children: [
           InkWell(
             child: Container(
-              height: Global.ksHeight - 200,
+              height: Global.ksHeight - 180,
               width: Global.ksWidth,
             ),
             onTap: () {
               Navigator.of(context).pop();
             },
           ),
-          Container(
-            height: 200,
-            color: Colors.white,
-            child: CupertinoPicker(
-                itemExtent: 28,
-                onSelectedItemChanged: (position) {},
-                children: _itemWidget()),
-          )
+          Expanded(
+              child: Stack(
+            children: [
+              Container(
+                height: 180,
+                decoration: BoxDecoration(
+                    color: Color(0xFFEEEFF0),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10))),
+                child: CupertinoPicker(
+                    itemExtent: 28,
+                    onSelectedItemChanged: (position) {
+                      _position = position;
+                      setState(() {
+                        _selectStr = widget.dataList[position];
+                      });
+                    },
+                    children: _itemWidget()),
+              ),
+              Positioned(
+                  left: 0,
+                  top: 0,
+                  child: IconButton(
+                      icon: Text('取消'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      })),
+              Positioned(
+                  right: 0,
+                  top: 0,
+                  child: IconButton(
+                      icon: Text(
+                        '确定',
+                        style: TextStyle(color: Color(0xFFFF706E)),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop(widget.dataList[_position]);
+                      })),
+            ],
+          ))
         ],
       ),
     );
   }
 
   List<Widget> _itemWidget() {
+    if (_selectStr == null) {
+      _selectStr = widget.dataList[0];
+    }
     return [
-      Text("0"),
-      Text("1"),
-      Text("2"),
-      Text("3"),
-      Text("4"),
+      for (var item in widget.dataList) Text(item,style: TextStyle(
+        color: item==_selectStr?Color(0xFFFF706E):Color(0xFF968E8A)
+      ),),
     ];
   }
 }

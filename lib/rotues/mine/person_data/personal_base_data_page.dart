@@ -15,7 +15,9 @@ class _PersonalBaseDataPageState extends State<PersonalBaseDataPage> {
   //item 的点击
   void _itemClick(int index) {
     showPicker(context, (e){
-          print('回调回调');
+      if (e != null) {
+        print(e);
+      }
     });
   }
 
