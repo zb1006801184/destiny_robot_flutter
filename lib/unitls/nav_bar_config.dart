@@ -55,35 +55,40 @@ class NavBarConfig {
       // leading: _buildLeftButton(leftClick),
       actions: [
         Container(
-          width: Global.ksWidth,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildLeftButton(leftClick),
-              Text(
-                title,
-                style: TextStyle(
-                    color: ThemUntil().widgetColor(context),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600),
-              ),
-              GestureDetector(
-                child: Container(
-                  height: 64,
-                  margin: EdgeInsets.only(
-                    right: 19,
-                  ),
-                  child: Image.asset(
-                    'assets/images/index_nav_shaixuan.png',
-                    width: 32,
-                    height: 30,
-                  ),
+            width: Global.ksWidth,
+            child: Stack(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildLeftButton(leftClick),
+                    GestureDetector(
+                      child: Container(
+                        height: 64,
+                        margin: EdgeInsets.only(
+                          right: 19,
+                        ),
+                        child: Image.asset(
+                          'assets/images/index_nav_shaixuan.png',
+                          width: 32,
+                          height: 30,
+                        ),
+                      ),
+                      onTap: rightClick,
+                    ),
+                  ],
                 ),
-                onTap: rightClick,
-              ),
-            ],
-          ),
-        ),
+                Center(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                        color: ThemUntil().widgetColor(context),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600),
+                  ),
+                )
+              ],
+            )),
       ],
     );
   }
@@ -98,18 +103,18 @@ class NavBarConfig {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
-              '今天',
+              '2020年09月21日',
               style: TextStyle(
                   color: Color(0xFFFF6572),
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500),
             ),
             Container(
-              margin: EdgeInsets.only(left: 8),
+              margin: EdgeInsets.only(left: 6),
               child: Image.asset(
                 'assets/images/index_nav_sel.png',
                 width: 10,
-                height: 6,
+                height: 8,
               ),
             )
           ],
