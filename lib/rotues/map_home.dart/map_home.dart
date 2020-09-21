@@ -33,6 +33,7 @@ class _MapHomeState extends State<MapHome> {
 
     var result = await showDatePicker(
       context: context,
+      locale: Locale('zh'),
       initialDate: DateTime.now(),
       firstDate: DateTime(2020),
       lastDate: DateTime(2021),

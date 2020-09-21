@@ -3,6 +3,7 @@ import 'package:destiny_robot/state/provider_store.dart';
 import 'package:destiny_robot/state/them_model.dart';
 import 'package:destiny_robot/unitls/them_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:rongcloud_im_plugin/rongcloud_im_plugin.dart' as prefix;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -175,13 +176,22 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     appContext = context;
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('zh', 'CH'),
+        const Locale('en', 'US'),
+      ],
+      locale: Locale('zh'),
       onGenerateRoute: onGenerateRoute,
       themeMode: Store.value<ThemModel>(context).getThemeModel()
           ? ThemeMode.dark
           : ThemeMode.light,
       darkTheme: ThemUntil().darktData,
       home: HomePage(),
-            theme: ThemUntil().linghtData,
+      theme: ThemUntil().linghtData,
     );
   }
 

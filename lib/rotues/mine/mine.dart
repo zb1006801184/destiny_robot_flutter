@@ -11,8 +11,10 @@ class Mine extends StatefulWidget {
 class _MineState extends State<Mine> {
   final _iconList = [
     'assets/images/me_icon_shiming.png',
+    'assets/images/me_icon_student.png',
     'assets/images/me_icon_shaixuan.png',
     'assets/images/me_icon_kefu.png',
+    'assets/images/me_icon_share.png',
     'assets/images/me_icon_set.png'
   ];
   //编辑个人资料点击
@@ -75,10 +77,12 @@ class _MineState extends State<Mine> {
       physics: const NeverScrollableScrollPhysics(),
       children: [
         _buildTopItemMessageWidget(),
-        _buildCommonItemWidget(title: '实名认证',iconSting:_iconList[0] ),
-        _buildCommonItemWidget(title: '筛选条件',iconSting:_iconList[1]),
-        _buildCommonItemWidget(title: '人工客服',iconSting:_iconList[2]),
-        _buildCommonItemWidget(title: '设置',iconSting:_iconList[3]),
+        _buildCommonItemWidget(title: '实名认证', iconSting: _iconList[0]),
+        _buildCommonItemWidget(title: '学生认证', iconSting: _iconList[1]),
+        _buildCommonItemWidget(title: '人工客服', iconSting: _iconList[2]),
+        _buildCommonItemWidget(title: '筛选条件', iconSting: _iconList[3]),
+        _buildCommonItemWidget(title: '分享', iconSting: _iconList[4]),
+        _buildCommonItemWidget(title: '设置', iconSting: _iconList[5]),
       ],
     );
   }
@@ -199,7 +203,7 @@ class _MineState extends State<Mine> {
   }
 
 //列表相同的Item
-  Widget _buildCommonItemWidget({String title, String iconSting}) {
+  Widget _buildCommonItemWidget({String title, String iconSting,String subtitleString}) {
     return Container(
       height: 52,
       width: Global.ksWidth - 12 * 2,
@@ -214,7 +218,10 @@ class _MineState extends State<Mine> {
                 margin: EdgeInsets.only(left: 20),
                 width: 15,
                 height: 15,
-              child: Image.asset(iconSting,fit: BoxFit.cover,),
+                child: Image.asset(
+                  iconSting,
+                  fit: BoxFit.cover,
+                ),
               ),
               Container(
                 margin: EdgeInsets.only(left: 20),
