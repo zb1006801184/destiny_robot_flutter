@@ -18,6 +18,11 @@ import 'other/chat_debug_page.dart';
 import 'other/chatroom_debug_page.dart';
 import 'other/select_conversation_page.dart';
 
+import 'rotues/mine/person_data/personal_data_ introduction_page.dart';
+import 'rotues/mine/person_data/personal_data_album_page.dart';
+import 'rotues/mine/person_like/person_like_page.dart';
+import 'rotues/mine/person_author/person_author_page.dart';
+
 final routes = {
   '/': (context) => HomePage(),
   '/conversation': (context, {arguments}) =>
@@ -42,6 +47,11 @@ final routes = {
   '/edit_data_page': (context, {arguments}) => EditDataPage(),
   '/PersonalDataPage': (context, {arguments}) => PersonalDataPage(),
   '/PersonalBaseDataPage': (context, {arguments}) => PersonalBaseDataPage(),
+  '/PersonalDataIntroductionPage': (context, {arguments}) =>
+      PersonalDataIntroductionPage(),
+  '/PersonalDataAlbumPage': (context, {arguments}) => PersonalDataAlbumPage(),
+  '/PersonLikePage': (context, {arguments}) => PersonLikePage(),
+  '/PersonAuthorPages': (context, {arguments}) => PersonAuthorPages(),
 };
 
 var onGenerateRoute = (RouteSettings settings) {

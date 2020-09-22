@@ -13,11 +13,8 @@ class NavBarConfig {
         style: TextStyle(color: ThemUntil().widgetColor(context), fontSize: 18),
       ),
       leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: Store.value<ThemModel>(context).getThemeModel()
-                ? Colors.white
-                : Colors.black,
+          icon: Container(
+            child: Image.asset('assets/images/nav_icon_return.png'),
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -45,14 +42,9 @@ class NavBarConfig {
   AppBar configHomeMapAppBar(String title, BuildContext context,
       Function leftClick, Function rightClick) {
     return AppBar(
-      // title: Text(
-      //   title,
-      //   style: TextStyle(color: ThemUntil().widgetColor(context), fontSize: 18),
-      // ),
       backgroundColor: ThemUntil().mainColor(context),
       elevation: 0, //阴影辐射范围
       brightness: ThemUntil().stateBarColor(context),
-      // leading: _buildLeftButton(leftClick),
       actions: [
         Container(
             width: Global.ksWidth,

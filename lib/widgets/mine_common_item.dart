@@ -8,9 +8,19 @@ class MineCommonItem extends StatefulWidget {
   String title;
   //子标题
   String placerTitle;
+  //是否显示星星
+  bool isShowStar;
+  //子标题样式(内容true,提示false )
+  bool isShowContent;
   //item 点击时间
   Function itemClick;
-  MineCommonItem({this.index, this.title, this.placerTitle, this.itemClick});
+  MineCommonItem(
+      {this.index,
+      this.title,
+      this.placerTitle,
+      this.isShowStar,
+      this.isShowContent,
+      this.itemClick});
   @override
   _MineCommonItemState createState() => _MineCommonItemState();
 }
@@ -28,10 +38,15 @@ class _MineCommonItemState extends State<MineCommonItem> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              widget.title,
-              style: TextStyle(fontSize: 15, color: Color(0xFF706863)),
-            ),
+            RichText(
+                text: TextSpan(
+                    text: widget.title,
+                    style: TextStyle(color: Color(0xFF000000)),
+                    children: <TextSpan>[
+                  TextSpan(
+                      text: widget.isShowStar == true ? ' *' : '',
+                      style: TextStyle(color: Color(0xFFFE0301))),
+                ])),
             Row(
               children: [
                 Container(
@@ -40,7 +55,9 @@ class _MineCommonItemState extends State<MineCommonItem> {
                   child: Text(
                     widget.placerTitle,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 10, color: Color(0xFFD1D1D1)),
+                    style: widget.isShowContent == true
+                        ? TextStyle(fontSize: 14, color: Color(0xFF706864))
+                        : TextStyle(fontSize: 10, color: Color(0xFFD1D1D1)),
                   ),
                 ),
                 Container(

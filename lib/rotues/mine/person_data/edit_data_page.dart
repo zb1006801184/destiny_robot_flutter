@@ -10,7 +10,12 @@ class EditDataPage extends StatefulWidget {
 
 class _EditDataPageState extends State<EditDataPage> {
   final List _titles = ['个人信息', '基本信息', '自我介绍', '相册'];
-  final pushVc = ['/PersonalDataPage', '/PersonalBaseDataPage'];
+  final pushVc = [
+    '/PersonalDataPage',
+    '/PersonalBaseDataPage',
+    '/PersonalDataIntroductionPage',
+    '/PersonalDataAlbumPage'
+  ];
   //item 的点击
   void _itemClick(int index) {
     if (pushVc[index] != null) Navigator.of(context).pushNamed(pushVc[index]);

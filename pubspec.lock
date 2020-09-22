@@ -106,6 +106,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.2"
+  city_pickers:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "40ad97f301890bf04c0781bb61c4496bff380b4f"
+      url: "https://github.com/hanxu317317/city_pickers.git"
+    source: git
+    version: "0.2.0"
   cli_util:
     dependency: transitive
     description:
@@ -420,6 +429,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.11.4"
+  lpinyin:
+    dependency: transitive
+    description:
+      name: lpinyin
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.9"
   matcher:
     dependency: transitive
     description:

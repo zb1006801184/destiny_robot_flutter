@@ -24,7 +24,14 @@ class _MineState extends State<Mine> {
 
   //喜欢我的/我喜欢的 点击
   void _mineLikeClick({String title}) {
-    print(title);
+    Navigator.of(context).pushNamed('/PersonLikePage');
+  }
+
+  //item点击
+  void _itemClick(String title) {
+    if (title == '实名认证') {
+      Navigator.of(context).pushNamed('/PersonAuthorPages');
+    }
   }
 
   @override
@@ -212,42 +219,47 @@ class _MineState extends State<Mine> {
 //列表相同的Item
   Widget _buildCommonItemWidget(
       {String title, String iconSting, String subtitleString}) {
-    return Container(
-      height: 52,
-      width: Global.ksWidth - 12 * 2,
-      margin: EdgeInsets.only(left: 12, right: 12, top: 7.5),
-      color: Colors.white,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Container(
-                margin: EdgeInsets.only(left: 20),
-                width: 15,
-                height: 15,
-                child: Image.asset(
-                  iconSting,
-                  fit: BoxFit.cover,
+    return InkWell(
+      child: Container(
+        height: 52,
+        width: Global.ksWidth - 12 * 2,
+        margin: EdgeInsets.only(left: 12, right: 12, top: 7.5),
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 20),
+                  width: 15,
+                  height: 15,
+                  child: Image.asset(
+                    iconSting,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 20),
-                child: Text(
-                  title,
-                  style: TextStyle(fontSize: 15, color: Color(0xFF6F6763)),
+                Container(
+                  margin: EdgeInsets.only(left: 20),
+                  child: Text(
+                    title,
+                    style: TextStyle(fontSize: 15, color: Color(0xFF6F6763)),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 27.5),
-            width: 5,
-            height: 9,
-            child: Image.asset('assets/images/list_icon_retu.png'),
-          )
-        ],
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(right: 27.5),
+              width: 5,
+              height: 9,
+              child: Image.asset('assets/images/list_icon_retu.png'),
+            )
+          ],
+        ),
       ),
+      onTap: () {
+        _itemClick(title);
+      },
     );
   }
 }
