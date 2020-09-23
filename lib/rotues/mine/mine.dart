@@ -1,6 +1,6 @@
 import 'package:destiny_robot/unitls/global.dart';
-import 'package:destiny_robot/unitls/nav_bar_config.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 //tabbar - 我
 class Mine extends StatefulWidget {
@@ -31,6 +31,24 @@ class _MineState extends State<Mine> {
   void _itemClick(String title) {
     if (title == '实名认证') {
       Navigator.of(context).pushNamed('/PersonAuthorPages');
+    }
+    if (title == '学生认证') {
+      Navigator.of(context).pushNamed('/StudentAuthorPage');
+    }
+    if (title == '人工客服') {
+      _launchURL();
+    }
+    if (title == '筛选条件') {
+      Navigator.of(context).pushNamed('/PersonSiftPage');
+    }
+  }
+
+  _launchURL() async {
+    const phoneNum = 'tel:15070925726';
+    if (await canLaunch(phoneNum)) {
+      await launch(phoneNum);
+    } else {
+      throw 'Could not launch $phoneNum';
     }
   }
 
@@ -219,7 +237,7 @@ class _MineState extends State<Mine> {
 //列表相同的Item
   Widget _buildCommonItemWidget(
       {String title, String iconSting, String subtitleString}) {
-    return InkWell(
+    return GestureDetector(
       child: Container(
         height: 52,
         width: Global.ksWidth - 12 * 2,

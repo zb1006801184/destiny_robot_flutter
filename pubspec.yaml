@@ -47,7 +47,7 @@ dependencies:
   flutter_webview_plugin: ^0.3.11
   webview_flutter: ^0.3.19+9
   image_gallery_saver: ^1.2.2
-  url_launcher: ^5.4.2
+  url_launcher: ^5.7.0
   rxdart: ^0.24.0
   flutter_cache_manager: ^1.2.0
   connectivity: ^0.4.8+2
@@ -64,6 +64,7 @@ dependencies:
   city_pickers: 
     git: 
       url: https://github.com/hanxu317317/city_pickers.git
+
 
 dev_dependencies:
   flutter_test:

@@ -6,7 +6,8 @@ import 'package:destiny_robot/unitls/them_util.dart';
 
 class NavBarConfig {
   //默认导航栏样式
-  AppBar configAppBar(String title, BuildContext context) {
+  AppBar configAppBar(String title, BuildContext context,
+      {List<Widget> rightWidget = null}) {
     return AppBar(
       title: Text(
         title,
@@ -19,6 +20,7 @@ class NavBarConfig {
           onPressed: () {
             Navigator.pop(context);
           }),
+      actions: rightWidget,
       backgroundColor: ThemUntil().mainColor(context),
       elevation: 0, //阴影辐射范围
       brightness: ThemUntil().stateBarColor(context),
