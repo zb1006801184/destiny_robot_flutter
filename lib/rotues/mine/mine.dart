@@ -41,6 +41,9 @@ class _MineState extends State<Mine> {
     if (title == '筛选条件') {
       Navigator.of(context).pushNamed('/PersonSiftPage');
     }
+    if (title == '设置') {
+      Navigator.of(context).pushNamed('/MineSetPage');
+    }
   }
 
   _launchURL() async {

@@ -10,6 +10,7 @@ class _MineSetPageState extends State<MineSetPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: NavBarConfig().configAppBar('设置', context),
+      body: Center(child: Text('data'),),
     );
   }
 }

@@ -48,7 +48,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
             print(e);
           }
         },
-        dataList: index == 3 ? _heights : _sexs,
+        dataList: index == 4 ? _heights : _sexs,
       );
     } else if (index == 5) {
       //现居住地

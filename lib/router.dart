@@ -24,6 +24,7 @@ import 'rotues/mine/person_like/person_like_page.dart';
 import 'rotues/mine/person_author/person_author_page.dart';
 import 'rotues/mine/person_author/student_author_page.dart';
 import 'rotues/mine/person_sift/person_sift_page.dart';
+import 'rotues/mine/mine_set/mine_set_page.dart';
 
 final routes = {
   '/': (context) => HomePage(),
@@ -56,6 +57,7 @@ final routes = {
   '/PersonAuthorPages': (context, {arguments}) => PersonAuthorPages(),
   '/StudentAuthorPage': (context, {arguments}) => StudentAuthorPage(),
   '/PersonSiftPage': (context, {arguments}) => PersonSiftPage(),
+  '/MineSetPage': (context, {arguments}) => MineSetPage(),
 };
 
 var onGenerateRoute = (RouteSettings settings) {
