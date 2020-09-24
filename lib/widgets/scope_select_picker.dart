@@ -2,6 +2,8 @@ import 'package:destiny_robot/unitls/global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+//范围选择器
+
 void showScopePicker(BuildContext context, Function callBackHandler,
     {List leftDataList, List rightDataList}) {
   Navigator.of(context)

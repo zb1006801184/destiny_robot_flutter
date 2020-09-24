@@ -1,6 +1,9 @@
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import '../../../widgets/sample_select.dart';
+import 'package:image_picker/image_picker.dart';
 
 //我-实名认证
 class PersonAuthorPages extends StatefulWidget {
@@ -9,6 +12,22 @@ class PersonAuthorPages extends StatefulWidget {
 }
 
 class _PersonAuthorPagesState extends State<PersonAuthorPages> {
+  final List titles = ['拍照', '从相册中选择'];
+  //选择照片
+  void _selectImageClick(int index) async {
+    var cameraStatus = await Permission.camera.status;
+        var photosStatus = await Permission.photos.status;
+
+    if (cameraStatus.isUndetermined||photosStatus.isUndetermined) {
+     await Permission.camera.request();
+     await Permission.photos.request();
+    }
+    showSampleSelect(context, dataList: titles, callBackHandler: (index) async {
+      var image = await ImagePicker().getImage(
+          source: index == 0 ? ImageSource.camera : ImageSource.gallery);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,14 +45,19 @@ class _PersonAuthorPagesState extends State<PersonAuthorPages> {
   //正/反 选择证件照
   Widget _selectImages(int index) {
     List images = ['assets/images/ID_front.png', 'assets/images/ID_back.png'];
-    return Container(
-      width: Global.ksWidth,
-      padding: EdgeInsets.only(left: 49, right: 49, top: 20.5),
-      height: 216.0,
-      child: Image.asset(
-        images[index],
-        fit: BoxFit.fill,
+    return GestureDetector(
+      child: Container(
+        width: Global.ksWidth,
+        padding: EdgeInsets.only(left: 49, right: 49, top: 20.5),
+        height: 216.0,
+        child: Image.asset(
+          images[index],
+          fit: BoxFit.fill,
+        ),
       ),
+      onTap: () {
+        _selectImageClick(index);
+      },
     );
   }
 
@@ -71,7 +95,7 @@ class _PersonAuthorPagesState extends State<PersonAuthorPages> {
             ),
           ),
         ),
-        onTap: (){
+        onTap: () {
           print("完成");
         },
       )
