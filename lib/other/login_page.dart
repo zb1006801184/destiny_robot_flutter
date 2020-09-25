@@ -1,4 +1,5 @@
 import 'package:destiny_robot/rotues/main/home_page.dart';
+import 'package:destiny_robot/unitls/global.dart';
 import 'package:flutter/material.dart';
 import '../im/util/http_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -119,28 +120,118 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Login"),
-      ),
-      body: Center(
-          child: ListView(
-        shrinkWrap: true,
-        padding: EdgeInsets.only(left: 24.0, right: 24.0),
-        children: <Widget>[
-          logo,
-          SizedBox(height: 48.0),
-          account,
-          SizedBox(
-            height: 8.0,
-          ),
-          password,
-          SizedBox(
-            height: 24.0,
-          ),
-          loginButton
-        ],
-      )),
+    AppBar appBar = AppBar(
+      elevation: 0,
+      leading: IconButton(
+          icon: Image.asset('assets/images/login_nav_del.png'),
+          onPressed: () {
+            print('object');
+          }),
+      actions: [
+        IconButton(
+            icon: Image.asset('assets/images/login_icon_phone.png'),
+            onPressed: () {
+              FocusScope.of(context).requestFocus(FocusNode());
+              print('object1');
+            })
+      ],
     );
+    //底部按钮
+    final _bottomWidget = Positioned(
+      bottom: 40,
+      left: (Global.ksWidth - 146) / 2,
+      child: Container(
+        width: 146,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              '问题反馈',
+              style: TextStyle(color: Color(0xFFFF010101), fontSize: 13),
+            ),
+            Container(
+              width: 1,
+              height: 16.5,
+              color: Color(0xFFFFD1D1D1),
+            ),
+            Text(
+              '找回账号',
+              style: TextStyle(color: Color(0xFFFF010101), fontSize: 13),
+            ),
+          ],
+        ),
+      ),
+    );
+    //标题
+    final _titleWidget = Container(
+      width: Global.ksWidth,
+      padding: EdgeInsets.only(left: 17, top: 36),
+      child: Text(
+        '手机号登录',
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+      ),
+    );
+
+    //输入框
+    final _inputWidget = Container(
+      width: Global.ksWidth,
+      padding: EdgeInsets.only(left: 41.5, top: 49, right: 41.5),
+      child: Row(
+        children: [
+          Text(
+            '+86',
+            style: TextStyle(
+                color: Color(0xFFFF000000),
+                fontSize: 15,
+                fontWeight: FontWeight.w500),
+          ),
+          Container(
+            width: 1,
+            height: 16.5,
+            margin: EdgeInsets.only(left: 17, right: 17),
+            color: Color(0xFFFFD1D1D1),
+          ),
+          Expanded(
+              child: Container(
+            height: 30,
+            child: TextField(
+              controller: _assount,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(
+                  contentPadding: EdgeInsets.only(left: 0,bottom: 12),
+                  hintText: '请输入电话号码',
+                  hintStyle: TextStyle(fontSize: 15)
+                  ),
+            ),
+          ))
+        ],
+      ),
+    );
+
+    return Scaffold(
+        appBar: appBar,
+        backgroundColor: Colors.white,
+        body: Center(
+          child: Stack(
+            children: [
+              InkWell(
+                child: Container(
+                  width: Global.ksWidth,
+                  height: Global.ksHeight,
+                  child: Column(
+                    children: [
+                      _titleWidget,
+                      _inputWidget,
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                },
+              ),
+              _bottomWidget,
+            ],
+          ),
+        ));
   }
 }
