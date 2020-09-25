@@ -1,6 +1,9 @@
+import 'package:destiny_robot/other/login_page.dart';
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rongcloud_im_plugin/rongcloud_im_plugin.dart' as prefix;
 import '../../../widgets/mine_set_item.dart';
 
 class MineSetPage extends StatefulWidget {
@@ -19,6 +22,14 @@ class _MineSetPageState extends State<MineSetPage> {
   void _itemClick(int index) {
     List items = ['/MineSetAboutPage','/MineSetAboutPage'];
     Navigator.of(context).pushNamed(items[index]);
+  }
+  void _logout() async {
+    prefix.RongIMClient.disconnect(false);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("token");
+    Navigator.of(context).pushAndRemoveUntil(
+        new MaterialPageRoute(builder: (context) => new LoginPage()),
+        (route) => route == null);
   }
 
   @override
@@ -52,9 +63,7 @@ class _MineSetPageState extends State<MineSetPage> {
               ),
             ),
           ),
-          onTap: () {
-            print('退出登录');
-          },
+          onTap: _logout,
         ));
   }
 

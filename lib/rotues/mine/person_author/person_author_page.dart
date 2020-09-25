@@ -13,18 +13,28 @@ class PersonAuthorPages extends StatefulWidget {
 
 class _PersonAuthorPagesState extends State<PersonAuthorPages> {
   final List titles = ['拍照', '从相册中选择'];
-  //选择照片
-  void _selectImageClick(int index) async {
-    var cameraStatus = await Permission.camera.status;
-        var photosStatus = await Permission.photos.status;
+  //正面
+  String _peopleImagePath;
+  //反面
+  String _reverseImagePath;
 
-    if (cameraStatus.isUndetermined||photosStatus.isUndetermined) {
-     await Permission.camera.request();
-     await Permission.photos.request();
+  //选择照片
+  void _selectImageClick(int selectIndex) async {
+    var cameraStatus = await Permission.camera.status;
+    var photosStatus = await Permission.photos.status;
+
+    if (cameraStatus.isUndetermined || photosStatus.isUndetermined) {
+      await Permission.camera.request();
+      await Permission.photos.request();
     }
     showSampleSelect(context, dataList: titles, callBackHandler: (index) async {
-      var image = await ImagePicker().getImage(
+      PickedFile image = await ImagePicker().getImage(
           source: index == 0 ? ImageSource.camera : ImageSource.gallery);
+      setState(() {
+        selectIndex == 0
+            ? _peopleImagePath = image.path
+            : _reverseImagePath = image.path;
+      });
     });
   }
 
@@ -45,14 +55,19 @@ class _PersonAuthorPagesState extends State<PersonAuthorPages> {
   //正/反 选择证件照
   Widget _selectImages(int index) {
     List images = ['assets/images/ID_front.png', 'assets/images/ID_back.png'];
+    String image;
+    index == 0 ? image = _peopleImagePath : image = _reverseImagePath;
     return GestureDetector(
       child: Container(
         width: Global.ksWidth,
         padding: EdgeInsets.only(left: 49, right: 49, top: 20.5),
         height: 216.0,
-        child: Image.asset(
-          images[index],
-          fit: BoxFit.fill,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.asset(
+            image ?? images[index],
+            fit: BoxFit.fill,
+          ),
         ),
       ),
       onTap: () {

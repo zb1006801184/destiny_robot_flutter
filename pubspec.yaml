@@ -64,7 +64,8 @@ dependencies:
   city_pickers: 
     git: 
       url: https://github.com/hanxu317317/city_pickers.git
-
+    #极光一键登录
+  jverify: ^0.6.20
 
 dev_dependencies:
   flutter_test:
