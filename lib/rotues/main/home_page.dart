@@ -3,7 +3,7 @@ import 'package:destiny_robot/im/util/db_manager.dart';
 import 'package:destiny_robot/im/util/event_bus.dart';
 import 'package:destiny_robot/im/util/user_info_datesource.dart';
 import 'package:destiny_robot/other/contacts_page.dart';
-import 'package:destiny_robot/other/login_page.dart';
+import 'package:destiny_robot/rotues/login/login_page.dart';
 import 'package:destiny_robot/rotues/map_home.dart/map_home.dart';
 import 'package:destiny_robot/rotues/mine/mine.dart';
 import 'package:flutter/material.dart';

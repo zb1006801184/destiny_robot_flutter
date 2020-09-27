@@ -12,7 +12,7 @@ import 'item/conversation_list_item.dart';
 import '../util/style.dart';
 import '../util/event_bus.dart';
 import '../util/dialog_util.dart';
-import '../../other/login_page.dart';
+import '../../rotues/login/login_page.dart';
 import 'dart:developer' as developer;
 
 class ConversationListPage extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:destiny_robot/other/login_page.dart';
+import 'package:destiny_robot/rotues/login/login_page.dart';
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
 import 'package:flutter/material.dart';

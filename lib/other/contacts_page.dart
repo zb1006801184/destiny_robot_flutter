@@ -5,7 +5,7 @@ import 'package:rongcloud_im_plugin/rongcloud_im_plugin.dart' as prefix;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../im/util/user_info_datesource.dart' as example;
-import 'login_page.dart';
+import '../rotues/login/login_page.dart';
 
 class ContactsPage extends StatefulWidget {
   @override
