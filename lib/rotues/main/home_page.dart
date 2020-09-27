@@ -6,6 +6,8 @@ import 'package:destiny_robot/other/contacts_page.dart';
 import 'package:destiny_robot/rotues/login/login_page.dart';
 import 'package:destiny_robot/rotues/map_home.dart/map_home.dart';
 import 'package:destiny_robot/rotues/mine/mine.dart';
+import 'package:destiny_robot/state/provider_store.dart';
+import 'package:destiny_robot/state/user_state_model.dart';
 import 'package:flutter/material.dart';
 import 'package:rongcloud_im_plugin/rongcloud_im_plugin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -76,10 +78,10 @@ class _HomePageState extends State<HomePage> {
         developer.log("connect result " + code.toString(), name: pageName);
         EventBus.instance.commit(EventKeys.UpdateNotificationQuietStatus, {});
         if (code == 31004 || code == 12) {
-          developer.log("connect result " + code.toString(), name: pageName);
-          Navigator.of(context).pushAndRemoveUntil(
-              new MaterialPageRoute(builder: (context) => new LoginPage()),
-              (route) => route == null);
+          // developer.log("connect result " + code.toString(), name: pageName);
+          // Navigator.of(context).pushAndRemoveUntil(
+          //     new MaterialPageRoute(builder: (context) => new LoginPage()),
+          //     (route) => route == null);
         } else if (code == 0) {
           developer.log("connect userId" + userId, name: pageName);
           // 连接成功后打开数据库
@@ -87,9 +89,9 @@ class _HomePageState extends State<HomePage> {
         }
       });
     } else {
-      Navigator.of(context).pushAndRemoveUntil(
-          new MaterialPageRoute(builder: (context) => new LoginPage()),
-          (route) => route == null);
+      // Navigator.of(context).pushAndRemoveUntil(
+      //     new MaterialPageRoute(builder: (context) => new LoginPage()),
+      //     (route) => route == null);
     }
   }
 
@@ -113,8 +115,15 @@ class _HomePageState extends State<HomePage> {
         items: tabbarList,
         type: BottomNavigationBarType.fixed,
         onTap: (int index) {
+
+          // if (Store.value<UserStateModel>(context).isLogin() != true) {
+          //   Navigator.of(context).pushNamed('/loginPage');
+          //   return;
+          // }
+
           setState(() {
             curIndex = index;
+            
           });
         },
         currentIndex: curIndex,

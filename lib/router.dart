@@ -28,6 +28,8 @@ import 'rotues/mine/mine_set/mine_set_page.dart';
 import 'rotues/mine/mine_set/mine_set_about_page.dart';
 import 'rotues/login/code_page.dart';
 import 'rotues/login/once_login_page.dart';
+import 'rotues/login/login_page.dart';
+
 final routes = {
   '/': (context) => HomePage(),
   '/conversation': (context, {arguments}) =>
@@ -62,8 +64,8 @@ final routes = {
   '/MineSetPage': (context, {arguments}) => MineSetPage(),
   '/MineSetAboutPage': (context, {arguments}) => MineSetAboutPage(),
   '/CodePage': (context, {arguments}) => CodePage(),
-    '/OnceLoginPage': (context, {arguments}) => OnceLoginPage(),
-
+  '/OnceLoginPage': (context, {arguments}) => OnceLoginPage(),
+  '/LoginPage': (context, {arguments}) => LoginPage(),
 };
 
 var onGenerateRoute = (RouteSettings settings) {

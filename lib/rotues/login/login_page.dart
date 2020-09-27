@@ -27,15 +27,18 @@ class _LoginPageState extends State<LoginPage> {
   int _count = 0;
   String _codeButtonString = '获取验证码';
   bool isAgree = true;
+
   /// 统一 key
   final String f_result_key = "result";
-  /// 错误码
-  final  String  f_code_key = "code";
-  /// 回调的提示信息，统一返回 flutter 为 message
-  final  String  f_msg_key  = "message";
-  /// 运营商信息
-  final  String  f_opr_key  = "operator";
 
+  /// 错误码
+  final String f_code_key = "code";
+
+  /// 回调的提示信息，统一返回 flutter 为 message
+  final String f_msg_key = "message";
+
+  /// 运营商信息
+  final String f_opr_key = "operator";
 
   String _platformVersion = 'Unknown';
   String _result = "token=";
@@ -44,14 +47,11 @@ class _LoginPageState extends State<LoginPage> {
   bool _loading = false;
   String _token;
 
-
   @override
   void initState() {
     super.initState();
     initPlatformState();
   }
-
- 
 
   void _loginAction() {
     Map map = new Map();
@@ -114,10 +114,9 @@ class _LoginPageState extends State<LoginPage> {
 //关闭按钮的点击
 
 //一键登录的点击
-  void oneButtonLogin() async{
+  void oneButtonLogin() async {
     // FocusScope.of(context).requestFocus(FocusNode());
-  loginAuth();
-    // Navigator.of(context).pushNamed('/OnceLoginPage');
+    loginAuth();
   }
 
   @override
@@ -343,32 +342,24 @@ class _LoginPageState extends State<LoginPage> {
         ));
   }
 
-   /// SDK 请求授权一键登录
-   void loginAuth() {
+  /// SDK 请求授权一键登录
+  void loginAuth() {
     setState(() {
       _loading = true;
     });
     jverify.checkVerifyEnable().then((map) {
       bool result = map[f_result_key];
       if (result) {
-
         final screenSize = MediaQuery.of(context).size;
         final screenWidth = screenSize.width;
         final screenHeight = screenSize.height;
         bool isiOS = PlatformUtils.isIOS;
 
-        /// 自定义授权的 UI 界面，以下设置的图片必须添加到资源文件里，
-        /// android项目将图片存放至drawable文件夹下，可使用图片选择器的文件名,例如：btn_login.xml,入参为"btn_login"。
-        /// ios项目存放在 Assets.xcassets。
-        ///
         JVUIConfig uiConfig = JVUIConfig();
-        //uiConfig.authBackgroundImage = ;
 
-        //uiConfig.navHidden = true;
         uiConfig.navColor = Colors.white.value;
         uiConfig.navText = "";
-        // uiConfig.navTextColor = Colors.blue.value;
-        uiConfig.navReturnImgPath = "login_nav_del";//图片必须存在
+        uiConfig.navReturnImgPath = "login_nav_del"; //图片必须存在
 
         uiConfig.logoWidth = 64;
         uiConfig.logoHeight = 64;
@@ -379,7 +370,7 @@ class _LoginPageState extends State<LoginPage> {
         uiConfig.logoImgPath = "logo";
 
         uiConfig.numberFieldWidth = 200;
-        uiConfig.numberFieldHeight = 40 ;
+        uiConfig.numberFieldHeight = 40;
         uiConfig.numFieldOffsetY = 15;
         uiConfig.numberVerticalLayoutItem = JVIOSLayoutItem.ItemLogo;
         uiConfig.numberColor = Color(0xFFFF000000).value;
@@ -389,41 +380,42 @@ class _LoginPageState extends State<LoginPage> {
 
         uiConfig.logBtnWidth = 245;
         uiConfig.logBtnHeight = 44;
-        uiConfig.logBtnOffsetY = 15;
+        uiConfig.logBtnOffsetY = 80;
         uiConfig.logBtnVerticalLayoutItem = JVIOSLayoutItem.ItemNumber;
         uiConfig.logBtnText = "本机一键登录";
-        uiConfig.logBtnTextColor = Colors.red.value;
+        uiConfig.logBtnTextColor = Colors.white.value;
         uiConfig.logBtnTextSize = 15;
         uiConfig.logBtnBackgroundPath = 'button_pink';
-        uiConfig.loginBtnNormalImage = "button_pink";//图片必须存在
-        uiConfig.loginBtnPressedImage = "button_pink";//图片必须存在
-        uiConfig.loginBtnUnableImage = "button_pink";//图片必须存在
+        uiConfig.loginBtnNormalImage = "button_pink"; //图片必须存在
+        uiConfig.loginBtnPressedImage = "button_pink"; //图片必须存在
+        uiConfig.loginBtnUnableImage = "button_pink"; //图片必须存在
 
-        uiConfig.privacyHintToast = true;//only android 设置隐私条款不选中时点击登录按钮默认显示toast。
+        uiConfig.privacyHintToast =
+            true; //only android 设置隐私条款不选中时点击登录按钮默认显示toast。
 
-        uiConfig.privacyState = true;//设置默认勾选
+        uiConfig.privacyState = true; //设置默认勾选
         uiConfig.privacyCheckboxSize = 20;
-        uiConfig.checkedImgPath = "check_image";//图片必须存在
-        uiConfig.uncheckedImgPath = "uncheck_image";//图片必须存在
+        uiConfig.checkedImgPath = "check_image"; //图片必须存在
+        uiConfig.uncheckedImgPath = "uncheck_image"; //图片必须存在
         uiConfig.privacyCheckboxInCenter = true;
         //uiConfig.privacyCheckboxHidden = false;
 
-        //uiConfig.privacyOffsetX = isiOS ? (20 + uiConfig.privacyCheckboxSize) : null;
-        uiConfig.privacyOffsetY = 193;// 距离底部距离
+        // uiConfig.privacyOffsetX = isiOS ? (20 + uiConfig.privacyCheckboxSize) : null;
+        uiConfig.privacyOffsetY = (Global.ksHeight - 550).toInt(); // 距离底部距离
+        uiConfig.privacyOffsetX = 80;
         uiConfig.privacyVerticalLayoutItem = JVIOSLayoutItem.ItemLogin;
-        uiConfig.clauseName = "《使用协议》";
+        uiConfig.clauseName = "使用协议";
         uiConfig.clauseUrl = "http://www.baidu.com";
         uiConfig.clauseBaseColor = Colors.black.value;
-        uiConfig.clauseNameTwo = "《隐私协议》";
+        uiConfig.clauseNameTwo = "隐私协议";
         uiConfig.clauseUrlTwo = "http://www.hao123.com";
         uiConfig.clauseColor = Colors.red.value;
-        uiConfig.privacyText = ["登录即代表阅读并同意","、","和","并授权恋爱机器人获得本机号码。"];
+        uiConfig.privacyText = ["登录即代表阅读并同意", "、", "和", "并授权恋爱机器人获得本机号码。"];
         uiConfig.privacyTextSize = 13;
-        //uiConfig.privacyWithBookTitleMark = true;
-        //uiConfig.privacyTextCenterGravity = false;
-        uiConfig.authStatusBarStyle =  JVIOSBarStyle.StatusBarStyleDarkContent;
+        uiConfig.authStatusBarStyle = JVIOSBarStyle.StatusBarStyleDarkContent;
         uiConfig.privacyStatusBarStyle = JVIOSBarStyle.StatusBarStyleDefault;
-        uiConfig.modelTransitionStyle = JVIOSUIModalTransitionStyle.CrossDissolve;
+        uiConfig.modelTransitionStyle =
+            JVIOSUIModalTransitionStyle.CrossDissolve;
 
         uiConfig.statusBarColorWithNav = true;
         uiConfig.virtualButtonTransparent = true;
@@ -434,123 +426,65 @@ class _LoginPageState extends State<LoginPage> {
         uiConfig.needStartAnim = true;
         uiConfig.needCloseAnim = true;
 
-        uiConfig.privacyNavColor =  Colors.red.value;;
-        uiConfig.privacyNavTitleTextColor = Colors.blue.value;
+        uiConfig.privacyNavColor = Colors.white.value;
+        uiConfig.privacyNavTitleTextColor = Colors.black.value;
         uiConfig.privacyNavTitleTextSize = 16;
 
-        uiConfig.privacyNavTitleTitle  =null;//only ios
+        uiConfig.privacyNavTitleTitle = null; //only ios
         uiConfig.privacyNavTitleTitle1 = "使用协议";
         uiConfig.privacyNavTitleTitle2 = "隐私协议";
-        uiConfig.privacyNavReturnBtnImage = "login_nav_del";//图片必须存在;
+        uiConfig.privacyNavReturnBtnImage = "login_nav_del"; //图片必须存在;
+
+        JVCustomWidget textWidget =
+            JVCustomWidget('123', JVCustomWidgetType.button);
+        textWidget.title = "其他登录";
+        textWidget.left = ((Global.ksWidth - 245) / 2).toInt();
+        textWidget.top = 320;
+        textWidget.width = 245;
+        textWidget.height = 44;
+        textWidget.titleFont = 15;
+        textWidget.textAlignment = JVTextAlignmentType.center;
+        textWidget.isClickEnable = true;
+        textWidget.titleColor = Colors.white.value;
+        textWidget.btnNormalImageName = 'button_pink';
+        jverify.addClikWidgetEventListener('123', (eventId) {
+          if ('123' == eventId) {
+            jverify.dismissLoginAuthView();
+          }
+        });
 
         /// 添加自定义的 控件 到授权界面
-        List<JVCustomWidget> widgetList = [];
+        List<JVCustomWidget> widgetList = [
+          textWidget,
+        ];
+
         /// 步骤 1：调用接口设置 UI
-        jverify.setCustomAuthorizationView(true, uiConfig, landscapeConfig: uiConfig,widgets: widgetList);
+        jverify.setCustomAuthorizationView(true, uiConfig,
+            landscapeConfig: uiConfig, widgets: widgetList);
 
         /// 步骤 2：调用一键登录接口
 
         /// 方式一：使用同步接口 （如果想使用异步接口，则忽略此步骤，看方式二）
         /// 先，添加 loginAuthSyncApi 接口回调的监听
-        jverify.addLoginAuthCallBackListener((event){
+        jverify.addLoginAuthCallBackListener((event) {
           setState(() {
             _loading = false;
             _result = "监听获取返回数据：[${event.code}] message = ${event.message}";
           });
-          print("通过添加监听，获取到 loginAuthSyncApi 接口返回数据，code=${event.code},message = ${event.message},operator = ${event.operator}");
+          print(
+              "通过添加监听，获取到 loginAuthSyncApi 接口返回数据，code=${event.code},message = ${event.message},operator = ${event.operator}");
         });
+
         /// 再，执行同步的一键登录接口
         jverify.loginAuthSyncApi(autoDismiss: true);
       } else {
-        setState(() {
-          _loading = false;
-          _result = "[2016],msg = 当前网络环境不支持认证";
-        });
-
-        /*
-        final String text_widgetId = "jv_add_custom_text";// 标识控件 id
-        JVCustomWidget textWidget = JVCustomWidget(text_widgetId, JVCustomWidgetType.textView);
-        textWidget.title = "新加 text view 控件";
-        textWidget.left = 20;
-        textWidget.top = 360 ;
-        textWidget.width = 200;
-        textWidget.height  = 40;
-        textWidget.backgroundColor = Colors.yellow.value;
-        textWidget.isShowUnderline = true;
-        textWidget.textAlignment = JVTextAlignmentType.center;
-        textWidget.isClickEnable = true;
-
-        // 添加点击事件监听
-        jverify.addClikWidgetEventListener(text_widgetId, (eventId) {
-          print("receive listener - click widget event :$eventId");
-          if (text_widgetId == eventId) {
-            print("receive listener - 点击【新加 text】");
-          }
-        });
-        widgetList.add(textWidget);
-
-        final String btn_widgetId = "jv_add_custom_button";// 标识控件 id
-        JVCustomWidget buttonWidget = JVCustomWidget(btn_widgetId, JVCustomWidgetType.button);
-        buttonWidget.title = "新加 button 控件";
-        buttonWidget.left = 100;
-        buttonWidget.top = 400;
-        buttonWidget.width = 150;
-        buttonWidget.height  = 40;
-        buttonWidget.isShowUnderline = true;
-        buttonWidget.backgroundColor = Colors.brown.value;
-        //buttonWidget.btnNormalImageName = "";
-        //buttonWidget.btnPressedImageName = "";
-        //buttonWidget.textAlignment = JVTextAlignmentType.left;
-
-        // 添加点击事件监听
-        jverify.addClikWidgetEventListener(btn_widgetId, (eventId) {
-          print("receive listener - click widget event :$eventId");
-          if (btn_widgetId == eventId) {
-            print("receive listener - 点击【新加 button】");
-          }
-        });
-        widgetList.add(buttonWidget);
-        */
-
-
-        /* 弹框模式
-        JVPopViewConfig popViewConfig = JVPopViewConfig();
-        popViewConfig.width = (screenWidth - 100.0).toInt();
-        popViewConfig.height = (screenHeight - 150.0).toInt();
-
-        uiConfig.popViewConfig = popViewConfig;
-        */
-
-
-        /*
-
-        /// 方式二：使用异步接口 （如果想使用异步接口，则忽略此步骤，看方式二）
-
-        /// 先，执行异步的一键登录接口
-        jverify.loginAuth(true).then((map) {
-
-          /// 再，在回调里获取 loginAuth 接口异步返回数据（如果是通过添加 JVLoginAuthCallBackListener 监听来获取返回数据，则忽略此步骤）
-          int code = map[f_code_key];
-          String content = map[f_msg_key];
-          String operator = map[f_opr_key];
-          setState(() {
-            _loading = false;
-            _result = "接口异步返回数据：[$code] message = $content";
-          });
-          print("通过接口异步返回，获取到 loginAuth 接口返回数据，code=$code,message = $content,operator = $operator");
-        });
-
-        */
-
+          Fluttertoast.showToast(msg: "网络条件不允许！");
       }
     });
   }
 
-
-
   Future<void> initPlatformState() async {
-
-     SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     String phone = prefs.get("phone");
     String password = prefs.get("password");
 
@@ -560,15 +494,15 @@ class _LoginPageState extends State<LoginPage> {
     String platformVersion;
 
     // 初始化 SDK 之前添加监听
-    jverify.addSDKSetupCallBackListener((JVSDKSetupEvent event){
+    jverify.addSDKSetupCallBackListener((JVSDKSetupEvent event) {
       print("receive sdk setup call back event :${event.toMap()}");
     });
 
     jverify.setDebugMode(true); // 打开调试模式
     jverify.setup(
-        appKey: "f7f5f138d028e05467f8ac6b",//"你自己应用的 AppKey",
+        appKey: "f7f5f138d028e05467f8ac6b", //"你自己应用的 AppKey",
         channel: "devloper-default"); // 初始化sdk,  appKey 和 channel 只对ios设置有效
-    
+
     if (!mounted) return;
 
     setState(() {

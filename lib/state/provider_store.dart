@@ -1,6 +1,8 @@
+import 'package:destiny_robot/state/user_state_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'them_model.dart';
+
 class Store {
   //  初始化
   static init({Widget child}) {
@@ -8,6 +10,7 @@ class Store {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemModel()),
+        ChangeNotifierProvider(create: (_) => UserStateModel()),
       ],
       child: child,
     );
