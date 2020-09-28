@@ -1,13 +1,17 @@
 import 'package:city_pickers/city_pickers.dart';
+import 'package:destiny_robot/im/widget/cachImage/cached_image_widget.dart';
 
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
 import 'package:destiny_robot/widgets/edit_detai_widget.dart';
+import 'package:destiny_robot/widgets/sample_select.dart';
 import 'package:destiny_robot/widgets/single_select_picker.dart';
 
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../widgets/mine_common_item.dart';
 import '../../../widgets/edit_detai_widget.dart';
+import 'package:image_picker/image_picker.dart';
 
 //我-编辑资料-个人信息
 class PersonalDataPage extends StatefulWidget {
@@ -35,6 +39,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
     '190CM',
   ];
   final _sexs = ['男', '女'];
+  String headImage;
 
   //item 点击
   void _itemClick(int index) async {
@@ -78,6 +83,24 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
     }
   }
 
+  Future<void> _selectImage() async {
+    var cameraStatus = await Permission.camera.status;
+    var photosStatus = await Permission.photos.status;
+
+    if (cameraStatus.isUndetermined || photosStatus.isUndetermined) {
+      await Permission.camera.request();
+      await Permission.photos.request();
+    }
+    showSampleSelect(context, dataList: ['拍照', '从相册中选择'],
+        callBackHandler: (index) async {
+      PickedFile image = await ImagePicker().getImage(
+          source: index == 0 ? ImageSource.camera : ImageSource.gallery);
+      setState(() {
+        headImage = image.path;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,17 +123,42 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
           Container(
             width: 93,
             height: 93,
-            decoration: BoxDecoration(
-                color: Colors.red, borderRadius: BorderRadius.circular(93 / 2)),
             child: Stack(
               children: [
+                GestureDetector(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(93 / 2),
+                    child: headImage != null
+                        ? Image.asset(
+                            headImage,
+                            fit: BoxFit.cover,
+                            width: 93,
+                            height: 93,
+                          )
+                        : CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl:
+                                headImage ?? Global.userModel.headImgUrl ?? '',
+                            placeholder: (context, url) => Image.asset(
+                              'assets/images/user_placer_image.jpg',
+                              fit: BoxFit.cover,
+                              height: 93,
+                              width: 93,
+                            ),
+                          ),
+                  ),
+                  onTap: _selectImage,
+                ),
                 Positioned(
                     right: 0,
                     bottom: 0,
                     child: Container(
                       width: 24,
                       height: 24,
-                      color: Colors.blue,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/images/personal_icon_camera.png'))),
                     )),
               ],
             ),

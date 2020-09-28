@@ -44,12 +44,12 @@ class HttpUtils {
     _dio = Dio(options);
 
     //设置代理
-    // (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
-    //   client.findProxy = (Uri) {
-    //     // 用1个开关设置是否开启代理
-    //     return  'PROXY 192.168.3.138:8888';
-    //   };
-    // };
+    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
+      client.findProxy = (Uri) {
+        // 用1个开关设置是否开启代理
+        return  'PROXY 192.168.3.137:8888';
+      };
+    };
 
     /// 添加拦截器
     _dio.interceptors

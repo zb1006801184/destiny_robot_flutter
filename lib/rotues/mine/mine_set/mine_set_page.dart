@@ -1,6 +1,8 @@
 import 'package:destiny_robot/rotues/login/login_page.dart';
+import 'package:destiny_robot/unitls/data_name_unitls.dart';
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
+import 'package:destiny_robot/unitls/sp_util.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rongcloud_im_plugin/rongcloud_im_plugin.dart' as prefix;
@@ -20,13 +22,13 @@ class _MineSetPageState extends State<MineSetPage> {
 
   //item click
   void _itemClick(int index) {
-    List items = ['/MineSetAboutPage','/MineSetAboutPage'];
+    List items = ['/MineSetAboutPage', '/MineSetAboutPage'];
     Navigator.of(context).pushNamed(items[index]);
   }
+
   void _logout() async {
     prefix.RongIMClient.disconnect(false);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove("token");
+    SpUtil.remove(DataName.LOGINSTATE);
     Navigator.of(context).pushAndRemoveUntil(
         new MaterialPageRoute(builder: (context) => new LoginPage()),
         (route) => route == null);
@@ -76,7 +78,7 @@ class _MineSetPageState extends State<MineSetPage> {
           itemBuilder: (context, index) {
             return GestureDetector(
               child: MineSetItem(title: _titles[index], icon: _icons[index]),
-              onTap: (){
+              onTap: () {
                 _itemClick(index);
               },
             );

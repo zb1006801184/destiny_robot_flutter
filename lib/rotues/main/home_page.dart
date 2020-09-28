@@ -35,13 +35,13 @@ class _HomePageState extends State<HomePage> {
           Image(image: AssetImage("assets/images/tabar_message_selected.png")),
       title: new Text("消息"),
     ),
-    new BottomNavigationBarItem(
-      icon: new Icon(
-        Icons.perm_contact_calendar,
-        color: Colors.grey,
-      ),
-      title: new Text("通讯录"),
-    ),
+    // new BottomNavigationBarItem(
+    //   icon: new Icon(
+    //     Icons.perm_contact_calendar,
+    //     color: Colors.grey,
+    //   ),
+    //   title: new Text("通讯录"),
+    // ),
     new BottomNavigationBarItem(
       icon: Image(image: AssetImage("assets/images/tabar_me_normal.png")),
       activeIcon:
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> vcList = [
     MapHome(),
     ConversationListPage(),
-    ContactsPage(),
+    // ContactsPage(),
     Mine(),
   ];
 
@@ -116,10 +116,10 @@ class _HomePageState extends State<HomePage> {
         type: BottomNavigationBarType.fixed,
         onTap: (int index) {
 
-          // if (Store.value<UserStateModel>(context).isLogin() != true) {
-          //   Navigator.of(context).pushNamed('/loginPage');
-          //   return;
-          // }
+          if (Store.value<UserStateModel>(context,listen: false).isLogin() != true) {
+            Navigator.of(context).pushNamed('/LoginPage');
+            return;
+          }
 
           setState(() {
             curIndex = index;

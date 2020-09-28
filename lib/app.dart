@@ -192,6 +192,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       darkTheme: ThemUntil().darktData,
       home: HomePage(),
       theme: ThemUntil().linghtData,
+      initialRoute: '/',
     );
   }
 

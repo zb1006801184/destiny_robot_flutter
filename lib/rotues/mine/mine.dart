@@ -1,3 +1,5 @@
+import 'package:destiny_robot/im/widget/cachImage/cached_image_widget.dart';
+import 'package:destiny_robot/im/widget/cachImage/cached_network_image_provider.dart';
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -145,8 +147,16 @@ class _MineState extends State<Mine> {
         child: Container(
           width: 75,
           height: 75,
-          decoration: BoxDecoration(
-              color: Colors.blue, borderRadius: BorderRadius.circular(75 / 2)),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(75 / 2),
+            child: CachedNetworkImage(
+              imageUrl: Global.userModel.headImgUrl ?? '',
+              placeholder: (context, url) =>
+                  Image.asset('assets/images/user_placer_image.jpg'),
+              errorWidget: (context, url, error) =>
+                  Image.asset('assets/images/user_placer_image.jpg'),
+            ),
+          ),
         ));
   }
 
@@ -172,14 +182,16 @@ class _MineState extends State<Mine> {
                           maxWidth: Global.ksWidth - 12 * 2 - 111 - 15),
                       margin: EdgeInsets.only(left: 111),
                       child: Text(
-                        '迪士尼在逃公主',
+                        Global.userModel.nickname ?? 'unkown',
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Container(
                       width: 15,
                       height: 15,
-                      child: Image.asset('assets/images/user_icon_female.png'),
+                      child: Image.asset(Global.userModel.gender == '0'
+                          ? 'assets/images/user_icon_male.png'
+                          : 'assets/images/user_icon_female.png'),
                     ),
                   ],
                 ),

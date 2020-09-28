@@ -1,3 +1,4 @@
+import 'package:destiny_robot/network/api_service.dart';
 import 'package:destiny_robot/rotues/main/home_page.dart';
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/platform_unitls.dart';
@@ -53,11 +54,12 @@ class _LoginPageState extends State<LoginPage> {
     initPlatformState();
   }
 
-  void _loginAction() {
+  void _loginAction() async{
     Map map = new Map();
     map["region"] = 86;
     map["phone"] = int.parse(_assount.text);
     map["password"] = _password.text;
+
 
     HttpUtil.post("http://api.sealtalk.im/user/login", (data) {
       if (data != null) {
@@ -126,7 +128,13 @@ class _LoginPageState extends State<LoginPage> {
       leading: IconButton(
           icon: Image.asset('assets/images/login_nav_del.png'),
           onPressed: () {
-            print('object');
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                  (route) => false);
+            }
           }),
       actions: [
         IconButton(
@@ -478,7 +486,7 @@ class _LoginPageState extends State<LoginPage> {
         /// 再，执行同步的一键登录接口
         jverify.loginAuthSyncApi(autoDismiss: true);
       } else {
-          Fluttertoast.showToast(msg: "网络条件不允许！");
+        Fluttertoast.showToast(msg: "网络条件不允许！");
       }
     });
   }
