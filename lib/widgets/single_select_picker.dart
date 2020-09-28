@@ -31,7 +31,7 @@ class SingleSelectPicker extends StatefulWidget {
 }
 
 class _SingleSelectPickerState extends State<SingleSelectPicker> {
-  int _position;
+  int _position = 0;
   String _selectStr;
   @override
   Widget build(BuildContext context) {

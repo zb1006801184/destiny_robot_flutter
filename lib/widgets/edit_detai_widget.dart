@@ -3,26 +3,22 @@ import 'package:flutter/material.dart';
 
 //编辑资料-个人信息- 编辑(昵称/现居住地)
 
-void showEditeBox(
-  BuildContext context,
-  Function callBackHandler,
-  {String title}
-) {
+void showEditeBox(BuildContext context, Function callBackHandler,
+    {String title}) {
   Navigator.of(context)
-          .push(PageRouteBuilder(
-              opaque: false,
-              pageBuilder: (BuildContext context, Animation animation,
-                      Animation secondaryAnimation) =>
-                  FadeTransition(
-                      opacity: animation,
-                      child: EditDetailWidget(
-                        title: title,
-                      ))))
-          .then((e) {
-            callBackHandler(e);
-      });
+      .push(PageRouteBuilder(
+          opaque: false,
+          pageBuilder: (BuildContext context, Animation animation,
+                  Animation secondaryAnimation) =>
+              FadeTransition(
+                  opacity: animation,
+                  child: EditDetailWidget(
+                    title: title,
+                  ))))
+      .then((e) {
+    callBackHandler(e);
+  });
 }
-
 
 class EditDetailWidget extends StatefulWidget {
   String title;
@@ -32,6 +28,7 @@ class EditDetailWidget extends StatefulWidget {
 }
 
 class _EditDetailWidgetState extends State<EditDetailWidget> {
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +47,7 @@ class _EditDetailWidgetState extends State<EditDetailWidget> {
                   child: _buildColunWidget()),
             )),
         onTap: () {
-          Navigator.of(context).pop(widget.title);
+          Navigator.of(context).pop();
         },
       ),
     );
@@ -90,6 +87,7 @@ class _EditDetailWidgetState extends State<EditDetailWidget> {
           borderRadius: BorderRadius.circular(5), color: Color(0xFFEDEFF0)),
       child: TextField(
         style: TextStyle(fontSize: 10),
+        controller: controller,
         showCursor: true,
         decoration: InputDecoration(
             border: InputBorder.none,
@@ -114,13 +112,18 @@ class _EditDetailWidgetState extends State<EditDetailWidget> {
           child:
               Center(child: _buildText(title: '取消', color: Color(0xFFFF7061))),
         ),
-        Container(
-          width: 125,
-          height: 44,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(22),
-              color: Color(0xFFFF706E)),
-          child: Center(child: _buildText(title: '确定', color: Colors.white)),
+        GestureDetector(
+          child: Container(
+            width: 125,
+            height: 44,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(22),
+                color: Color(0xFFFF706E)),
+            child: Center(child: _buildText(title: '确定', color: Colors.white)),
+          ),
+          onTap: (){
+            Navigator.of(context).pop(controller.text);
+          },
         ),
       ],
     );

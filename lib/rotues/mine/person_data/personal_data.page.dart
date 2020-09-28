@@ -1,5 +1,6 @@
 import 'package:city_pickers/city_pickers.dart';
 import 'package:destiny_robot/im/widget/cachImage/cached_image_widget.dart';
+import 'package:destiny_robot/network/api_service.dart';
 
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
@@ -12,6 +13,9 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../widgets/mine_common_item.dart';
 import '../../../widgets/edit_detai_widget.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:dio/dio.dart';
 
 //我-编辑资料-个人信息
 class PersonalDataPage extends StatefulWidget {
@@ -39,10 +43,12 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
     '190CM',
   ];
   final _sexs = ['男', '女'];
+  final params = ['nickname', '', 'gender', 'birthday', 'height', 'address'];
   String headImage;
 
   //item 点击
   void _itemClick(int index) async {
+    String value;
     if (index == 1) return;
     if (index == 4 || index == 2) {
       //身高 性别
@@ -50,7 +56,8 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
         context,
         (e) {
           if (e != null) {
-            print(e);
+            value = e;
+            _request(value, index);
           }
         },
         dataList: index == 4 ? _heights : _sexs,
@@ -72,15 +79,25 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
         ),
       );
 
-      print(result.provinceName);
+      _request('${result.provinceName}-${result.cityName}', index);
     } else {
       //编辑框
-      showEditeBox(context, (e) {
+      showEditeBox(context, (e) async {
         if (e != null) {
-          print(e);
+          value = e;
+          _request(value, index);
         }
       }, title: _titles[index]);
     }
+  }
+
+  void _request(value, int index) async {
+    if (index == 2) {
+      value == '男' ? value = '0' : value = '1';
+    }
+
+    var respon = await ApiService.alterUserInfoRequest(
+        {params[index].toString(): value});
   }
 
   Future<void> _selectImage() async {
@@ -95,8 +112,13 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
         callBackHandler: (index) async {
       PickedFile image = await ImagePicker().getImage(
           source: index == 0 ? ImageSource.camera : ImageSource.gallery);
-      setState(() {
+      setState(() async {
         headImage = image.path;
+        var name = headImage.substring(
+            headImage.lastIndexOf("/") + 1, headImage.length);
+        FormData params = FormData.fromMap(
+            {"file": await MultipartFile.fromFile(headImage, filename: name)});
+        ApiService.uploadImageRequest(params);
       });
     });
   }

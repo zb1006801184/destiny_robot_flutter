@@ -6,20 +6,7 @@ import 'api_url.dart';
 import '../models/user_info_model.dart';
 
 class ApiService {
-  //获取今日新闻
-  // static Future<UserInfoMode> getOauthTokenRequest() async {
-  //   Response response =
-  //       await HttpUtils().request(ApiUrl.OAUTH_TOKEN_URL, method: HttpUtils.GET);
-  //   if (response != null) {
-  //     var responseData = jsonDecode(response.data);
-  //     if (responseData == null) {
-  //       return null;
-  //     }
-  //     // return UserInfoMode.fromJson(responseData);
-  //   } else {
-  //     return null;
-  //   }
-  // }
+  //获取token
   static Future<UserInfoModel> getOauthTokenRequest(
       String username, String verification_code) async {
     Response response = await HttpUtils(headers: {
@@ -38,9 +25,9 @@ class ApiService {
 
 //获取用户信息
   static Future<UserInfoModel> getUserInfoRequest() async {
-    Response response =
-        await HttpUtils(headers: {"Authorization": "Bearer ${Global.tokenModel.accessToken}"})
-            .request(ApiUrl.USER_DETAIL_URL, method: HttpUtils.GET);
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.USER_DETAIL_URL, method: HttpUtils.GET);
     if (response != null) {
       var responseData = jsonDecode(response.data);
       UserInfoModel data = UserInfoModel.fromJson(responseData["data"]);
@@ -49,4 +36,36 @@ class ApiService {
       return null;
     }
   }
+
+  //修改用户信息
+  static Future<dynamic> alterUserInfoRequest(
+      Map<String, dynamic> params) async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.ALTER_BASE_USER_INFO_URL,
+        data: params, method: HttpUtils.POST);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      UserInfoModel data = UserInfoModel.fromJson(responseData["data"]);
+      return responseData;
+    } else {
+      return null;
+    }
+  }
+
+//上传图片
+ static Future<dynamic> uploadImageRequest(
+      FormData params) async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).uploadFile(ApiUrl.UPLOAD_IMAGE_URL, data: params);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      return responseData;
+    } else {
+      return null;
+    }
+  }
+
+
 }
