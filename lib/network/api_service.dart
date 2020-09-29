@@ -59,8 +59,8 @@ class ApiService {
       "Authorization": "Bearer ${Global.tokenModel.accessToken}"
     }).uploadFile(ApiUrl.UPLOAD_IMAGE_URL, data: params);
     if (response != null) {
-      var responseData = jsonDecode(response.data);
-      return responseData;
+      var responseData = response.data;
+      return responseData['data']['urls'][0] ?? null;
     } else {
       return null;
     }

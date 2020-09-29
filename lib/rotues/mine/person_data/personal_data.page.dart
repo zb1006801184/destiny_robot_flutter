@@ -149,13 +149,16 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
         callBackHandler: (index) async {
       PickedFile image = await ImagePicker().getImage(
           source: index == 0 ? ImageSource.camera : ImageSource.gallery);
-      setState(() async {
-        headImage = image.path;
-        var name = headImage.substring(
-            headImage.lastIndexOf("/") + 1, headImage.length);
-        FormData params = FormData.fromMap(
-            {"file": await MultipartFile.fromFile(headImage, filename: name)});
-        await ApiService.uploadImageRequest(params);
+      headImage = image.path;
+      var name =
+          headImage.substring(headImage.lastIndexOf("/") + 1, headImage.length);
+      FormData params = FormData.fromMap(
+          {"file": await MultipartFile.fromFile(headImage, filename: name)});
+      var url = await ApiService.uploadImageRequest(params);
+      var respon = await ApiService.alterUserInfoRequest({'headImgUrl': url});
+      savaUserInfo();
+      setState(() {
+        _userInfoModel.headImgUrl = url;
       });
     });
   }
@@ -193,24 +196,18 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
                 GestureDetector(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(93 / 2),
-                    child: headImage != null
-                        ? Image.asset(
-                            headImage,
-                            fit: BoxFit.cover,
-                            width: 93,
-                            height: 93,
-                          )
-                        : CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            imageUrl:
-                                headImage ?? Global.userModel.headImgUrl ?? '',
-                            placeholder: (context, url) => Image.asset(
-                              'assets/images/user_placer_image.jpg',
-                              fit: BoxFit.cover,
-                              height: 93,
-                              width: 93,
-                            ),
-                          ),
+                    child: CachedNetworkImage(
+                      width: 93,
+                      height: 93,
+                      fit: BoxFit.cover,
+                      imageUrl: _userInfoModel.headImgUrl ?? '',
+                      placeholder: (context, url) => Image.asset(
+                        'assets/images/user_placer_image.jpg',
+                        fit: BoxFit.cover,
+                        height: 93,
+                        width: 93,
+                      ),
+                    ),
                   ),
                   onTap: _selectImage,
                 ),
