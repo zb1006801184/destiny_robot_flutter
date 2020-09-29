@@ -1,5 +1,7 @@
 import 'package:destiny_robot/im/widget/cachImage/cached_image_widget.dart';
 import 'package:destiny_robot/im/widget/cachImage/cached_network_image_provider.dart';
+import 'package:destiny_robot/state/provider_store.dart';
+import 'package:destiny_robot/state/user_state_model.dart';
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -182,7 +184,10 @@ class _MineState extends State<Mine> {
                           maxWidth: Global.ksWidth - 12 * 2 - 111 - 15),
                       margin: EdgeInsets.only(left: 111),
                       child: Text(
-                        Global.userModel.nickname ?? 'unkown',
+                        Store.value<UserStateModel>(context)
+                                .userInfoModel()
+                                .nickname ??
+                            'unkown',
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),

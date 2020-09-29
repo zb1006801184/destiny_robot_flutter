@@ -15,7 +15,7 @@ class UserStateModel extends ChangeNotifier {
     return isLogin;
   }
 
-  //token
+  //保存token
   savaTokenInfo(UserInfoModel model) async {
     String data = jsonEncode(model.toJson());
     SpUtil.setBool(DataName.LOGINSTATE, true);
@@ -23,11 +23,27 @@ class UserStateModel extends ChangeNotifier {
     Global.tokenModel = model;
     notifyListeners();
   }
-  //用户个人信息
+
+  //保存用户个人信息
   savaUserInfo(UserInfoModel model) async {
     String data = jsonEncode(model.toJson());
     SpUtil.setString(DataName.PERSONINFO, data);
     Global.userModel = model;
     notifyListeners();
+  }
+
+  //返回全局用户信息
+  UserInfoModel userInfoModel() {
+    UserInfoModel userModel;
+    var _userInfoModel = SpUtil.getString(DataName.PERSONINFO);
+    if (_userInfoModel != null) {
+      try {
+        userModel = UserInfoModel.fromJson(jsonDecode(_userInfoModel));
+      } catch (e) {
+        print(e);
+        userModel = null;
+      }
+    }
+    return userModel;
   }
 }

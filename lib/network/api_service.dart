@@ -46,7 +46,7 @@ class ApiService {
         data: params, method: HttpUtils.POST);
     if (response != null) {
       var responseData = jsonDecode(response.data);
-      UserInfoModel data = UserInfoModel.fromJson(responseData["data"]);
+      // UserInfoModel data = UserInfoModel.fromJson(responseData["data"]);
       return responseData;
     } else {
       return null;
@@ -54,8 +54,7 @@ class ApiService {
   }
 
 //上传图片
- static Future<dynamic> uploadImageRequest(
-      FormData params) async {
+  static Future<dynamic> uploadImageRequest(FormData params) async {
     Response response = await HttpUtils(headers: {
       "Authorization": "Bearer ${Global.tokenModel.accessToken}"
     }).uploadFile(ApiUrl.UPLOAD_IMAGE_URL, data: params);
@@ -66,6 +65,4 @@ class ApiService {
       return null;
     }
   }
-
-
 }

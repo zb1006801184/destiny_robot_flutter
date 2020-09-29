@@ -1,6 +1,9 @@
 import 'package:city_pickers/city_pickers.dart';
 import 'package:destiny_robot/im/widget/cachImage/cached_image_widget.dart';
+import 'package:destiny_robot/models/user_info_model.dart';
 import 'package:destiny_robot/network/api_service.dart';
+import 'package:destiny_robot/state/provider_store.dart';
+import 'package:destiny_robot/state/user_state_model.dart';
 
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
@@ -25,7 +28,7 @@ class PersonalDataPage extends StatefulWidget {
 
 class _PersonalDataPageState extends State<PersonalDataPage> {
   final _titles = ['昵称', 'ID', '性别', '生辰', '身高', '现居住地'];
-  final _placerTitles = [
+  var _placerTitles = [
     '请输入小于16个字的昵称',
     '123456789',
     '请选择性别',
@@ -45,6 +48,13 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
   final _sexs = ['男', '女'];
   final params = ['nickname', '', 'gender', 'birthday', 'height', 'address'];
   String headImage;
+  UserInfoModel _userInfoModel;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _userInfoModel = Global.userModel;
+  }
 
   //item 点击
   void _itemClick(int index) async {
@@ -98,6 +108,33 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
 
     var respon = await ApiService.alterUserInfoRequest(
         {params[index].toString(): value});
+
+    if (index == 0) {
+      setState(() {
+        _userInfoModel.nickname = value;
+      });
+    }
+    if (index == 2) {
+      setState(() {
+        _userInfoModel.gender = value;
+      });
+    }
+    if (index == 3) {
+      setState(() {
+        _userInfoModel.birthday = value;
+      });
+    }
+    if (index == 4) {
+      setState(() {
+        _userInfoModel.height = value;
+      });
+    }
+    if (index == 5) {
+      setState(() {
+        _userInfoModel.address = value;
+      });
+    }
+    savaUserInfo();
   }
 
   Future<void> _selectImage() async {
@@ -118,9 +155,15 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
             headImage.lastIndexOf("/") + 1, headImage.length);
         FormData params = FormData.fromMap(
             {"file": await MultipartFile.fromFile(headImage, filename: name)});
-        ApiService.uploadImageRequest(params);
+        await ApiService.uploadImageRequest(params);
       });
     });
+  }
+
+  //修改信息成功保存到本地
+  void savaUserInfo() {
+    Store.value<UserStateModel>(context, listen: false)
+        .savaUserInfo(_userInfoModel);
   }
 
   @override
@@ -205,14 +248,59 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
         String title = _titles[index];
         return MineCommonItem(
           title: title,
-          placerTitle: _placerTitles[index],
+          placerTitle: placerTitle(index),
           index: index,
           itemClick: _itemClick,
           isShowStar: title == '性别' || title == '生辰' ? true : false,
-          isShowContent: title == 'ID' ? true : false,
+          isShowContent: isShowContent(index),
         );
       },
       itemCount: _titles.length,
     );
+  }
+
+  String placerTitle(int index) {
+    if (index == 0 && _userInfoModel.nickname != null) {
+      return _userInfoModel.nickname;
+    }
+    if (index == 1) {
+      // return _userInfoModel.ID
+    }
+    if (index == 2 && _userInfoModel?.gender != null) {
+      return _userInfoModel.gender == '0' ? '男' : '女';
+    }
+    if (index == 3 && _userInfoModel?.birthday != null) {
+      return _userInfoModel.birthday;
+    }
+    if (index == 4 && _userInfoModel?.height != null) {
+      return _userInfoModel.height;
+    }
+    if (index == 5 && _userInfoModel?.address != null) {
+      return _userInfoModel.address;
+    }
+    return _placerTitles[index];
+  }
+
+  bool isShowContent(int index) {
+    if (index == 0 && _userInfoModel.nickname != null) {
+      return true;
+    }
+    if (index == 1) {
+      return true;
+    }
+    if (index == 2 && _userInfoModel.gender != null) {
+      return true;
+    }
+    if (index == 3 && _userInfoModel.birthday != null) {
+      return true;
+    }
+    if (index == 4 && _userInfoModel.height != null) {
+      return true;
+    }
+    if (index == 5 && _userInfoModel.address != null) {
+      return true;
+    }
+
+    return false;
   }
 }

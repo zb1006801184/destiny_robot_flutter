@@ -44,10 +44,11 @@ class HttpUtils {
     _dio = Dio(options);
 
     //设置代理
-    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
+    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (client) {
       client.findProxy = (Uri) {
         // 用1个开关设置是否开启代理
-        return  'PROXY 192.168.3.137:8888';
+        return 'PROXY 192.168.3.137:8888';
       };
     };
 
@@ -96,7 +97,7 @@ class HttpUtils {
         responseHeader: false,
         requestHeader: false,
       ));
-    PlatformUtils.isWeb??
+    PlatformUtils.isWeb ??
         _dio.interceptors.add(
             DioCacheManager(CacheConfig(baseUrl: ApiUrl.BASE_URL)).interceptor);
   }
@@ -134,11 +135,13 @@ class HttpUtils {
           data: data,
           queryParameters: method == GET ? data : null,
           // options: Options(method: method),
-          options: PlatformUtils.isWeb?Options(method: method):buildCacheOptions(Duration(days: 7),
-              options: Options(method: method)),
+          options: PlatformUtils.isWeb
+              ? Options(method: method)
+              : buildCacheOptions(Duration(days: 7),
+                  options: Options(method: method)),
           onReceiveProgress: (int count, int total) {},
-          onSendProgress: (int count, int total) {
-      }, cancelToken: cancelToken);
+          onSendProgress: (int count, int total) {},
+          cancelToken: cancelToken);
     } on DioError catch (e) {
       // formatError(e);
       if (e.response == null) {
@@ -156,7 +159,6 @@ class HttpUtils {
       }
       response = null;
     }
-
     return response;
   }
 
@@ -199,10 +201,10 @@ class HttpUtils {
     try {
       response = await Dio(
         BaseOptions(
-          baseUrl: baseUrl,
-          connectTimeout: 15000,
-          receiveTimeout: 15000,
-        ),
+            baseUrl: baseUrl,
+            connectTimeout: 15000,
+            receiveTimeout: 15000,
+            headers: _dio.options.headers),
       ).post(
         "$path",
         data: data,
