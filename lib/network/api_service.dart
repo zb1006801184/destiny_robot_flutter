@@ -37,8 +37,23 @@ class ApiService {
     }
   }
 
-  //修改用户信息
+  //修改用户个人信息
   static Future<dynamic> alterUserInfoRequest(
+      Map<String, dynamic> params) async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.ALTER_USER_INFO_URL,
+        data: params, method: HttpUtils.POST);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      return responseData;
+    } else {
+      return null;
+    }
+  }
+
+  //修改用户基本信息
+  static Future<dynamic> alterUserBaseInfoRequest(
       Map<String, dynamic> params) async {
     Response response = await HttpUtils(headers: {
       "Authorization": "Bearer ${Global.tokenModel.accessToken}"
@@ -46,7 +61,6 @@ class ApiService {
         data: params, method: HttpUtils.POST);
     if (response != null) {
       var responseData = jsonDecode(response.data);
-      // UserInfoModel data = UserInfoModel.fromJson(responseData["data"]);
       return responseData;
     } else {
       return null;

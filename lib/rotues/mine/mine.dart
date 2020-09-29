@@ -152,6 +152,7 @@ class _MineState extends State<Mine> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(75 / 2),
             child: CachedNetworkImage(
+              fit: BoxFit.cover,
               imageUrl: Global.userModel.headImgUrl ?? '',
               placeholder: (context, url) =>
                   Image.asset('assets/images/user_placer_image.jpg'),
@@ -184,10 +185,7 @@ class _MineState extends State<Mine> {
                           maxWidth: Global.ksWidth - 12 * 2 - 111 - 15),
                       margin: EdgeInsets.only(left: 111),
                       child: Text(
-                        Store.value<UserStateModel>(context)
-                                .userInfoModel()
-                                .nickname ??
-                            'unkown',
+                        Global.userModel.nickname ?? 'unkown',
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),

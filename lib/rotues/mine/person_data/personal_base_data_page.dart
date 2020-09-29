@@ -1,4 +1,7 @@
 import 'package:city_pickers/city_pickers.dart';
+import 'package:destiny_robot/network/api_service.dart';
+import 'package:destiny_robot/state/provider_store.dart';
+import 'package:destiny_robot/state/user_state_model.dart';
 
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
@@ -23,7 +26,7 @@ class _PersonalBaseDataPageState extends State<PersonalBaseDataPage> {
       //学历
       showPicker(context, (e) {
         if (e != null) {
-          print(e);
+          _request(index, e);
         }
       }, dataList: _educations);
     } else if (index == 3) {
@@ -42,19 +45,88 @@ class _PersonalBaseDataPageState extends State<PersonalBaseDataPage> {
           style: TextStyle(fontSize: 14, color: Color(0xFFFF706E)),
         ),
       );
-      print(result.provinceName);
+      _request(index, '北京');
     } else {
       //编辑框
       showEditeBox(context, (e) {
         if (e != null) {
-          print(e);
+          _request(index, e);
         }
       }, title: _titles[index]);
     }
   }
 
+  Future<String> _educationParam(String education) async {
+    if (education == '高中') {
+      return '1';
+    }
+    if (education == '专科') {
+      return '2';
+    }
+    if (education == '本科') {
+      return '3';
+    }
+    if (education == '硕士') {
+      return '4';
+    }
+    if (education == '博士') {
+      return '5';
+    }
+    return '0';
+  }
+
+  _updateInfo(int index, var value) {
+    if (index == 0) {
+      Global.userModel.education = value;
+    }
+    if (index == 1) {
+      Global.userModel.school = value;
+    }
+    if (index == 2) {
+      Global.userModel.major = value;
+    }
+    if (index == 3) {
+      Global.userModel.hometown = value;
+    }
+    if (index == 4) {
+      Global.userModel.interest = value;
+    }
+    setState(() {});
+  }
+
+  void _request(int index, var value) async {
+    List params = ['education', 'school', 'major', 'hometown', 'interest'];
+    if (index == 0) {
+      value = await _educationParam(value);
+    }
+    await ApiService.alterUserBaseInfoRequest({'${params[index]}': value});
+    _updateInfo(index, value);
+    savaUserInfo();
+    print('修改成功');
+  }
+
+  void savaUserInfo() {
+    Store.value<UserStateModel>(context, listen: false)
+        .savaUserInfo(Global.userModel);
+  }
+
   @override
   Widget build(BuildContext context) {
+    var contents = [
+      _educations[int.parse(Global.userModel.education) - 1] ??
+          _placerTitles[0],
+      Global.userModel.school ?? _placerTitles[1],
+      Global.userModel.major ?? _placerTitles[2],
+      Global.userModel.hometown ?? _placerTitles[3],
+      Global.userModel.interest ?? _placerTitles[4]
+    ];
+    var isShowContents = [
+      Global.userModel.education != null ? true : false,
+      Global.userModel.school != null ? true : false,
+      Global.userModel.major != null ? true : false,
+      Global.userModel.hometown != null ? true : false,
+      Global.userModel.interest != null ? true : false,
+    ];
     return Scaffold(
       appBar: NavBarConfig().configAppBar('基本信息', context),
       body: ListView.builder(
@@ -64,31 +136,13 @@ class _PersonalBaseDataPageState extends State<PersonalBaseDataPage> {
             index: index,
             title: title,
             itemClick: _itemClick,
-            placerTitle: _placerTitles[index],
+            placerTitle: contents[index],
+            isShowContent: isShowContents[index],
             isShowStar: title == '学校' || title == '专业' ? true : false,
           );
         },
         itemCount: _titles.length,
       ),
-    );
-  }
-
-  //list item
-
-  Widget _buildListItem(int index) {
-    return GestureDetector(
-      child: Container(
-        margin: EdgeInsets.only(top: index == 0 ? 3 : 1),
-        padding: EdgeInsets.only(left: 19.5, right: 19.5),
-        width: Global.ksWidth,
-        height: 55,
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [Text(_titles[index]), Icon(Icons.arrow_forward_ios)],
-        ),
-      ),
-      onTap: () => _itemClick(index),
     );
   }
 }

@@ -163,7 +163,6 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
     });
   }
 
-  //修改信息成功保存到本地
   void savaUserInfo() {
     Store.value<UserStateModel>(context, listen: false)
         .savaUserInfo(_userInfoModel);
