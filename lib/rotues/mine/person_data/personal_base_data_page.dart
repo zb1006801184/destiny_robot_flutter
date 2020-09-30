@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import '../../../widgets/mine_common_item.dart';
 import '../../../widgets/single_select_picker.dart';
 import '../../../widgets/edit_detai_widget.dart';
+import '../../../widgets/interest_select_widget.dart';
 //编辑资料-基本信息
 
 class PersonalBaseDataPage extends StatefulWidget {
@@ -46,6 +47,8 @@ class _PersonalBaseDataPageState extends State<PersonalBaseDataPage> {
         ),
       );
       _request(index, '北京');
+    } else if (index == 4) {
+      InterestSelectWidget().showInterestSelect(context, ['1', '2', '3', '4']);
     } else {
       //编辑框
       showEditeBox(context, (e) {
