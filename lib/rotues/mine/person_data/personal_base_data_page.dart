@@ -10,6 +10,7 @@ import '../../../widgets/mine_common_item.dart';
 import '../../../widgets/single_select_picker.dart';
 import '../../../widgets/edit_detai_widget.dart';
 import '../../../widgets/interest_select_widget.dart';
+import '../../../unitls/local_data.dart';
 //编辑资料-基本信息
 
 class PersonalBaseDataPage extends StatefulWidget {
@@ -21,6 +22,7 @@ class _PersonalBaseDataPageState extends State<PersonalBaseDataPage> {
   final List _titles = ['学历', '学校', '专业', '家乡', '兴趣'];
   final List _placerTitles = ['请选择学历', '请输入学校名称', '请输入专业名称', '请选择家乡', '请选择兴趣'];
   final List _educations = ['高中', '专科', '本科', '硕士', '博士'];
+  
   //item 的点击
   void _itemClick(int index) async {
     if (index == 0) {
@@ -48,7 +50,10 @@ class _PersonalBaseDataPageState extends State<PersonalBaseDataPage> {
       );
       _request(index, '北京');
     } else if (index == 4) {
-      InterestSelectWidget().showInterestSelect(context, ['1', '2', '3', '4']);
+      InterestSelectWidget().showInterestSelect(context, LocalData().intersTitles,
+          sureCallBack: (data) {
+        print(data);
+      });
     } else {
       //编辑框
       showEditeBox(context, (e) {

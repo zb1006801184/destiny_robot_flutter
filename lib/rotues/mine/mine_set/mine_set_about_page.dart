@@ -107,7 +107,8 @@ class _MineSetAboutPageState extends State<MineSetAboutPage> {
       width: 64,
       height: 64,
       decoration: BoxDecoration(
-          color: Color(0xFFFF8484),
+          image: DecorationImage(
+              image: AssetImage('assets/images/icon-83.5@2x.png')),
           borderRadius: BorderRadiusDirectional.circular(15)),
     );
   }

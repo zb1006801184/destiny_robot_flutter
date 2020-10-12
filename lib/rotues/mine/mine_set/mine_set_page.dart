@@ -22,7 +22,7 @@ class _MineSetPageState extends State<MineSetPage> {
 
   //item click
   void _itemClick(int index) {
-    List items = ['/MineSetAboutPage', '/MineSetAboutPage'];
+    List items = ['/MineSetNotifyPage', '/MineSetAboutPage'];
     Navigator.of(context).pushNamed(items[index]);
   }
 

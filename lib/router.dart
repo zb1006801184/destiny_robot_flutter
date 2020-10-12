@@ -26,6 +26,7 @@ import 'rotues/mine/person_author/student_author_page.dart';
 import 'rotues/mine/person_sift/person_sift_page.dart';
 import 'rotues/mine/mine_set/mine_set_page.dart';
 import 'rotues/mine/mine_set/mine_set_about_page.dart';
+import 'rotues/mine/mine_set/mine_set_notify_page.dart';
 import 'rotues/login/code_page.dart';
 import 'rotues/login/once_login_page.dart';
 import 'rotues/login/login_page.dart';
@@ -66,6 +67,7 @@ final routes = {
   '/CodePage': (context, {arguments}) => CodePage(),
   '/OnceLoginPage': (context, {arguments}) => OnceLoginPage(),
   '/LoginPage': (context, {arguments}) => LoginPage(),
+  '/MineSetNotifyPage': (context, {arguments}) => MineSetNotifyPage(),
 };
 
 var onGenerateRoute = (RouteSettings settings) {
