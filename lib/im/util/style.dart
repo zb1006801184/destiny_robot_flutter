@@ -3,10 +3,10 @@ class RCColor {
 
   //会话列表相关颜色
   static const ConListTitleColor = 0xff000000;
-  static const ConListDigestColor = 0xff6C7B8B;
+  static const ConListDigestColor = 0xffFF999491;
   static const ConListUnreadColor = 0xffCD3333;
   static const ConListUnreadTextColor = 0xffffffff;
-  static const ConListTimeColor = 0xff6C7B8B;
+  static const ConListTimeColor = 0xffFFD1D1D1;
   static const ConListItemBgColor = 0xffffffff;
   static const ConListBorderColor = 0xff6C7B8B;
   static const ConListTopBgColor = 0xFFBBDEFB;
@@ -27,7 +27,7 @@ class RCColor {
 class RCFont {
   //会话列表相关字体大小
   static const double ConListTitleFont = 16;
-  static const double ConListTimeFont = 12;
+  static const double ConListTimeFont = 10;
   static const double ConListUnreadFont = 8;
   static const double ConListDigestFont = 12;
 

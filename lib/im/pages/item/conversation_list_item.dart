@@ -102,9 +102,11 @@ class _ConversationListItemState extends State<ConversationListItem> {
     ];
     return Container(
       width: RCLayout.ConListItemHeight,
-      margin: EdgeInsets.only(right: 8),
+      margin: EdgeInsets.only(right: 18),
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, children: _rightArea),
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: _rightArea),
     );
   }
 
@@ -113,6 +115,8 @@ class _ConversationListItemState extends State<ConversationListItem> {
             ? "单聊："
             : "群聊：") +
         (this.info == null || this.info.id == null ? "" : this.info.id);
+
+        title = this.info?.id??'';
     String digest = "";
     if (conversation.latestMessageContent != null) {
       if (conversation.latestMessageContent.destructDuration != null &&

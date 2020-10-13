@@ -165,10 +165,15 @@ class _ConversationListPageState extends State<ConversationListPage>
           actionExtentRatio: 0.25,
           secondaryActions: <Widget>[
             IconSlideAction(
-              color: Colors.red,
-              iconWidget: Text("删除",style: TextStyle(fontSize: 15,color: Colors.white),),
+              color: Color(0xFFFFFF6F6D),
+              iconWidget: Text(
+                "删除",
+                style: TextStyle(fontSize: 15, color: Colors.white),
+              ),
               closeOnTap: true,
-              // onTap: () => _showSnackBar('Delete',index),
+              onTap: () {
+                _deleteConversation(conList[index]);
+              },
             ),
           ],
         );
@@ -191,6 +196,7 @@ class _ConversationListPageState extends State<ConversationListPage>
 
   @override
   void didLongPressConversation(Conversation conversation, Offset tapPos) {
+    return;
     Map<String, String> actionMap = {
       RCLongPressAction.DeleteConversationKey:
           RCLongPressAction.DeleteConversationValue,
