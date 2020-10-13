@@ -53,7 +53,7 @@ class RCFont {
 
 class RCLayout {
   //会话列表页面布局
-  static const double ConListPortraitSize = 45; //会话列表头像大小
+  static const double ConListPortraitSize = 49; //会话列表头像大小
   static const double ConListItemHeight = 70; //会话列表 item 高度
   static const double ConListUnreadSize = 15; //会话列表未读数大小
 

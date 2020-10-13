@@ -80,7 +80,7 @@ class _ConversationListItemState extends State<ConversationListItem> {
             border: Border(
                 bottom: BorderSide(
           width: 0.5,
-          color: Color(RCColor.ConListBorderColor),
+          color: Color(0xffFFF1F1F1),
         ))),
         child: Row(
           children: <Widget>[_buildTitle(), _buildTime()],

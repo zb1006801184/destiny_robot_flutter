@@ -67,7 +67,7 @@ class WidgetUtil {
     }
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(49/2),
       child: Container(
         height: RCLayout.ConListPortraitSize,
         width: RCLayout.ConListPortraitSize,

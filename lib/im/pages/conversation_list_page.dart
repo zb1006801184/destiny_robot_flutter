@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rongcloud_im_plugin/rongcloud_im_plugin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'item/widget_util.dart';
 import 'item/conversation_list_item.dart';
@@ -156,8 +157,21 @@ class _ConversationListPageState extends State<ConversationListPage>
         if (conList.length <= 0) {
           return WidgetUtil.buildEmptyWidget();
         }
-        return ConversationListItem(
-            delegate: this, conversation: conList[index]);
+        return Slidable(
+          child: ConversationListItem(
+              delegate: this, conversation: conList[index]),
+          actionPane: SlidableScrollActionPane(),
+          enabled: true,
+          actionExtentRatio: 0.25,
+          secondaryActions: <Widget>[
+            IconSlideAction(
+              color: Colors.red,
+              iconWidget: Text("删除",style: TextStyle(fontSize: 15,color: Colors.white),),
+              closeOnTap: true,
+              // onTap: () => _showSnackBar('Delete',index),
+            ),
+          ],
+        );
       },
     );
   }

@@ -4,6 +4,8 @@ import 'package:destiny_robot/widgets/mine_common_item.dart';
 import 'package:destiny_robot/widgets/single_select_picker.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/scope_select_picker.dart';
+import '../../../widgets/interest_select_widget.dart';
+import '../../../unitls/local_data.dart';
 
 //我-筛选
 class PersonSiftPage extends StatefulWidget {
@@ -88,6 +90,10 @@ class _PersonSiftPageState extends State<PersonSiftPage> {
       print(result.provinceName);
 
   }
+
+  if (index == 5) {
+    InterestSelectWidget().showInterestSelect(context, LocalData().intersTitles,sureCallBack: (e){});
+    }
 
   }
 
