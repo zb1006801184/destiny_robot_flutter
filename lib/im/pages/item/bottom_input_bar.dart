@@ -283,7 +283,7 @@ class _BottomInputBarState extends State<BottomInputBar> {
               Row(
                 children: <Widget>[
                   IconButton(
-                    icon: Icon(Icons.mic),
+                    icon: Image.asset('assets/images/message_bottom_voice.png'),
                     iconSize: 24,
                     onPressed: () {
                       switchVoice();
@@ -291,19 +291,20 @@ class _BottomInputBarState extends State<BottomInputBar> {
                   ),
                   Expanded(child: _getMainInputField()),
                   IconButton(
-                    icon: Icon(Icons.mood), // sentiment_ver
+                    icon: Image.asset('assets/images/message_bottom_exp.png'), 
                     iconSize: 32,
                     onPressed: () {
                       switchEmoji();
                     },
                   ),
-                  IconButton(
-                    icon: Icon(Icons.add),
-                    iconSize: 32,
-                    onPressed: () {
-                      switchExtention();
-                    },
-                  ),
+                  //发送更多按钮
+                  // IconButton(
+                  //   icon: Icon(Icons.add),
+                  //   iconSize: 32,
+                  //   onPressed: () {
+                  //     switchExtention();
+                  //   },
+                  // ),
                 ],
               ),
             ]));

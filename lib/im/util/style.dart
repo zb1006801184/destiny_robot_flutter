@@ -13,7 +13,7 @@ class RCColor {
   static const ConCombineMsgContentColor = 0xFF9E9E9E;
   static const ConReferenceMsgContentColor = 0xFF9E9E9E;
   //会话页面，消息相关颜色
-  static const MessageSendBgColor = 0xffC8E9FD;
+  static const MessageSendBgColor = 0xffFFFF6F6D;
   static const MessageReceiveBgColor = 0xffffffff;
   static const MessageTimeBgColor = 0xffC8C8C8;
   static const MessageNameBgColor = 0xff9B9B9B;
@@ -32,8 +32,8 @@ class RCFont {
   static const double ConListDigestFont = 12;
 
   //会话页面，消息相关字体大小
-  static const double MessageTextFont = 18;
-  static const double MessageTimeFont = 12;
+  static const double MessageTextFont = 13;
+  static const double MessageTimeFont = 10;
   static const double MessageNameFont = 14;
   static const double MessageNotifiFont = 15;
   static const double MessageCombineTitleFont = 12;

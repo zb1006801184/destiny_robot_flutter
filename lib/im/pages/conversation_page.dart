@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:destiny_robot/unitls/nav_bar_config.dart';
 import 'package:flutter/material.dart';
 import 'package:rongcloud_im_plugin/rongcloud_im_plugin.dart';
 import '../util/combine_message_util.dart';
@@ -760,10 +761,8 @@ class _ConversationPageState extends State<ConversationPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(titleContent),
-          actions: _buildRightButtons(),
-        ),
+        appBar: NavBarConfig().configAppBar(titleContent, context,
+            rightWidget: _buildRightButtons()),
         body: Container(
           child: Stack(
             children: <Widget>[

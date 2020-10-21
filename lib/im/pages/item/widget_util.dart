@@ -98,11 +98,11 @@ class WidgetUtil {
         margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
         width: RCLayout.MessageTimeItemWidth,
         height: RCLayout.MessageTimeItemHeight,
-        color: Color(RCColor.MessageTimeBgColor),
+        // color: Color(RCColor.MessageTimeBgColor),
         child: Text(
           TimeUtil.convertTime(sentTime),
           style:
-              TextStyle(color: Colors.white, fontSize: RCFont.MessageTimeFont),
+              TextStyle(color: Color(0xFFFFD1D1D1), fontSize: RCFont.MessageTimeFont),
         ),
       ),
     );

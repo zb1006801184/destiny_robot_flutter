@@ -30,7 +30,11 @@ class MessageItemFactory extends StatelessWidget {
       padding: EdgeInsets.all(8),
       child: Text(
         needShow ? msg.content : "点击查看",
-        style: TextStyle(fontSize: RCFont.MessageTextFont),
+        style: TextStyle(
+            fontSize: RCFont.MessageTextFont,
+            color: message.messageDirection == RCMessageDirection.Receive
+                ? Color(0xFFFF000000)
+                : Colors.white),
       ),
     );
   }
@@ -202,19 +206,19 @@ class MessageItemFactory extends StatelessWidget {
     List<Widget> list = new List();
     if (message.messageDirection == RCMessageDirection.Send) {
       list.add(SizedBox(
-        width: 6,
+        width: 10,
       ));
       list.add(Text(
         msg.duration.toString() + "''",
-        style: TextStyle(fontSize: RCFont.MessageTextFont),
+        style: TextStyle(fontSize: RCFont.MessageTextFont, color: Colors.white),
       ));
       list.add(SizedBox(
-        width: 20,
+        width: 10,
       ));
       list.add(Container(
         width: 20,
         height: 20,
-        child: Image.asset("assets/images/voice_icon.png"),
+        child: Image.asset("assets/images/voice_icon.png", color: Colors.white),
       ));
     } else {
       list.add(SizedBox(
@@ -223,7 +227,9 @@ class MessageItemFactory extends StatelessWidget {
       list.add(Container(
         width: 20,
         height: 20,
-        child: Image.asset("assets/images/voice_icon_reverse.png"),
+        child: Image.asset("assets/images/voice_icon_reverse.png",
+            // color: Colors.white
+            ),
       ));
       list.add(SizedBox(
         width: 20,

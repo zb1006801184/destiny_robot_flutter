@@ -131,6 +131,10 @@ class _ConversationListItemState extends State<ConversationListItem> {
     if (digest == null) {
       digest = "";
     }
+  if (digest == '语音'||digest == '图片') {
+    digest = '[${digest}]';
+  }
+
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

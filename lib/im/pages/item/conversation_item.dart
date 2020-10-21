@@ -174,17 +174,18 @@ class _ConversationItemState extends State<ConversationItem> {
             Expanded(
               child: Column(
                 children: <Widget>[
-                  Container(
-                    alignment: Alignment.centerRight,
-                    padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
-                    child: Text(
-                        (this.user == null || this.user.id == null
-                            ? ""
-                            : this.user.id),
-                        style: TextStyle(
-                            fontSize: RCFont.MessageNameFont,
-                            color: Color(RCColor.MessageNameBgColor))),
-                  ),
+                  //昵称
+                  // Container(
+                  //   alignment: Alignment.centerRight,
+                  //   padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
+                  //   child: Text(
+                  //       (this.user == null || this.user.id == null
+                  //           ? ""
+                  //           : this.user.id),
+                  //       style: TextStyle(
+                  //           fontSize: RCFont.MessageNameFont,
+                  //           color: Color(RCColor.MessageNameBgColor))),
+                  // ),
                   buildMessageWidget(),
                   Container(
                     alignment: Alignment.centerRight,
@@ -234,17 +235,18 @@ class _ConversationItemState extends State<ConversationItem> {
             Expanded(
               child: Column(
                 children: <Widget>[
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                    child: Text(
-                      (this.user == null || this.user.id == null
-                          ? ""
-                          : this.user.id),
-                      style:
-                          TextStyle(color: Color(RCColor.MessageNameBgColor)),
-                    ),
-                  ),
+                  //昵称
+                  // Container(
+                  //   alignment: Alignment.centerLeft,
+                  //   padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                  //   child: Text(
+                  //     (this.user == null || this.user.id == null
+                  //         ? ""
+                  //         : this.user.id),
+                  //     style:
+                  //         TextStyle(color: Color(RCColor.MessageNameBgColor)),
+                  //   ),
+                  // ),
                   buildMessageWidget(),
                 ],
               ),
@@ -446,7 +448,7 @@ class _ConversationItemState extends State<ConversationItem> {
   Text buildReadInfo() {
     if (message.conversationType == prefix.RCConversationType.Private) {
       if (message.sentStatus == 50) {
-        return Text("已读");
+        return Text("已读",style: TextStyle(fontSize: 13),);
       }
       return Text("");
     } else if (message.conversationType == prefix.RCConversationType.Group) {
