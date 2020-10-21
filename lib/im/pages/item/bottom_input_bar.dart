@@ -68,6 +68,7 @@ class _BottomInputBarState extends State<BottomInputBar> {
       autofocus: true,
       maxLines: null,
       keyboardType: TextInputType.text,
+      
     );
   }
 
@@ -230,8 +231,8 @@ class _BottomInputBarState extends State<BottomInputBar> {
           Container(
             padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
             decoration: BoxDecoration(
-                border: new Border.all(color: Colors.black54, width: 0.5),
-                borderRadius: BorderRadius.circular(8)),
+                border: new Border.all(color: Color(0xFFd1d1d1), width: 0.5),
+                borderRadius: BorderRadius.circular(5)),
           ),
           widget
         ],
@@ -258,31 +259,32 @@ class _BottomInputBarState extends State<BottomInputBar> {
               referenceMessage == null
                   ? WidgetUtil.buildEmptyWidget()
                   : _buildReferenceWidget(),
-              GestureDetector(
-                  onTap: () {
-                    switchPhrases();
-                  },
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(6, 6, 12, 6),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 80,
-                        height: 22,
-                        color: Color(0xffC8C8C8),
-                        child: Text(
-                          RCString.BottomCommonPhrases,
-                          style: TextStyle(color: Colors.white, fontSize: 14),
-                        ),
-                      ),
-                    ),
-                  )),
+              //快捷回复
+              // GestureDetector(
+              //     onTap: () {
+              //       switchPhrases();
+              //     },
+              //     child: Container(
+              //       padding: EdgeInsets.fromLTRB(6, 6, 12, 6),
+              //       child: ClipRRect(
+              //         borderRadius: BorderRadius.circular(5),
+              //         child: Container(
+              //           alignment: Alignment.center,
+              //           width: 80,
+              //           height: 22,
+              //           color: Color(0xffC8C8C8),
+              //           child: Text(
+              //             RCString.BottomCommonPhrases,
+              //             style: TextStyle(color: Colors.white, fontSize: 14),
+              //           ),
+              //         ),
+              //       ),
+              //     )),
               Row(
                 children: <Widget>[
                   IconButton(
                     icon: Icon(Icons.mic),
-                    iconSize: 32,
+                    iconSize: 24,
                     onPressed: () {
                       switchVoice();
                     },

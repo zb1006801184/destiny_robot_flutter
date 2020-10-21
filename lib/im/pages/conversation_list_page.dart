@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:core';
 
+import 'package:destiny_robot/unitls/nav_bar_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rongcloud_im_plugin/rongcloud_im_plugin.dart';
@@ -186,9 +187,7 @@ class _ConversationListPageState extends State<ConversationListPage>
     this._scrollController = ScrollController(initialScrollOffset: mPosition);
     _addScroolListener();
     return new Scaffold(
-      appBar: AppBar(
-        title: Text("消息"),
-      ),
+      appBar: NavBarConfig().configTabbarAppBar("消息", context),
       key: UniqueKey(),
       body: _buildConversationListView(),
     );
