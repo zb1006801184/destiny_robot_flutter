@@ -49,7 +49,9 @@ class _CodePageState extends State<CodePage> {
         await ApiService.getOauthTokenRequest('15070925726', '1234');
     Store.value<UserStateModel>(context, listen: false).savaTokenInfo(model);
     //获取个人信息
-    UserInfoModel userModel = await ApiService.getUserInfoRequest();
+    UserInfoModel userModel = await ApiService.getUserInfoRequest().catchError((e){
+      print(e);
+    });
     Store.value<UserStateModel>(context, listen: false).savaUserInfo(userModel);
 
     HttpUtil.post("http://api.sealtalk.im/user/login", (data) {

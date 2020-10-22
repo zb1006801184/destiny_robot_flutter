@@ -168,7 +168,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     String content = "消息通知";
 
     await flutterLocalNotificationsPlugin.show(
-        0, 'RongCloud IM', content, platformChannelSpecifics,
+        0, '缘分校园', content, platformChannelSpecifics,
         payload: 'item x');
   }
 
