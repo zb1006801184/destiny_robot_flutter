@@ -156,10 +156,10 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
           {"file": await MultipartFile.fromFile(headImage, filename: name)});
       var url = await ApiService.uploadImageRequest(params);
       var respon = await ApiService.alterUserInfoRequest({'headImgUrl': url});
-      savaUserInfo();
       setState(() {
         _userInfoModel.headImgUrl = url;
       });
+    savaUserInfo();
     });
   }
 
@@ -269,7 +269,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
       return _userInfoModel.birthday;
     }
     if (index == 4 && _userInfoModel?.height != null) {
-      return _userInfoModel.height;
+      return _userInfoModel.height.toString();
     }
     if (index == 5 && _userInfoModel?.address != null) {
       return _userInfoModel.address;

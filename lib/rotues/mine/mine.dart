@@ -153,7 +153,10 @@ class _MineState extends State<Mine> {
             borderRadius: BorderRadius.circular(75 / 2),
             child: CachedNetworkImage(
               fit: BoxFit.cover,
-              imageUrl: Global.userModel.headImgUrl ?? '',
+              imageUrl: Store.value<UserStateModel>(context,listen: true)
+                      .userInfoModel()
+                      .headImgUrl ??
+                  '',
               placeholder: (context, url) =>
                   Image.asset('assets/images/user_placer_image.jpg'),
               errorWidget: (context, url, error) =>

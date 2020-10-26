@@ -6,12 +6,12 @@ class UserInfoModel {
   String scope;
   String nickname;
   String headImgUrl;
-  String gender;
+  int gender;
   String birthday;
-  String height;
+  int height;
   String address;
   String major;
-  String education;
+  int education;
   String school;
   String hometown;
   String interest;
@@ -20,10 +20,10 @@ class UserInfoModel {
   String idCardReverse;
   String studentFront;
   String studentReverse;
-  String auditState;
-  String studentAuditState;
+  int auditState;
+  int studentAuditState;
   String auditMsg;
-  String matchingState;
+  bool matchingState;
 
   UserInfoModel(
       {this.accessToken,
@@ -63,11 +63,11 @@ class UserInfoModel {
     gender = json['gender'];
     birthday = json['birthday'];
     height = json['height'];
-    address = json['address'];
+    // address = json['address'];
     major = json['major'];
     education = json['education'];
     school = json['school'];
-    hometown = json['hometown'];
+    // hometown = json['hometown'];
     interest = json['interest'];
     details = json['details'];
     idCardFront = json['idCardFront'];

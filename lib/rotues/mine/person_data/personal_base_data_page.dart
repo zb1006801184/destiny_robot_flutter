@@ -121,7 +121,7 @@ class _PersonalBaseDataPageState extends State<PersonalBaseDataPage> {
   @override
   Widget build(BuildContext context) {
     var contents = [
-      _educations[int.parse(Global.userModel.education) - 1] ??
+      _educations[Global.userModel.education - 1] ??
           _placerTitles[0],
       Global.userModel.school ?? _placerTitles[1],
       Global.userModel.major ?? _placerTitles[2],
