@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../widgets/mine_common_item.dart';
 import '../../../widgets/edit_detai_widget.dart';
+import '../../../widgets/pickCalendar/pickCalendar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'dart:io';
@@ -90,7 +91,10 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
       );
 
       _request('${result.provinceName}-${result.cityName}', index);
-    } else {
+    } else if(index == 3){
+      incrementCounter(context);
+    }
+     else {
       //编辑框
       showEditeBox(context, (e) async {
         if (e != null) {
