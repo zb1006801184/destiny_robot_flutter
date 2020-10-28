@@ -120,7 +120,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
     }
     if (index == 2) {
       setState(() {
-        _userInfoModel.gender = value;
+        _userInfoModel.gender = int.parse(value);
       });
     }
     if (index == 3) {
@@ -267,7 +267,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
       // return _userInfoModel.ID
     }
     if (index == 2 && _userInfoModel?.gender != null) {
-      return _userInfoModel.gender == '0' ? '男' : '女';
+      return _userInfoModel.gender == 0 ? '男' : '女';
     }
     if (index == 3 && _userInfoModel?.birthday != null) {
       return _userInfoModel.birthday;

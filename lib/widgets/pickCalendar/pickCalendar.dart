@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'calendar_utils.dart';
 
 void incrementCounter(context) {
   showDialog(
@@ -42,7 +43,6 @@ class _PickBodyState extends State<PickBody> {
   List nMonth = ['正', '二', '三', '四', '五', '六', '七', '八', '九', '十', '冬', '腊'];
 
   List time = [
-    '时辰未知',
     '23:00-1:00(子时)',
     '1:00-3:00(丑时)',
     '3:00-5:00(寅时)',
@@ -91,6 +91,7 @@ class _PickBodyState extends State<PickBody> {
     '三十一'
   ];
 
+//默认年份
   FixedExtentScrollController yearController =
       new FixedExtentScrollController(initialItem: 20);
 
@@ -129,8 +130,6 @@ class _PickBodyState extends State<PickBody> {
 
     int count = getYangliDay(int.parse(sYear), int.parse(sMonth));
 
-    print('count---$count');
-
     yday = [];
 
     for (int m = 1; m < count + 1; m++) {
@@ -149,7 +148,8 @@ class _PickBodyState extends State<PickBody> {
     } else {
       month = nMonth;
 
-      int count = getNongliDay(int.parse(sYear), int.parse(sMonth));
+      // int count = getNongliDay(int.parse(sYear), int.parse(sMonth));
+      int count = CalendarUtils().monthDays(int.parse(sYear), int.parse(sMonth));
 
       print('农历的天数==${count}');
 
@@ -173,12 +173,14 @@ class _PickBodyState extends State<PickBody> {
 // padding: EdgeInsets.all(10),
 
             child: Column(children: <Widget>[
+              //顶部切换
               Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       border: Border(
-                          bottom:
-                              BorderSide(width: 2, color: Color(0xFFE53B49)))),
+                          // bottom:
+                          //     BorderSide(width: 2, color: Color(0xFFE53B49))
+                          )),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -186,8 +188,6 @@ class _PickBodyState extends State<PickBody> {
                         child: Text('取消',
                             style: TextStyle(color: Color(0xFFE53B49))),
                         onTap: () {
-                          print('关闭弹框');
-
                           Navigator.pop(context);
                         },
                       ),
@@ -286,7 +286,6 @@ class _PickBodyState extends State<PickBody> {
                                   sYear = '$selectYear';
 
 // 更换年的时候检测是阳历还是农历
-
                                   updateDay();
 
 // monthController.jumpToItem(3);
@@ -430,13 +429,14 @@ class _PickBodyState extends State<PickBody> {
         yday.add('$m');
       }
     } else {
-      int count = getNongliDay(int.parse(sYear), int.parse(sMonth));
+      // int count = getNongliDay(int.parse(sYear), int.parse(sMonth));
+      int count = CalendarUtils().monthDays(int.parse(sYear), int.parse(sMonth));
 
       print('农历的天数==${count}');
 
-      List old = day;
+      List old = nday;
 
-      List newDay = old.sublist(0, count);
+      List newDay = nday.sublist(0, count);
 
       print(old);
 
@@ -504,7 +504,7 @@ bool isLeapYear(int year) {
   return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
 }
 
-// 计算阳历的这个年份这个月份，天数有几天
+// 计算阴历的这个年份这个月份，天数有几天
 
 int getNongliDay(int year, int month) {
   if ((LUNAR_INFO[year - 1900] & (0x100000 >> month)) == 0)
@@ -525,7 +525,7 @@ int getNongliDay(int year, int month) {
 
 * <p/>
 
-* 以2014年的数据0x955ABF为例说明：
+* 以2004年的数据0x955ABF为例说明：
 
 * 1001 0101 0101 1010 1011 1111
 
@@ -534,264 +534,46 @@ int getNongliDay(int year, int month) {
 */
 
 final List<int> LUNAR_INFO = [
-  0x84B6BF,
-
-/*1900*/
-
-  0x04AE53,
-  0x0A5748,
-  0x5526BD,
-  0x0D2650,
-  0x0D9544,
-  0x46AAB9,
-  0x056A4D,
-  0x09AD42,
-  0x24AEB6,
-  0x04AE4A,
-
-/*1901-1910*/
-
-  0x6A4DBE,
-  0x0A4D52,
-  0x0D2546,
-  0x5D52BA,
-  0x0B544E,
-  0x0D6A43,
-  0x296D37,
-  0x095B4B,
-  0x749BC1,
-  0x049754,
-
-/*1911-1920*/
-
-  0x0A4B48,
-  0x5B25BC,
-  0x06A550,
-  0x06D445,
-  0x4ADAB8,
-  0x02B64D,
-  0x095742,
-  0x2497B7,
-  0x04974A,
-  0x664B3E,
-
-/*1921-1930*/
-
-  0x0D4A51,
-  0x0EA546,
-  0x56D4BA,
-  0x05AD4E,
-  0x02B644,
-  0x393738,
-  0x092E4B,
-  0x7C96BF,
-  0x0C9553,
-  0x0D4A48,
-
-/*1931-1940*/
-
-  0x6DA53B,
-  0x0B554F,
-  0x056A45,
-  0x4AADB9,
-  0x025D4D,
-  0x092D42,
-  0x2C95B6,
-  0x0A954A,
-  0x7B4ABD,
-  0x06CA51,
-
-/*1941-1950*/
-
-  0x0B5546,
-  0x555ABB,
-  0x04DA4E,
-  0x0A5B43,
-  0x352BB8,
-  0x052B4C,
-  0x8A953F,
-  0x0E9552,
-  0x06AA48,
-  0x6AD53C,
-
-/*1951-1960*/
-
-  0x0AB54F,
-  0x04B645,
-  0x4A5739,
-  0x0A574D,
-  0x052642,
-  0x3E9335,
-  0x0D9549,
-  0x75AABE,
-  0x056A51,
-  0x096D46,
-
-/*1961-1970*/
-
-  0x54AEBB,
-  0x04AD4F,
-  0x0A4D43,
-  0x4D26B7,
-  0x0D254B,
-  0x8D52BF,
-  0x0B5452,
-  0x0B6A47,
-  0x696D3C,
-  0x095B50,
-
-/*1971-1980*/
-
-  0x049B45,
-  0x4A4BB9,
-  0x0A4B4D,
-  0xAB25C2,
-  0x06A554,
-  0x06D449,
-  0x6ADA3D,
-  0x0AB651,
-  0x095746,
-  0x5497BB,
-
-/*1981-1990*/
-
-  0x04974F,
-  0x064B44,
-  0x36A537,
-  0x0EA54A,
-  0x86B2BF,
-  0x05AC53,
-  0x0AB647,
-  0x5936BC,
-  0x092E50,
-  0x0C9645,
-
-/*1991-2000*/
-
-  0x4D4AB8,
-  0x0D4A4C,
-  0x0DA541,
-  0x25AAB6,
-  0x056A49,
-  0x7AADBD,
-  0x025D52,
-  0x092D47,
-  0x5C95BA,
-  0x0A954E,
-
-/*2001-2010*/
-
-  0x0B4A43,
-  0x4B5537,
-  0x0AD54A,
-  0x955ABF,
-  0x04BA53,
-  0x0A5B48,
-  0x652BBC,
-  0x052B50,
-  0x0A9345,
-  0x474AB9,
-
-/*2011-2020*/
-
-  0x06AA4C,
-  0x0AD541,
-  0x24DAB6,
-  0x04B64A,
-  0x6a573D,
-  0x0A4E51,
-  0x0D2646,
-  0x5E933A,
-  0x0D534D,
-  0x05AA43,
-
-/*2021-2030*/
-
-  0x36B537,
-  0x096D4B,
-  0xB4AEBF,
-  0x04AD53,
-  0x0A4D48,
-  0x6D25BC,
-  0x0D254F,
-  0x0D5244,
-  0x5DAA38,
-  0x0B5A4C,
-
-/*2031-2040*/
-
-  0x056D41,
-  0x24ADB6,
-  0x049B4A,
-  0x7A4BBE,
-  0x0A4B51,
-  0x0AA546,
-  0x5B52BA,
-  0x06D24E,
-  0x0ADA42,
-  0x355B37,
-
-/*2041-2050*/
-
-  0x09374B,
-  0x8497C1,
-  0x049753,
-  0x064B48,
-  0x66A53C,
-  0x0EA54F,
-  0x06AA44,
-  0x4AB638,
-  0x0AAE4C,
-  0x092E42,
-
-/*2051-2060*/
-
-  0x3C9735,
-  0x0C9649,
-  0x7D4ABD,
-  0x0D4A51,
-  0x0DA545,
-  0x55AABA,
-  0x056A4E,
-  0x0A6D43,
-  0x452EB7,
-  0x052D4B,
-
-/*2061-2070*/
-
-  0x8A95BF,
-  0x0A9553,
-  0x0B4A47,
-  0x6B553B,
-  0x0AD54F,
-  0x055A45,
-  0x4A5D38,
-  0x0A5B4C,
-  0x052B42,
-  0x3A93B6,
-
-/*2071-2080*/
-
-  0x069349,
-  0x7729BD,
-  0x06AA51,
-  0x0AD546,
-  0x54DABA,
-  0x04B64E,
-  0x0A5743,
-  0x452738,
-  0x0D264A,
-  0x8E933E,
-
-/*2081-2090*/
-
-  0x0D5252,
-  0x0DAA47,
-  0x66B53B,
-  0x056D4F,
-  0x04AE45,
-  0x4A4EB9,
-  0x0A4D4C,
-  0x0D1541,
-  0x2D92B5 /*2091-2099*/
+  0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0,
+  0x09ad0, 0x055d2, //1900-1909
+  0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2,
+  0x095b0, 0x14977, //1910-1919
+  0x04970, 0x0a4b0, 0x0b4b5, 0x06a50, 0x06d40, 0x1ab54, 0x02b60, 0x09570,
+  0x052f2, 0x04970, //1920-1929
+  0x06566, 0x0d4a0, 0x0ea50, 0x06e95, 0x05ad0, 0x02b60, 0x186e3, 0x092e0,
+  0x1c8d7, 0x0c950, //1930-1939
+  0x0d4a0, 0x1d8a6, 0x0b550, 0x056a0, 0x1a5b4, 0x025d0, 0x092d0, 0x0d2b2,
+  0x0a950, 0x0b557, //1940-1949
+  0x06ca0, 0x0b550, 0x15355, 0x04da0, 0x0a5b0, 0x14573, 0x052b0, 0x0a9a8,
+  0x0e950, 0x06aa0, //1950-1959
+  0x0aea6, 0x0ab50, 0x04b60, 0x0aae4, 0x0a570, 0x05260, 0x0f263, 0x0d950,
+  0x05b57, 0x056a0, //1960-1969
+  0x096d0, 0x04dd5, 0x04ad0, 0x0a4d0, 0x0d4d4, 0x0d250, 0x0d558, 0x0b540,
+  0x0b6a0, 0x195a6, //1970-1979
+  0x095b0, 0x049b0, 0x0a974, 0x0a4b0, 0x0b27a, 0x06a50, 0x06d40, 0x0af46,
+  0x0ab60, 0x09570, //1980-1989
+  0x04af5, 0x04970, 0x064b0, 0x074a3, 0x0ea50, 0x06b58, 0x055c0, 0x0ab60,
+  0x096d5, 0x092e0, //1990-1999
+  0x0c960, 0x0d954, 0x0d4a0, 0x0da50, 0x07552, 0x056a0, 0x0abb7, 0x025d0,
+  0x092d0, 0x0cab5, //2000-2009
+  0x0a950, 0x0b4a0, 0x0baa4, 0x0ad50, 0x055d9, 0x04ba0, 0x0a5b0, 0x15176,
+  0x052b0, 0x0a930, //2010-2019
+  0x07954, 0x06aa0, 0x0ad50, 0x05b52, 0x04b60, 0x0a6e6, 0x0a4e0, 0x0d260,
+  0x0ea65, 0x0d530, //2020-2029
+  0x05aa0, 0x076a3, 0x096d0, 0x04afb, 0x04ad0, 0x0a4d0, 0x1d0b6, 0x0d250,
+  0x0d520, 0x0dd45, //2030-2039
+  0x0b5a0, 0x056d0, 0x055b2, 0x049b0, 0x0a577, 0x0a4b0, 0x0aa50, 0x1b255,
+  0x06d20, 0x0ada0, //2040-2049
+  /**Add By JJonline@JJonline.Cn**/
+  0x14b63, 0x09370, 0x049f8, 0x04970, 0x064b0, 0x168a6, 0x0ea50, 0x06b20,
+  0x1a6c4, 0x0aae0, //2050-2059
+  0x0a2e0, 0x0d2e3, 0x0c960, 0x0d557, 0x0d4a0, 0x0da50, 0x05d55, 0x056a0,
+  0x0a6d0, 0x055d4, //2060-2069
+  0x052d0, 0x0a9b8, 0x0a950, 0x0b4a0, 0x0b6a6, 0x0ad50, 0x055a0, 0x0aba4,
+  0x0a5b0, 0x052b0, //2070-2079
+  0x0b273, 0x06930, 0x07337, 0x06aa0, 0x0ad50, 0x14b55, 0x04b60, 0x0a570,
+  0x054e4, 0x0d160, //2080-2089
+  0x0e968, 0x0d520, 0x0daa0, 0x16aa6, 0x056d0, 0x04ae0, 0x0a9d4, 0x0a2d0,
+  0x0d150, 0x0f252, //2090-2099
+  0x0d520
 ];
