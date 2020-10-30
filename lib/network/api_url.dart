@@ -10,4 +10,7 @@ class ApiUrl {
   static const String ALTER_USER_INFO_URL = '/api-love/account_data/personal';
   //上传图片
   static const String UPLOAD_IMAGE_URL = '/api-user/files/uploads';
+  //保存自我介绍
+    static const String SAVE_USER_DETAIL_URL = '/api-love/account_data/details';
+
 }

@@ -91,10 +91,11 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
       );
 
       _request('${result.provinceName}-${result.cityName}', index);
-    } else if(index == 3){
-      incrementCounter(context);
-    }
-     else {
+    } else if (index == 3) {
+      incrementCounter(context, callBack: (v) {
+        _request(v, index);
+      });
+    } else {
       //编辑框
       showEditeBox(context, (e) async {
         if (e != null) {
@@ -109,9 +110,12 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
     if (index == 2) {
       value == '男' ? value = '0' : value = '1';
     }
+    if (index == 4) {
+     value = value.substring(0,3);
+    }
 
     var respon = await ApiService.alterUserInfoRequest(
-        {params[index].toString(): value});
+        index == 3 ? value : {params[index].toString(): value});
 
     if (index == 0) {
       setState(() {
@@ -125,12 +129,12 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
     }
     if (index == 3) {
       setState(() {
-        _userInfoModel.birthday = value;
+        _userInfoModel.birthdayStr = value['birthdayStr'];
       });
     }
     if (index == 4) {
       setState(() {
-        _userInfoModel.height = value;
+        _userInfoModel.height = int.parse(value);
       });
     }
     if (index == 5) {
@@ -163,7 +167,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
       setState(() {
         _userInfoModel.headImgUrl = url;
       });
-    savaUserInfo();
+      savaUserInfo();
     });
   }
 
@@ -269,8 +273,8 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
     if (index == 2 && _userInfoModel?.gender != null) {
       return _userInfoModel.gender == 0 ? '男' : '女';
     }
-    if (index == 3 && _userInfoModel?.birthday != null) {
-      return _userInfoModel.birthday;
+    if (index == 3 && _userInfoModel?.birthdayStr != null) {
+      return _userInfoModel.birthdayStr;
     }
     if (index == 4 && _userInfoModel?.height != null) {
       return _userInfoModel.height.toString();
@@ -291,7 +295,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
     if (index == 2 && _userInfoModel.gender != null) {
       return true;
     }
-    if (index == 3 && _userInfoModel.birthday != null) {
+    if (index == 3 && _userInfoModel.birthdayStr != null) {
       return true;
     }
     if (index == 4 && _userInfoModel.height != null) {

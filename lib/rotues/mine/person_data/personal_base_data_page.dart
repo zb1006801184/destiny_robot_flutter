@@ -22,7 +22,7 @@ class _PersonalBaseDataPageState extends State<PersonalBaseDataPage> {
   final List _titles = ['学历', '学校', '专业', '家乡', '兴趣'];
   final List _placerTitles = ['请选择学历', '请输入学校名称', '请输入专业名称', '请选择家乡', '请选择兴趣'];
   final List _educations = ['高中', '专科', '本科', '硕士', '博士'];
-  
+
   //item 的点击
   void _itemClick(int index) async {
     if (index == 0) {
@@ -48,11 +48,13 @@ class _PersonalBaseDataPageState extends State<PersonalBaseDataPage> {
           style: TextStyle(fontSize: 14, color: Color(0xFFFF706E)),
         ),
       );
-      _request(index, '北京');
+      _request(index, '${result.provinceName}-${result.cityName}');
     } else if (index == 4) {
-      InterestSelectWidget().showInterestSelect(context, LocalData().intersTitles,
-          sureCallBack: (data) {
-        print(data);
+      InterestSelectWidget().showInterestSelect(
+          context, LocalData().intersTitles, sureCallBack: (data) {
+        if (data.length > 0) {
+          _request(index, data);
+        }
       });
     } else {
       //编辑框
@@ -85,7 +87,7 @@ class _PersonalBaseDataPageState extends State<PersonalBaseDataPage> {
 
   _updateInfo(int index, var value) {
     if (index == 0) {
-      Global.userModel.education = value;
+      Global.userModel.education = int.parse(value);
     }
     if (index == 1) {
       Global.userModel.school = value;
@@ -118,15 +120,23 @@ class _PersonalBaseDataPageState extends State<PersonalBaseDataPage> {
         .savaUserInfo(Global.userModel);
   }
 
+  String interestStr(List intersest) {
+    String result = '';
+    if (intersest != null && intersest.length > 0) {
+      intersest.forEach((e) => result = result + '、' + e);
+      return result?.substring(1);
+    }
+    return '';
+  }
+
   @override
   Widget build(BuildContext context) {
     var contents = [
-      _educations[Global.userModel.education - 1] ??
-          _placerTitles[0],
+      _educations[Global.userModel.education - 1] ?? _placerTitles[0],
       Global.userModel.school ?? _placerTitles[1],
       Global.userModel.major ?? _placerTitles[2],
       Global.userModel.hometown ?? _placerTitles[3],
-      Global.userModel.interest ?? _placerTitles[4]
+      interestStr(Global.userModel.interest) ?? _placerTitles[4]
     ];
     var isShowContents = [
       Global.userModel.education != null ? true : false,

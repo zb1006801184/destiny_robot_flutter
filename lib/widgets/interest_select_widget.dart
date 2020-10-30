@@ -145,7 +145,9 @@ class _InterestSelectWidgetState extends State<InterestSelectWidget> {
 
 //取消、确认按钮点击
   void _buttonClick({String title}) {
-    widget.sureCallBack(resultList);
+    if (title == '确定') {
+      widget.sureCallBack(resultList);
+    }
     Navigator.of(context).pop();
   }
 

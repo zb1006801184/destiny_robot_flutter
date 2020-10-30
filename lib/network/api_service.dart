@@ -16,7 +16,7 @@ class ApiService {
         method: HttpUtils.POST);
     if (response != null) {
       var responseData = jsonDecode(response.data);
-      UserInfoModel data = UserInfoModel.fromJson(responseData["datas"]);
+      UserInfoModel data = UserInfoModel.fromJson(responseData["data"]);
       return data;
     } else {
       return null;
@@ -75,6 +75,21 @@ class ApiService {
     if (response != null) {
       var responseData = response.data;
       return responseData['data']['urls'][0] ?? null;
+    } else {
+      return null;
+    }
+  }
+
+//保存自我介绍
+  static Future<dynamic> saveUserDetailRequest(
+      Map<String, dynamic> params) async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.SAVE_USER_DETAIL_URL,
+        data: params, method: HttpUtils.POST);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      return responseData;
     } else {
       return null;
     }

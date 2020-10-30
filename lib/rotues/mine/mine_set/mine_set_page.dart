@@ -29,6 +29,8 @@ class _MineSetPageState extends State<MineSetPage> {
   void _logout() async {
     prefix.RongIMClient.disconnect(false);
     SpUtil.remove(DataName.LOGINSTATE);
+        SpUtil.remove(DataName.PERSONINFO);
+
     Navigator.of(context).pushAndRemoveUntil(
         new MaterialPageRoute(builder: (context) => new LoginPage()),
         (route) => route == null);

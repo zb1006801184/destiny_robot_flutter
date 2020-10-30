@@ -1,3 +1,7 @@
+import 'package:destiny_robot/models/user_info_model.dart';
+import 'package:destiny_robot/network/api_service.dart';
+import 'package:destiny_robot/state/provider_store.dart';
+import 'package:destiny_robot/state/user_state_model.dart';
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +15,20 @@ class PersonalDataIntroductionPage extends StatefulWidget {
 
 class _PersonalDataIntroductionPageState
     extends State<PersonalDataIntroductionPage> {
+  TextEditingController _controller = TextEditingController();
+  UserInfoModel _model;
+  void _request() async {
+    ApiService.saveUserDetailRequest({'details': _controller.text ?? ''})
+        .then((value) {
+      _model.details = _controller.text;
+      Store.value<UserStateModel>(context, listen: false).savaUserInfo(_model);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _model = Store.value<UserStateModel>(context, listen: true).userInfoModel();
+    _controller.text = _model.details ?? '';
     return Scaffold(
       appBar: NavBarConfig().configAppBar('自我介绍', context),
       resizeToAvoidBottomInset: false,
@@ -58,9 +74,7 @@ class _PersonalDataIntroductionPageState
           ),
         ),
       ),
-      onTap: () {
-        print('提交');
-      },
+      onTap: _request,
     );
   }
 
@@ -72,6 +86,7 @@ class _PersonalDataIntroductionPageState
       width: Global.ksWidth,
       color: Colors.white,
       child: TextField(
+        controller: _controller,
         style: TextStyle(fontSize: 15),
         showCursor: true,
         maxLength: 150,

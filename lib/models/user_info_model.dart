@@ -8,13 +8,14 @@ class UserInfoModel {
   String headImgUrl;
   int gender;
   String birthday;
+  String birthdayStr;
   int height;
   String address;
   String major;
   int education;
   String school;
   String hometown;
-  String interest;
+  List interest;
   String details;
   String idCardFront;
   String idCardReverse;
@@ -35,6 +36,7 @@ class UserInfoModel {
       this.headImgUrl,
       this.gender,
       this.birthday,
+      this.birthdayStr,
       this.height,
       this.address,
       this.major,
@@ -62,12 +64,13 @@ class UserInfoModel {
     headImgUrl = json['headImgUrl'];
     gender = json['gender'];
     birthday = json['birthday'];
+    birthdayStr = json['birthdayStr'];
     height = json['height'];
-    // address = json['address'];
+    address = json['address'];
     major = json['major'];
     education = json['education'];
     school = json['school'];
-    // hometown = json['hometown'];
+    hometown = json['hometown'];
     interest = json['interest'];
     details = json['details'];
     idCardFront = json['idCardFront'];
@@ -91,6 +94,7 @@ class UserInfoModel {
     data['headImgUrl'] = this.headImgUrl;
     data['gender'] = this.gender;
     data['birthday'] = this.birthday;
+    data['birthdayStr'] = this.birthdayStr;
     data['height'] = this.height;
     data['address'] = this.address;
     data['major'] = this.major;
