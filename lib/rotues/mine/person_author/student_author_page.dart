@@ -1,5 +1,8 @@
+import 'package:destiny_robot/im/widget/cachImage/cached_image_widget.dart';
+import 'package:destiny_robot/network/api_service.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
 import 'package:destiny_robot/widgets/sample_select.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,6 +16,21 @@ class StudentAuthorPage extends StatefulWidget {
 class _StudentAuthorPageState extends State<StudentAuthorPage> {
   final List titles = ['拍照', '从相册中选择'];
   String _imagePath;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _configData();
+  }
+
+  void _configData() async {
+    var data = await ApiService.getStudentRequest();
+    setState(() {
+      _imagePath = data['data']['studentFront'];
+    });
+  }
+
 //选择照片
   void _selectImageClick() async {
     var cameraStatus = await Permission.camera.status;
@@ -25,10 +43,25 @@ class _StudentAuthorPageState extends State<StudentAuthorPage> {
     showSampleSelect(context, dataList: titles, callBackHandler: (index) async {
       PickedFile image = await ImagePicker().getImage(
           source: index == 0 ? ImageSource.camera : ImageSource.gallery);
+      String headImage = image.path;
+      var name =
+          headImage.substring(headImage.lastIndexOf("/") + 1, headImage.length);
+      FormData params = FormData.fromMap(
+          {"file": await MultipartFile.fromFile(headImage, filename: name)});
+      var url = await ApiService.uploadImageRequest(params);
       setState(() {
-        _imagePath = image.path;
+        _imagePath = url;
       });
     });
+  }
+
+  void _submitResult() async {
+    if (_imagePath == null) {
+      return;
+    }
+    var data =
+        await ApiService.saveStudentRequest({'studentFront': _imagePath});
+    Navigator.of(context).pop();
   }
 
   @override
@@ -47,15 +80,22 @@ class _StudentAuthorPageState extends State<StudentAuthorPage> {
   //选择照片
   Widget _selectImage() {
     return GestureDetector(
-      child: UnconstrainedBox(child: Container(
-        margin: EdgeInsets.only(top: 19),
-        width: 282.5,
-        height: 407.5,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.asset(_imagePath??'assets/images/student_card.png',fit: BoxFit.fill,),
+      child: UnconstrainedBox(
+        child: Container(
+          margin: EdgeInsets.only(top: 19),
+          width: 282.5,
+          height: 407.5,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: _imagePath == null
+                ? Image.asset(
+                    'assets/images/student_card.png',
+                    fit: BoxFit.fill,
+                  )
+                : CachedNetworkImage(fit: BoxFit.fill, imageUrl: _imagePath),
+          ),
         ),
-      ),),
+      ),
       onTap: _selectImageClick,
     );
   }
@@ -94,9 +134,7 @@ class _StudentAuthorPageState extends State<StudentAuthorPage> {
             ),
           ),
         ),
-        onTap: () {
-          print("完成");
-        },
+        onTap: _submitResult,
       )
     ];
   }

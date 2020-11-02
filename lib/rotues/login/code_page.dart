@@ -42,7 +42,7 @@ class _CodePageState extends State<CodePage> {
   void _loginAction() async {
     Map map = new Map();
     map["region"] = 86;
-    map["phone"] = '15070925726';
+    map["phone"] = 15070925726;
     map["password"] = 'Zb368464';
     //token信息
     UserInfoModel model =
@@ -53,8 +53,9 @@ class _CodePageState extends State<CodePage> {
       print(e);
     });
     Store.value<UserStateModel>(context, listen: false).savaUserInfo(userModel);
-
-    HttpUtil.post("http://api.sealtalk.im/user/login", (data) {
+  //http://api-sealtalk.rongcloud.cn/user/login
+  //http://api.sealtalk.im/user/login
+    HttpUtil.post("http://api-sealtalk.rongcloud.cn/user/login", (data) {
       if (data != null) {
         Map body = data;
         int errorCode = body["code"];

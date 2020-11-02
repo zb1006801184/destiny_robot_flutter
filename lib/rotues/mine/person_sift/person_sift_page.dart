@@ -1,4 +1,5 @@
 import 'package:city_pickers/city_pickers.dart';
+import 'package:destiny_robot/network/api_service.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
 import 'package:destiny_robot/widgets/mine_common_item.dart';
 import 'package:destiny_robot/widgets/single_select_picker.dart';
@@ -40,40 +41,33 @@ class _PersonSiftPageState extends State<PersonSiftPage> {
     '研究生',
     '博士',
   ];
-  final List _sexs = ['男','女'];
+  final List _sexs = ['男', '女'];
 
 //item click
 
-  _itemClick(int index) async{
-    if (index == 1||index ==0) {
+  _itemClick(int index) async {
+    if (index == 1 || index == 0) {
       //年龄 身高
-      List data = index==1?heights:ages;
+      List data = index == 1 ? heights : ages;
       showScopePicker(context, (e) {
-        print(e);
+        if (e != null) {
+          _request(index, e);
+        }
       }, leftDataList: data[0], rightDataList: data[1]);
     }
 
-  if (index == 2) {
-    //学历
-    showPicker(context, (){
+    if (index == 2) {
+      //学历
+      showPicker(context, () {}, dataList: _education);
+    }
+    if (index == 3) {
+      //性别
+      showPicker(context, () {}, dataList: _sexs);
+    }
+    if (index == 4) {
+      //家乡
 
-    },
-    dataList: _education
-    );
-
-  }
-  if (index == 3) {
-    //性别
-    showPicker(context, (){
-
-    },
-    dataList: _sexs
-    );
-  }
-  if (index == 4) {
-    //家乡
-
-     Result result = await CityPickers.showCityPicker(
+      Result result = await CityPickers.showCityPicker(
         context: context,
         height: 180,
         showType: ShowType.pc,
@@ -88,13 +82,24 @@ class _PersonSiftPageState extends State<PersonSiftPage> {
         ),
       );
       print(result.provinceName);
-
-  }
-
-  if (index == 5) {
-    InterestSelectWidget().showInterestSelect(context, LocalData().intersTitles,sureCallBack: (e){});
     }
 
+    if (index == 5) {
+      InterestSelectWidget().showInterestSelect(
+          context, LocalData().intersTitles,
+          sureCallBack: (e) {});
+    }
+  }
+
+  void _request(int index, var value) async {
+    Map <String,dynamic>params;
+    if (index == 0) {
+      String age = value;
+      params = {'ageMax':age.substring(4,6),'ageMin':age.substring(0,2)};
+    }
+     ApiService.saveMatchRequest(params??{}).then((value) {
+       print(value);
+    });
   }
 
   @override

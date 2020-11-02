@@ -4,6 +4,7 @@ import 'package:destiny_robot/state/provider_store.dart';
 import 'package:destiny_robot/state/user_state_model.dart';
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
+import 'package:destiny_robot/unitls/toast_view.dart';
 import 'package:flutter/material.dart';
 
 //编辑资料-自我介绍
@@ -20,8 +21,14 @@ class _PersonalDataIntroductionPageState
   void _request() async {
     ApiService.saveUserDetailRequest({'details': _controller.text ?? ''})
         .then((value) {
-      _model.details = _controller.text;
-      Store.value<UserStateModel>(context, listen: false).savaUserInfo(_model);
+      if (value != null) {
+        ToastView(
+          title: "提交成功！",
+        ).showMessage();
+        _model.details = _controller.text;
+        Store.value<UserStateModel>(context, listen: false)
+            .savaUserInfo(_model);
+      }
     });
   }
 

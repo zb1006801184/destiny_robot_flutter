@@ -1,5 +1,9 @@
+import 'package:destiny_robot/im/widget/cachImage/cached_image_widget.dart';
+import 'package:destiny_robot/network/api_service.dart';
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
+import 'package:destiny_robot/unitls/toast_view.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../widgets/sample_select.dart';
@@ -18,6 +22,21 @@ class _PersonAuthorPagesState extends State<PersonAuthorPages> {
   //反面
   String _reverseImagePath;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    configData();
+  }
+
+  void configData() async {
+    var data = await ApiService.getIDCardRequest();
+    _peopleImagePath = data['data']['idCardFront'];
+    _reverseImagePath = data['data']['idCardReverse'];
+    setState(() {
+    });
+  }
+
   //选择照片
   void _selectImageClick(int selectIndex) async {
     var cameraStatus = await Permission.camera.status;
@@ -30,12 +49,37 @@ class _PersonAuthorPagesState extends State<PersonAuthorPages> {
     showSampleSelect(context, dataList: titles, callBackHandler: (index) async {
       PickedFile image = await ImagePicker().getImage(
           source: index == 0 ? ImageSource.camera : ImageSource.gallery);
+
+      String headImage = image.path;
+      var name =
+          headImage.substring(headImage.lastIndexOf("/") + 1, headImage.length);
+      FormData params = FormData.fromMap(
+          {"file": await MultipartFile.fromFile(headImage, filename: name)});
+      var url = await ApiService.uploadImageRequest(params);
+
       setState(() {
-        selectIndex == 0
-            ? _peopleImagePath = image.path
-            : _reverseImagePath = image.path;
+        selectIndex == 0 ? _peopleImagePath = url : _reverseImagePath = url;
       });
     });
+  }
+
+//完成
+  void _submitResult() async {
+    if (_peopleImagePath == null) {
+      ToastView(
+        title: '人像面为空！',
+      ).showMessage();
+      return;
+    }
+    if (_reverseImagePath == null) {
+      ToastView(
+        title: '国徽面为空！',
+      ).showMessage();
+      return;
+    }
+    await ApiService.saveIDCardRequest(
+        {'idCardFront': _peopleImagePath, 'idCardReverse': _reverseImagePath});
+    Navigator.of(context).pop();
   }
 
   @override
@@ -64,10 +108,17 @@ class _PersonAuthorPagesState extends State<PersonAuthorPages> {
         height: 216.0,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          child: Image.asset(
-            image ?? images[index],
-            fit: BoxFit.fill,
-          ),
+          child: image == null
+              ? Image.asset(
+                  images[index],
+                  fit: BoxFit.fill,
+                )
+              : CachedNetworkImage(
+                  fit: BoxFit.fill,
+                  imageUrl: image,
+                  placeholder: (context, url) =>
+                      Image.asset('assets/images/user_placer_image.jpg'),
+                ),
         ),
       ),
       onTap: () {
@@ -96,7 +147,7 @@ class _PersonAuthorPagesState extends State<PersonAuthorPages> {
 //右侧按钮
   List<Widget> _actionsWidget() {
     return [
-      InkWell(
+      GestureDetector(
         child: Container(
           margin: EdgeInsets.only(right: 17),
           width: 44,
@@ -110,9 +161,7 @@ class _PersonAuthorPagesState extends State<PersonAuthorPages> {
             ),
           ),
         ),
-        onTap: () {
-          print("完成");
-        },
+        onTap: _submitResult,
       )
     ];
   }

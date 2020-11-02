@@ -11,6 +11,16 @@ class ApiUrl {
   //上传图片
   static const String UPLOAD_IMAGE_URL = '/api-user/files/uploads';
   //保存自我介绍
-    static const String SAVE_USER_DETAIL_URL = '/api-love/account_data/details';
-
+  static const String SAVE_USER_DETAIL_URL = '/api-love/account_data/details';
+  //保存相册
+  static const String SAVE_ALUBM_URL = '/api-love/account_data/album';
+  //实名认证
+  static const String SAVE_IDCARD_URL = '/api-love/account_data/identification';
+  //获取实名认证
+  static const String GET_IDCARD_URL = '/api-love/account_data/identification';
+  //学生认证 、获取学生认证
+  static const String SAVE_STUDENT_URL =
+      '/api-love/account_data/student/identification';
+  //保存匹配条件
+  static const String SAVE_MATCH_URL = '/api-love/match/condition';
 }

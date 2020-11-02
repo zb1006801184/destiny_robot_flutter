@@ -111,11 +111,15 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
       value == '男' ? value = '0' : value = '1';
     }
     if (index == 4) {
-     value = value.substring(0,3);
+      value = value.substring(0, 3);
     }
 
     var respon = await ApiService.alterUserInfoRequest(
         index == 3 ? value : {params[index].toString(): value});
+
+    if (respon == null) {
+      return;
+    }
 
     if (index == 0) {
       setState(() {

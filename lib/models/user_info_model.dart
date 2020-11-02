@@ -25,34 +25,37 @@ class UserInfoModel {
   int studentAuditState;
   String auditMsg;
   bool matchingState;
+  List album;
 
-  UserInfoModel(
-      {this.accessToken,
-      this.tokenType,
-      this.refreshToken,
-      this.expiresIn,
-      this.scope,
-      this.nickname,
-      this.headImgUrl,
-      this.gender,
-      this.birthday,
-      this.birthdayStr,
-      this.height,
-      this.address,
-      this.major,
-      this.education,
-      this.school,
-      this.hometown,
-      this.interest,
-      this.details,
-      this.idCardFront,
-      this.idCardReverse,
-      this.studentFront,
-      this.studentReverse,
-      this.auditState,
-      this.studentAuditState,
-      this.auditMsg,
-      this.matchingState});
+  UserInfoModel({
+    this.accessToken,
+    this.tokenType,
+    this.refreshToken,
+    this.expiresIn,
+    this.scope,
+    this.nickname,
+    this.headImgUrl,
+    this.gender,
+    this.birthday,
+    this.birthdayStr,
+    this.height,
+    this.address,
+    this.major,
+    this.education,
+    this.school,
+    this.hometown,
+    this.interest,
+    this.details,
+    this.idCardFront,
+    this.idCardReverse,
+    this.studentFront,
+    this.studentReverse,
+    this.auditState,
+    this.studentAuditState,
+    this.auditMsg,
+    this.matchingState,
+    this.album,
+  });
 
   UserInfoModel.fromJson(Map<String, dynamic> json) {
     accessToken = json['access_token'];
@@ -81,6 +84,7 @@ class UserInfoModel {
     studentAuditState = json['studentAuditState'];
     auditMsg = json['auditMsg'];
     matchingState = json['matchingState'];
+    album = json['album'];
   }
 
   Map<String, dynamic> toJson() {
@@ -111,6 +115,7 @@ class UserInfoModel {
     data['studentAuditState'] = this.studentAuditState;
     data['auditMsg'] = this.auditMsg;
     data['matchingState'] = this.matchingState;
+    data['album'] = this.album;
     return data;
   }
 }

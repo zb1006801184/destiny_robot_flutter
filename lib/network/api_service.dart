@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:destiny_robot/unitls/global.dart';
+import 'package:destiny_robot/unitls/toast_view.dart';
 import 'package:dio/dio.dart';
 import 'http_utils.dart';
 import 'api_url.dart';
@@ -94,4 +95,84 @@ class ApiService {
       return null;
     }
   }
+
+//保存相册
+  static Future<dynamic> saveAlbumRequest(Map<String, dynamic> params) async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.SAVE_ALUBM_URL, data: params, method: HttpUtils.POST);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      return responseData;
+    } else {
+      return null;
+    }
+  }
+
+//实名认证
+  static Future<dynamic> saveIDCardRequest(Map<String, dynamic> params) async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.SAVE_IDCARD_URL, data: params, method: HttpUtils.POST);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      return responseData;
+    } else {
+      return null;
+    }
+  }
+
+//获取实名认证
+  static Future<dynamic> getIDCardRequest() async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.GET_IDCARD_URL, method: HttpUtils.GET);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      return responseData;
+    } else {
+      return null;
+    }
+  }
+
+//学生认证
+  static Future<dynamic> saveStudentRequest(Map<String, dynamic> params) async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.SAVE_STUDENT_URL, data: params, method: HttpUtils.POST);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      return responseData;
+    } else {
+      return null;
+    }
+  }
+
+//获取学生认证
+  static Future<dynamic> getStudentRequest() async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.SAVE_STUDENT_URL, method: HttpUtils.GET);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      return responseData;
+    } else {
+      return null;
+    }
+  }
+
+//保存匹配条件
+  static Future<dynamic> saveMatchRequest(Map<String, dynamic> params) async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.SAVE_MATCH_URL, data: params, method: HttpUtils.POST);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      return responseData;
+    } else {
+      return null;
+    }
+  }
+
+
 }
