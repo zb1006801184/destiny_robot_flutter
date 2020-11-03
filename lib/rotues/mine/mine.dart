@@ -3,6 +3,7 @@ import 'package:destiny_robot/im/widget/cachImage/cached_network_image_provider.
 import 'package:destiny_robot/state/provider_store.dart';
 import 'package:destiny_robot/state/user_state_model.dart';
 import 'package:destiny_robot/unitls/global.dart';
+import 'package:destiny_robot/unitls/widget_unitls.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -116,8 +117,10 @@ class _MineState extends State<Mine> {
       physics: const NeverScrollableScrollPhysics(),
       children: [
         _buildTopItemMessageWidget(),
-        _buildCommonItemWidget(title: '实名认证', iconSting: _iconList[0]),
-        _buildCommonItemWidget(title: '学生认证', iconSting: _iconList[1]),
+        _buildCommonItemWidget(
+            title: '实名认证', iconSting: _iconList[0], showContent: true),
+        _buildCommonItemWidget(
+            title: '学生认证', iconSting: _iconList[1], showContent: true),
         _buildCommonItemWidget(title: '人工客服', iconSting: _iconList[2]),
         _buildCommonItemWidget(title: '筛选条件', iconSting: _iconList[3]),
         _buildCommonItemWidget(title: '分享', iconSting: _iconList[4]),
@@ -153,7 +156,7 @@ class _MineState extends State<Mine> {
             borderRadius: BorderRadius.circular(75 / 2),
             child: CachedNetworkImage(
               fit: BoxFit.cover,
-              imageUrl: Store.value<UserStateModel>(context,listen: true)
+              imageUrl: Store.value<UserStateModel>(context, listen: true)
                       .userInfoModel()
                       .headImgUrl ??
                   '',
@@ -257,7 +260,10 @@ class _MineState extends State<Mine> {
 
 //列表相同的Item
   Widget _buildCommonItemWidget(
-      {String title, String iconSting, String subtitleString}) {
+      {String title,
+      String iconSting,
+      String subtitleString,
+      bool showContent = false}) {
     return GestureDetector(
       child: Container(
         height: 52,
@@ -287,11 +293,16 @@ class _MineState extends State<Mine> {
                 ),
               ],
             ),
-            Container(
-              margin: EdgeInsets.only(right: 27.5),
-              width: 5,
-              height: 9,
-              child: Image.asset('assets/images/list_icon_retu.png'),
+            Row(
+              children: [
+                if (showContent == true) _contentWidget(title),
+                Container(
+                  margin: EdgeInsets.only(right: 27.5),
+                  width: 5,
+                  height: 9,
+                  child: Image.asset('assets/images/list_icon_retu.png'),
+                )
+              ],
             )
           ],
         ),
@@ -299,6 +310,18 @@ class _MineState extends State<Mine> {
       onTap: () {
         _itemClick(title);
       },
+    );
+  }
+
+  Widget _contentWidget(
+    String title,
+  ) {
+    return Container(
+      margin: EdgeInsets.only(right: 20),
+      child: Text(
+        WidgetUnitls().mineAythorStr(title),
+        style: TextStyle(fontSize: 10, color: Color(0xFFFF706863)),
+      ),
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'package:destiny_robot/unitls/global.dart';
+
 class WidgetUnitls {
   String educationStr(int education) {
     if (education == 0) {
@@ -20,7 +22,8 @@ class WidgetUnitls {
     }
     return '无';
   }
-   int educationIndex(String education) {
+
+  int educationIndex(String education) {
     if (education == '不限') {
       return 0;
     }
@@ -69,13 +72,34 @@ class WidgetUnitls {
 
   String interestStr(List interestList) {
     if (interestList.length > 0) {
-      String result = '';
+      var result = StringBuffer();
       interestList.forEach((element) {
-        result = result + '、';
+        result.write(element);
+        if (result.length > 0) {
+          result.write('、');
+        }
       });
-      result = result.substring(1);
-      return result;
+      return result.toString();
     }
     return '';
+  }
+
+  //我的-实名认证、学生认证  显示内容
+
+  String mineAythorStr(String title) {
+    if (title == '实名认证') {
+      if (Global.userModel.auditState == 1) {
+        return '已认证';
+      } else {
+        return '未实名认证';
+      }
+    }
+    if (title == '学生认证') {
+      if (Global.userModel.studentAuditState == 1) {
+        return '已认证';
+      } else {
+        return '认证获得优先匹配权利';
+      }
+    }
   }
 }

@@ -21,8 +21,8 @@ class UserInfoModel {
   String idCardReverse;
   String studentFront;
   String studentReverse;
-  int auditState;
-  int studentAuditState;
+  int auditState; //实名认证状态 -1未通过/ 0已提交/ 1已通过
+  int studentAuditState; //学生认证状态 -1未通过/ 0已提交/ 1已通过
   String auditMsg;
   bool matchingState;
   List album;

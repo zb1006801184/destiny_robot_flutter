@@ -108,10 +108,9 @@ class _PersonSiftPageState extends State<PersonSiftPage> {
 
     if (index == 5) {
       InterestSelectWidget().showInterestSelect(
-          context, LocalData().intersTitles,
-          sureCallBack: (e) {
-            _request(index, e);
-          });
+          context, LocalData().intersTitles, sureCallBack: (e) {
+        _request(index, e);
+      });
     }
   }
 
@@ -132,7 +131,12 @@ class _PersonSiftPageState extends State<PersonSiftPage> {
   }
 
   void _setValue(int index, var value) {
-    String data = value;
+    String data;
+    try {
+      data = value;
+    } catch (e) {
+      print(e);
+    }
     if (index == 0) {
       _model.ageMin = int.parse(data.substring(0, 2));
       _model.ageMax = int.parse(data.substring(4, 6));
@@ -150,7 +154,7 @@ class _PersonSiftPageState extends State<PersonSiftPage> {
     if (index == 4) {
       _model.hometown = data;
     }
-    if (index ==5) {
+    if (index == 5) {
       _model.interestList = value;
     }
 
@@ -174,7 +178,7 @@ class _PersonSiftPageState extends State<PersonSiftPage> {
     if (index == 4 && _model?.hometown != null && _model.hometown.length > 0) {
       return true;
     }
-    if (index == 4 && _model?.interestList != null) {
+    if (index == 5 && _model?.interestList != null) {
       return true;
     }
 
@@ -200,7 +204,7 @@ class _PersonSiftPageState extends State<PersonSiftPage> {
     if (index == 4 && _model?.hometown != null && _model.hometown.length > 0) {
       return _model.hometown;
     }
-    if (index == 4 && _model?.interestList != null) {
+    if (index == 5 && _model?.interestList != null) {
       return WidgetUnitls().interestStr(_model.interestList);
     }
 
