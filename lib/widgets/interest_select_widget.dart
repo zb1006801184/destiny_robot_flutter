@@ -27,7 +27,7 @@ class InterestSelectWidget extends StatefulWidget {
 }
 
 class _InterestSelectWidgetState extends State<InterestSelectWidget> {
-  List resultList = [];
+  List <dynamic>resultList = [];
   //########widget########
   Widget title = Container(
     margin: EdgeInsets.only(top: 28),

@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'http_utils.dart';
 import 'api_url.dart';
 import '../models/user_info_model.dart';
+import '../models/sift_model.dart';
 
 class ApiService {
   //获取token
@@ -174,5 +175,22 @@ class ApiService {
     }
   }
 
-
+//获取匹配条件
+  static Future<SiftModel> getMatchRequest() async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.SAVE_MATCH_URL, method: HttpUtils.GET);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      SiftModel data;
+      try {
+        data = SiftModel.fromJson(responseData["data"]);
+      } catch (e) {
+        print(e);
+      }
+      return data;
+    } else {
+      return null;
+    }
+  }
 }

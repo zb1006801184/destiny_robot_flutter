@@ -1,6 +1,8 @@
 import 'package:city_pickers/city_pickers.dart';
+import 'package:destiny_robot/models/sift_model.dart';
 import 'package:destiny_robot/network/api_service.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
+import 'package:destiny_robot/unitls/widget_unitls.dart';
 import 'package:destiny_robot/widgets/mine_common_item.dart';
 import 'package:destiny_robot/widgets/single_select_picker.dart';
 import 'package:flutter/material.dart';
@@ -38,10 +40,24 @@ class _PersonSiftPageState extends State<PersonSiftPage> {
     '高中',
     '大专',
     '本科',
-    '研究生',
+    '硕士',
     '博士',
   ];
-  final List _sexs = ['男', '女'];
+  final List _sexs = ['男', '女', '不限'];
+
+  SiftModel _model;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _configData();
+  }
+
+  void _configData() async {
+    _model = await ApiService.getMatchRequest();
+    setState(() {});
+  }
 
 //item click
 
@@ -58,11 +74,17 @@ class _PersonSiftPageState extends State<PersonSiftPage> {
 
     if (index == 2) {
       //学历
-      showPicker(context, () {}, dataList: _education);
+      showPicker(context, (e) {
+        if (e != null) {
+          _request(index, e);
+        }
+      }, dataList: _education);
     }
     if (index == 3) {
       //性别
-      showPicker(context, () {}, dataList: _sexs);
+      showPicker(context, (e) {
+        _request(index, e);
+      }, dataList: _sexs);
     }
     if (index == 4) {
       //家乡
@@ -81,25 +103,121 @@ class _PersonSiftPageState extends State<PersonSiftPage> {
           style: TextStyle(fontSize: 14, color: Color(0xFFFF706E)),
         ),
       );
-      print(result.provinceName);
+      _request(index, '${result.provinceName}-${result.cityName}');
     }
 
     if (index == 5) {
       InterestSelectWidget().showInterestSelect(
-          context, LocalData().intersTitles,
-          sureCallBack: (e) {});
+          context, LocalData().intersTitles, sureCallBack: (e) {
+        try {
+          _request(index, '',);
+        } catch (r) {
+          print(r);
+        }
+      });
     }
   }
 
-  void _request(int index, var value) async {
-    Map <String,dynamic>params;
-    if (index == 0) {
-      String age = value;
-      params = {'ageMax':age.substring(4,6),'ageMin':age.substring(0,2)};
+  void _request(int index, var value, {List<dynamic> interestList}) async {
+    Map params = {};
+    try {
+      _setValue(index, value,);
+    } catch (e) {
+      print(e);
     }
-     ApiService.saveMatchRequest(params??{}).then((value) {
-       print(value);
-    });
+    params = {
+      'ageMax': _model.ageMax,
+      'ageMin': _model.ageMin,
+      'education': _model.education,
+      'gender': _model.gender,
+      'heightMax': _model.heightMax,
+      'heightMin': _model.heightMin,
+      'hometown': _model.hometown,
+      'interestList':null
+    };
+
+    ApiService.saveMatchRequest(params ?? {}).then((e) {});
+  }
+
+  void _setValue(int index, var value, {List<dynamic> interestList}) {
+    String data = value??'';
+    if (index == 0) {
+      _model.ageMin = int.parse(data.substring(0, 2));
+      _model.ageMax = int.parse(data.substring(4, 6));
+    }
+    if (index == 1) {
+      _model.heightMin = int.parse(data.substring(0, 3));
+      _model.heightMax = int.parse(data.substring(6, 9));
+    }
+    if (index == 2) {
+      _model.education = WidgetUnitls().educationIndex(data);
+    }
+    if (index == 3) {
+      _model.gender = WidgetUnitls().genderInt(data);
+    }
+    if (index == 4) {
+      _model.hometown = data;
+    }
+    if (index == 5) {
+      // try{
+      //         _model.interestList = interestList;
+      // }catch(e) {
+      //   print(e);
+      // }
+      _model.interestList = ['12','234'];
+    }
+
+    setState(() {});
+  }
+
+  bool _isShowContent(int index) {
+    if (_model == null) return false;
+    if (index == 0 && _model.ageMin != null && _model?.ageMin > 0) {
+      return true;
+    }
+    if (index == 1 && _model.heightMin != null && _model?.heightMin > 0) {
+      return true;
+    }
+    if (index == 2 && _model?.education != null) {
+      return true;
+    }
+    if (index == 3 && _model?.gender != null) {
+      return true;
+    }
+    if (index == 4 && _model?.hometown != null && _model.hometown.length > 0) {
+      return true;
+    }
+    if (index == 4 && _model?.interestList != null) {
+      return true;
+    }
+
+    return false;
+  }
+
+  String _showContent(int index) {
+    if (_model == null) return '';
+
+    if (index == 0 && _model.ageMin != null && _model?.ageMin > 0) {
+      return '${_model.ageMin}岁' + '-' + '${_model.ageMax}岁';
+    }
+    if (index == 1 && _model.heightMin != null && _model?.heightMin > 0) {
+      return '${_model.heightMin}CM' + '-' + '${_model.heightMax}CM';
+      ;
+    }
+    if (index == 2 && _model?.education != null) {
+      return WidgetUnitls().educationStr(_model.education);
+    }
+    if (index == 3 && _model?.gender != null) {
+      return WidgetUnitls().genderStr(_model.gender);
+    }
+    if (index == 4 && _model?.hometown != null && _model.hometown.length > 0) {
+      return _model.hometown;
+    }
+    if (index == 4 && _model?.interestList != null) {
+      return WidgetUnitls().interestStr(_model.interestList);
+    }
+
+    return _placerTitles[index];
   }
 
   @override
@@ -113,8 +231,8 @@ class _PersonSiftPageState extends State<PersonSiftPage> {
             index: index,
             title: title,
             itemClick: _itemClick,
-            placerTitle: _placerTitles[index],
-            // isShowStar: title == '学校' || title == '专业' ? true : false,
+            placerTitle: _showContent(index),
+            isShowContent: _isShowContent(index),
           );
         },
         itemCount: _titles.length,

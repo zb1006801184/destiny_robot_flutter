@@ -21,6 +21,6 @@ class ApiUrl {
   //学生认证 、获取学生认证
   static const String SAVE_STUDENT_URL =
       '/api-love/account_data/student/identification';
-  //保存匹配条件
+  //保存匹配条件、获取匹配条件
   static const String SAVE_MATCH_URL = '/api-love/match/condition';
 }
