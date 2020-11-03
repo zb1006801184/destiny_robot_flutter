@@ -6,6 +6,8 @@ import 'http_utils.dart';
 import 'api_url.dart';
 import '../models/user_info_model.dart';
 import '../models/sift_model.dart';
+import '../models/sift_list_model.dart';
+import '../models/sift_user_model.dart';
 
 class ApiService {
   //获取token
@@ -189,6 +191,44 @@ class ApiService {
         print(e);
       }
       return data;
+    } else {
+      return null;
+    }
+  }
+
+//获取匹配条件
+  static Future<List<SiftListModel>> getMatchListRequest() async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.GET_MATCH_LIST_URL, method: HttpUtils.GET);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      List data = responseData['data'];
+      List<SiftListModel> result = [];
+      data.forEach((element) { 
+        result.add(SiftListModel.fromJson(element));
+      });
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+
+  //根据匹配轨迹id获取匹配用户
+
+static Future<List<SiftUserModel>> getMatchWithIDRequest(Map<String, dynamic> params) async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.GET_MATCH_ID_URL, data: params,method: HttpUtils.GET);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      List data = responseData['data'];
+      List<SiftUserModel> result = [];
+      data.forEach((element) { 
+        result.add(SiftUserModel.fromJson(element));
+      });
+      return result;
     } else {
       return null;
     }

@@ -1,6 +1,10 @@
 import 'package:amap_location_fluttify/amap_location_fluttify.dart';
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
+import 'package:destiny_robot/models/sift_list_model.dart';
+import 'package:destiny_robot/models/sift_user_model.dart';
+import 'package:destiny_robot/network/api_service.dart';
 import 'package:destiny_robot/unitls/global.dart';
+import 'package:destiny_robot/unitls/toast_view.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../unitls/nav_bar_config.dart';
@@ -17,12 +21,30 @@ class _MapHomeState extends State<MapHome> {
   LatLng _centerLatLng = LatLng(39.95883870442708, 116.44932074652777);
   //是否在匹配
   bool _isMarry = false;
+  //轨迹列表
+  List<SiftListModel> _siftResultList = [];
+  int selectItemIndex;
 
   //折线数据
   LatLng _centerLatLng1 = LatLng(39.96883870442708, 116.44932074652777);
   LatLng _centerLatLng2 = LatLng(39.96883870442708, 116.47032074652777);
   LatLng _centerLatLng3 = LatLng(39.97883870442708, 116.44932074652777);
   LatLng _centerLatLng4 = LatLng(39.97953870442708, 116.44932074652777);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _configData();
+  }
+
+  void _configData() async {
+    await ApiService.getMatchListRequest().then((value) {
+      setState(() {
+        _siftResultList = value;
+      });
+    });
+  }
 
   void _righClick() {
     print('right');
@@ -47,6 +69,13 @@ class _MapHomeState extends State<MapHome> {
 //匹配
 
   void _marryAction() async {
+    if (Global.userModel.auditState != 1) {
+      ToastView(
+        title: '尚未实名认证！',
+      ).showMessage();
+      return;
+    }
+
     //添加路线图
     await _controller.addPolyline(PolylineOption(
       latLngList: [
@@ -60,9 +89,9 @@ class _MapHomeState extends State<MapHome> {
       lineJoinType: LineJoinType.Round,
     ));
 
-    _addPersonMarker();
-    await Future.delayed(Duration(seconds: 1), () {});
-    _addPersonMarker();
+    // _addPersonMarker(lists: [_centerLatLng1, _centerLatLng2]);
+    // await Future.delayed(Duration(seconds: 1), () {});
+    // _addPersonMarker(lists: [_centerLatLng1, _centerLatLng2]);
 
     //初始位置
     _controller.addMarker(MarkerOption(
@@ -71,11 +100,11 @@ class _MapHomeState extends State<MapHome> {
   }
 
 //添加自定义widget
-  void _addPersonMarker() {
+  void _addPersonMarker({List<SiftUserModel> lists}) {
     _controller.addMarkers([
-      for (var item in [_centerLatLng1, _centerLatLng2])
+      for (SiftUserModel item in lists)
         MarkerOption(
-            latLng: item,
+            latLng: LatLng(item.lat, item.lon),
             widget: Container(
               height: 55,
               width: 34,
@@ -124,6 +153,36 @@ class _MapHomeState extends State<MapHome> {
     await _controller?.showMyLocation(MyLocationOption(
         myLocationType: MyLocationType.Follow,
         iconProvider: AssetImage('assets/images/index_icon_daohang.png')));
+  }
+
+  //右侧历史轨迹列表的点击
+
+  void _historyListClick(int index) async {
+    //清理添加物
+    _controller.clear();
+    SiftListModel model = _siftResultList[index];
+    List<LatLng> result = [];
+    model.trailDetails.forEach((element) {
+      TrailDetails localModel = element;
+      result.add(LatLng(localModel.lat, localModel.lon));
+    });
+    //添加路线图
+    await _controller.addPolyline(PolylineOption(
+      latLngList: result,
+      width: 20,
+      strokeColor: Color(0xFFFC9E7E),
+      lineJoinType: LineJoinType.Round,
+    ));
+
+    await ApiService.getMatchWithIDRequest({'id': model.id})
+        .then((value) async {
+      _addPersonMarker(lists: value);
+      await Future.delayed(Duration(seconds: 1), () {});
+      _addPersonMarker(lists: value);
+    });
+    setState(() {
+      selectItemIndex = index;
+    });
   }
 
   @override
@@ -242,7 +301,7 @@ class _MapHomeState extends State<MapHome> {
                     itemBuilder: (context, index) {
                       return _rightSelectItem(index);
                     },
-                    itemCount: 4,
+                    itemCount: _siftResultList.length ?? 0,
                   ),
                 )
               ],
@@ -252,6 +311,7 @@ class _MapHomeState extends State<MapHome> {
   //右侧选择list item
   Widget _rightSelectItem(int index) {
     final List titles = ['三元桥', '双井', '健德门', '垂杨柳南里'];
+    SiftListModel model = _siftResultList[index];
     return GestureDetector(
       child: Container(
         child: Column(
@@ -261,8 +321,12 @@ class _MapHomeState extends State<MapHome> {
               width: 48.4,
               padding: EdgeInsets.all(8.5),
               child: Text(
-                titles[index],
-                style: TextStyle(color: Color(0xFFf89264), fontSize: 10),
+                model.name ?? '',
+                style: TextStyle(
+                    color: selectItemIndex == index
+                        ? Color(0xFFD1D1D1)
+                        : Color(0xFFf89264),
+                    fontSize: 10),
                 textAlign: TextAlign.left,
               ),
             ),
@@ -275,7 +339,7 @@ class _MapHomeState extends State<MapHome> {
         ),
       ),
       onTap: () {
-        print('${titles[index]}');
+        _historyListClick(index);
       },
     );
   }

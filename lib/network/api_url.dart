@@ -23,4 +23,9 @@ class ApiUrl {
       '/api-love/account_data/student/identification';
   //保存匹配条件、获取匹配条件
   static const String SAVE_MATCH_URL = '/api-love/match/condition';
+  //获取匹配轨迹列表
+  static const String GET_MATCH_LIST_URL = '/api-love/match/trail';
+  //根据匹配轨迹id获取匹配用户
+    static const String GET_MATCH_ID_URL = '/api-love/match/account';
+
 }
