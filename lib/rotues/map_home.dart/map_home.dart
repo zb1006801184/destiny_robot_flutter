@@ -1,5 +1,6 @@
 import 'package:amap_location_fluttify/amap_location_fluttify.dart';
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
+import 'package:destiny_robot/im/widget/cachImage/cached_image_widget.dart';
 import 'package:destiny_robot/models/sift_list_model.dart';
 import 'package:destiny_robot/models/sift_user_model.dart';
 import 'package:destiny_robot/network/api_service.dart';
@@ -119,15 +120,22 @@ class _MapHomeState extends State<MapHome> {
                                 'assets/images/index_icon_heart.png'))),
                     child: Center(
                       child: Text(
-                        '99',
+                        '${item.fateValue}',
                         style: TextStyle(fontSize: 8, color: Colors.white),
                       ),
                     ),
                   ),
-                  Image(
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(34 / 2),
+                    child: CachedNetworkImage(
                       width: 34,
                       height: 34,
-                      image: AssetImage('assets/images/default_portrait.png')),
+                      fit: BoxFit.cover,
+                      imageUrl: item.headImgUrl,
+                      errorWidget: (context, url, error) =>
+                          Image.asset('assets/images/default_portrait.jpg'),
+                    ),
+                  )
                 ],
               ),
             )),
@@ -173,15 +181,16 @@ class _MapHomeState extends State<MapHome> {
       strokeColor: Color(0xFFFC9E7E),
       lineJoinType: LineJoinType.Round,
     ));
-
+    setState(() {
+      selectItemIndex = index;
+    });
     await ApiService.getMatchWithIDRequest({'id': model.id})
         .then((value) async {
       _addPersonMarker(lists: value);
       await Future.delayed(Duration(seconds: 1), () {});
       _addPersonMarker(lists: value);
-    });
-    setState(() {
-      selectItemIndex = index;
+      await Future.delayed(Duration(seconds: 1), () {});
+      _addPersonMarker(lists: value);
     });
   }
 
