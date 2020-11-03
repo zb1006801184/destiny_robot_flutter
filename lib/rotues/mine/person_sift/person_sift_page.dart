@@ -108,23 +108,16 @@ class _PersonSiftPageState extends State<PersonSiftPage> {
 
     if (index == 5) {
       InterestSelectWidget().showInterestSelect(
-          context, LocalData().intersTitles, sureCallBack: (e) {
-        try {
-          _request(index, '',);
-        } catch (r) {
-          print(r);
-        }
-      });
+          context, LocalData().intersTitles,
+          sureCallBack: (e) {
+            _request(index, e);
+          });
     }
   }
 
-  void _request(int index, var value, {List<dynamic> interestList}) async {
-    Map params = {};
-    try {
-      _setValue(index, value,);
-    } catch (e) {
-      print(e);
-    }
+  void _request(int index, var value) async {
+    Map<String, dynamic> params = {};
+    _setValue(index, value);
     params = {
       'ageMax': _model.ageMax,
       'ageMin': _model.ageMin,
@@ -133,14 +126,13 @@ class _PersonSiftPageState extends State<PersonSiftPage> {
       'heightMax': _model.heightMax,
       'heightMin': _model.heightMin,
       'hometown': _model.hometown,
-      'interestList':null
+      'interestList': _model.interestList
     };
-
     ApiService.saveMatchRequest(params ?? {}).then((e) {});
   }
 
-  void _setValue(int index, var value, {List<dynamic> interestList}) {
-    String data = value??'';
+  void _setValue(int index, var value) {
+    String data = value;
     if (index == 0) {
       _model.ageMin = int.parse(data.substring(0, 2));
       _model.ageMax = int.parse(data.substring(4, 6));
@@ -158,13 +150,8 @@ class _PersonSiftPageState extends State<PersonSiftPage> {
     if (index == 4) {
       _model.hometown = data;
     }
-    if (index == 5) {
-      // try{
-      //         _model.interestList = interestList;
-      // }catch(e) {
-      //   print(e);
-      // }
-      _model.interestList = ['12','234'];
+    if (index ==5) {
+      _model.interestList = value;
     }
 
     setState(() {});
