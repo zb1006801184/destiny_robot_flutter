@@ -26,6 +26,7 @@ class ApiUrl {
   //获取匹配轨迹列表
   static const String GET_MATCH_LIST_URL = '/api-love/match/trail';
   //根据匹配轨迹id获取匹配用户
-    static const String GET_MATCH_ID_URL = '/api-love/match/account';
-
+  static const String GET_MATCH_ID_URL = '/api-love/match/account';
+  //去匹配 、停止匹配
+  static const String GET_TOTO_MATCH_URL = '/api-love/match';
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:amap_location_fluttify/amap_location_fluttify.dart';
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:destiny_robot/im/widget/cachImage/cached_image_widget.dart';
@@ -24,7 +26,16 @@ class _MapHomeState extends State<MapHome> {
   bool _isMarry = false;
   //轨迹列表
   List<SiftListModel> _siftResultList = [];
+  //历史轨迹选中了第几个
   int selectItemIndex;
+  //是否允许点击历史轨迹
+  bool isCanClick = true;
+  //定时器
+  Timer _timer;
+  //匹配的人
+  List _persons = [];
+  //三分钟一次的位置
+  List<LatLng> _locations = [];
 
   //折线数据
   LatLng _centerLatLng1 = LatLng(39.96883870442708, 116.44932074652777);
@@ -76,28 +87,94 @@ class _MapHomeState extends State<MapHome> {
       ).showMessage();
       return;
     }
+    setState(() {
+      _isMarry = !_isMarry;
+    });
+    if (_isMarry == true) {
+      starMach();
+    } else {
+      stopMach();
+    }
+  }
 
-    //添加路线图
-    await _controller.addPolyline(PolylineOption(
-      latLngList: [
-        _centerLatLng,
-        _centerLatLng1,
-        _centerLatLng2,
-        _centerLatLng3
-      ],
-      width: 20,
-      strokeColor: Color(0xFFFC9E7E),
-      lineJoinType: LineJoinType.Round,
-    ));
+  //去匹配
+  void starMach() async {
+    //当前定位
+    Location location =
+        await AmapLocation.instance.fetchLocation(needAddress: true);
+    _centerLatLng = location.latLng;
+    _locations.add(location.latLng);
+    _controller.setCenterCoordinate(location.latLng);
+    // _controller.setAllGesturesEnabled(false);
+    // await _controller?.showMyLocation(MyLocationOption(
+    //     myLocationType: MyLocationType.Follow,
+    //     iconProvider: AssetImage('assets/images/index_icon_daohang.png')));
 
-    // _addPersonMarker(lists: [_centerLatLng1, _centerLatLng2]);
-    // await Future.delayed(Duration(seconds: 1), () {});
-    // _addPersonMarker(lists: [_centerLatLng1, _centerLatLng2]);
+    //请求匹配接口
+    await ApiService.goToMatchRequest({
+      'lat': location.latLng.latitude,
+      'lon': location.latLng.longitude,
+      'newTrail': true,
+      'trailName': location.street ?? '三元桥'
+    }).then((value) async {
+      keepLocation();
+      _persons = value;
+      _controller.clear();
+      _addPersonMarker(lists: _persons);
+      await Future.delayed(Duration(seconds: 1), () {});
+      _addPersonMarker(lists: _persons);
+      await Future.delayed(Duration(seconds: 1), () {});
+      _addPersonMarker(lists: _persons);
+    });
 
     //初始位置
     _controller.addMarker(MarkerOption(
-        latLng: _centerLatLng4,
+        latLng: _centerLatLng,
         iconProvider: AssetImage('assets/images/index_icon_pos.png')));
+  }
+
+  //停止匹配
+  void stopMach() async {
+    await ApiService.stopMatchRequest().then((value) {
+      _timer?.cancel();
+      print('停止匹配');
+    }).catchError((e) {});
+  }
+
+  keepLocation() async {
+    _timer = Timer.periodic(Duration(milliseconds: 1000 * 10), (t) async {
+      print('匹配');
+      Location location =
+          await AmapLocation.instance.fetchLocation(needAddress: true);
+      _locations.add(location.latLng);
+      _locations.add(_centerLatLng3);
+
+      //添加路线图
+        await _controller.addPolyline(PolylineOption(
+          latLngList: _locations,
+          width: 20,
+          strokeColor: Color(0xFFFC9E7E),
+          lineJoinType: LineJoinType.Round,
+        ));
+
+
+      //请求匹配接口
+      await ApiService.goToMatchRequest({
+        'lat': location.latLng.latitude,
+        'lon': location.latLng.longitude,
+        'newTrail': false,
+        'trailName': location.street ?? '三元桥'
+      }).then((value) async {
+        _persons = value;
+        _addPersonMarker(lists: _persons);
+        await Future.delayed(Duration(seconds: 1), () {});
+        _addPersonMarker(lists: _persons);
+        await Future.delayed(Duration(seconds: 1), () {});
+        _addPersonMarker(lists: _persons);
+
+        
+      });
+    });
   }
 
 //添加自定义widget
@@ -106,6 +183,7 @@ class _MapHomeState extends State<MapHome> {
       for (SiftUserModel item in lists)
         MarkerOption(
             latLng: LatLng(item.lat, item.lon),
+            title: item.nickname,
             widget: Container(
               height: 55,
               width: 34,
@@ -149,15 +227,6 @@ class _MapHomeState extends State<MapHome> {
     Location location = await AmapLocation.instance.fetchLocation();
     _centerLatLng = location.latLng;
     _controller.setCenterCoordinate(location.latLng);
-    //连续定位
-    // int index = 0;
-    // Stream<Location> stream = await AmapLocation.instance.listenLocation();
-    // await for (final location in stream) {
-    //   _controller.setCenterCoordinate(location.latLng);
-    //   index += 1;
-    //   print('zzz${location.address}:${index}');
-    // }
-
     await _controller?.showMyLocation(MyLocationOption(
         myLocationType: MyLocationType.Follow,
         iconProvider: AssetImage('assets/images/index_icon_daohang.png')));
@@ -166,6 +235,9 @@ class _MapHomeState extends State<MapHome> {
   //右侧历史轨迹列表的点击
 
   void _historyListClick(int index) async {
+    if (isCanClick == false || _isMarry == true) {
+      return;
+    }
     //清理添加物
     _controller.clear();
     SiftListModel model = _siftResultList[index];
@@ -184,6 +256,7 @@ class _MapHomeState extends State<MapHome> {
     setState(() {
       selectItemIndex = index;
     });
+    isCanClick = false;
     await ApiService.getMatchWithIDRequest({'id': model.id})
         .then((value) async {
       _addPersonMarker(lists: value);
@@ -191,6 +264,7 @@ class _MapHomeState extends State<MapHome> {
       _addPersonMarker(lists: value);
       await Future.delayed(Duration(seconds: 1), () {});
       _addPersonMarker(lists: value);
+      isCanClick = true;
     });
   }
 

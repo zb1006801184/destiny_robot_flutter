@@ -25,10 +25,10 @@ void main() async {
   await enableFluttifyLog(false);
   //初始化地图
   await AmapService.init(
-    iosKey: 'cbe00823663a07e543d2d54430432272',
+    iosKey: 'cb185f64c4234f28297b93046d9bb241',
     androidKey: 'c91e45151b799ec4bd6f73508e7d28ea',
   );
 
   //初始化定位
-  await AmapCore.init('cbe00823663a07e543d2d54430432272');
+  await AmapCore.init('cb185f64c4234f28297b93046d9bb241');
 }

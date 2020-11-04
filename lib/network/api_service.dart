@@ -205,7 +205,7 @@ class ApiService {
       var responseData = jsonDecode(response.data);
       List data = responseData['data'];
       List<SiftListModel> result = [];
-      data.forEach((element) { 
+      data.forEach((element) {
         result.add(SiftListModel.fromJson(element));
       });
       return result;
@@ -214,21 +214,53 @@ class ApiService {
     }
   }
 
-
   //根据匹配轨迹id获取匹配用户
 
-static Future<List<SiftUserModel>> getMatchWithIDRequest(Map<String, dynamic> params) async {
+  static Future<List<SiftUserModel>> getMatchWithIDRequest(
+      Map<String, dynamic> params) async {
     Response response = await HttpUtils(headers: {
       "Authorization": "Bearer ${Global.tokenModel.accessToken}"
-    }).request(ApiUrl.GET_MATCH_ID_URL, data: params,method: HttpUtils.GET);
+    }).request(ApiUrl.GET_MATCH_ID_URL, data: params, method: HttpUtils.GET);
     if (response != null) {
       var responseData = jsonDecode(response.data);
       List data = responseData['data'];
       List<SiftUserModel> result = [];
-      data.forEach((element) { 
+      data.forEach((element) {
         result.add(SiftUserModel.fromJson(element));
       });
       return result;
+    } else {
+      return null;
+    }
+  }
+
+  //去匹配
+  static Future<List<SiftUserModel>> goToMatchRequest(
+      Map<String, dynamic> params) async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.GET_TOTO_MATCH_URL, data: params, method: HttpUtils.GET);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      List data = responseData['data'];
+      List<SiftUserModel> result = [];
+      data.forEach((element) {
+        result.add(SiftUserModel.fromJson(element));
+      });
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+  //停止匹配
+  static Future<dynamic> stopMatchRequest() async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.GET_TOTO_MATCH_URL, method: HttpUtils.POST);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      return responseData;
     } else {
       return null;
     }
