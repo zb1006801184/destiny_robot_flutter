@@ -265,4 +265,31 @@ class ApiService {
       return null;
     }
   }
+
+  //获取融云token
+  static Future<dynamic> getRongYunTokenRequest() async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.GET_RONGYUN_TOKEN_URL, method: HttpUtils.GET);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      return responseData;
+    } else {
+      return null;
+    }
+  }
+
+  //获取他人信息
+  static Future<dynamic> getOtherMessageWithIDRequest(
+      Map<String, dynamic> map) async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.GET_OTHER_MESSAGE_URL, data: map, method: HttpUtils.GET);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      return responseData;
+    } else {
+      return null;
+    }
+  }
 }

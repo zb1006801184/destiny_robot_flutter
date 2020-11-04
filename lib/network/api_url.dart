@@ -29,4 +29,9 @@ class ApiUrl {
   static const String GET_MATCH_ID_URL = '/api-love/match/account';
   //去匹配 、停止匹配
   static const String GET_TOTO_MATCH_URL = '/api-love/match';
+  //获取融云token
+  static const String GET_RONGYUN_TOKEN_URL =
+      '/api-love/account_data/rong/token';
+  //获取他人信息
+  static const String GET_OTHER_MESSAGE_URL = '/api-love/account_data/other';
 }

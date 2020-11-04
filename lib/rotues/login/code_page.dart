@@ -40,6 +40,7 @@ class _CodePageState extends State<CodePage> {
   }
 
   void _loginAction() async {
+    
     Map map = new Map();
     map["region"] = 86;
     map["phone"] = 15070925726;
@@ -49,12 +50,23 @@ class _CodePageState extends State<CodePage> {
         await ApiService.getOauthTokenRequest('15070925726', '1234');
     Store.value<UserStateModel>(context, listen: false).savaTokenInfo(model);
     //获取个人信息
-    UserInfoModel userModel = await ApiService.getUserInfoRequest().catchError((e){
+    UserInfoModel userModel =
+        await ApiService.getUserInfoRequest().catchError((e) {
       print(e);
     });
     Store.value<UserStateModel>(context, listen: false).savaUserInfo(userModel);
-  //http://api-sealtalk.rongcloud.cn/user/login
-  //http://api.sealtalk.im/user/login
+    ApiService.getRongYunTokenRequest().then((value) {
+      _saveUserInfo('15070925726', value['data']['rongToken']);
+      Navigator.of(context).pushAndRemoveUntil(
+          new MaterialPageRoute(builder: (context) => new HomePage()),
+          (route) => route == null);
+    });
+    return;
+
+
+
+    //http://api-sealtalk.rongcloud.cn/user/login
+    //http://api.sealtalk.im/user/login
     HttpUtil.post("http://api-sealtalk.rongcloud.cn/user/login", (data) {
       if (data != null) {
         Map body = data;

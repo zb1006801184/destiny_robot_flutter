@@ -142,7 +142,7 @@ class _MapHomeState extends State<MapHome> {
   }
 
   keepLocation() async {
-    _timer = Timer.periodic(Duration(milliseconds: 1000 * 10), (t) async {
+    _timer = Timer.periodic(Duration(milliseconds: 1000 * 60 * 3), (t) async {
       print('匹配');
       Location location =
           await AmapLocation.instance.fetchLocation(needAddress: true);
@@ -150,13 +150,12 @@ class _MapHomeState extends State<MapHome> {
       _locations.add(_centerLatLng3);
 
       //添加路线图
-        await _controller.addPolyline(PolylineOption(
-          latLngList: _locations,
-          width: 20,
-          strokeColor: Color(0xFFFC9E7E),
-          lineJoinType: LineJoinType.Round,
-        ));
-
+      await _controller.addPolyline(PolylineOption(
+        latLngList: _locations,
+        width: 20,
+        strokeColor: Color(0xFFFC9E7E),
+        lineJoinType: LineJoinType.Round,
+      ));
 
       //请求匹配接口
       await ApiService.goToMatchRequest({
@@ -171,8 +170,6 @@ class _MapHomeState extends State<MapHome> {
         _addPersonMarker(lists: _persons);
         await Future.delayed(Duration(seconds: 1), () {});
         _addPersonMarker(lists: _persons);
-
-        
       });
     });
   }
@@ -184,6 +181,7 @@ class _MapHomeState extends State<MapHome> {
         MarkerOption(
             latLng: LatLng(item.lat, item.lon),
             title: item.nickname,
+            snippet: '${item.accountId}',
             widget: Container(
               height: 55,
               width: 34,
@@ -268,6 +266,12 @@ class _MapHomeState extends State<MapHome> {
     });
   }
 
+  //地图上的人物点击
+  void onMarkerClicked(Marker marker) {
+    marker.iosModel?.get_subtitle().then((value) => print(value));
+    marker.androidModel?.getSnippet().then((value) => print(value));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -286,7 +290,7 @@ class _MapHomeState extends State<MapHome> {
                 rotateGestureEnabled: false,
                 zoomLevel: 15,
                 onMarkerClicked: (Marker marker) {
-                  print(marker.iosModel.get_title());
+                  onMarkerClicked(marker);
                 },
                 onMapClicked: (LatLng coord) {
                   print(coord);
