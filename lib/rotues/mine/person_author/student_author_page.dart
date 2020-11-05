@@ -87,7 +87,7 @@ class _StudentAuthorPageState extends State<StudentAuthorPage> {
           height: 407.5,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: _imagePath == null
+            child: _imagePath == null||_imagePath.length<1
                 ? Image.asset(
                     'assets/images/student_card.png',
                     fit: BoxFit.fill,

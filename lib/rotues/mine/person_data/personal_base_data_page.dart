@@ -5,6 +5,7 @@ import 'package:destiny_robot/state/user_state_model.dart';
 
 import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
+import 'package:destiny_robot/unitls/widget_unitls.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/mine_common_item.dart';
 import '../../../widgets/single_select_picker.dart';
@@ -132,7 +133,8 @@ class _PersonalBaseDataPageState extends State<PersonalBaseDataPage> {
   @override
   Widget build(BuildContext context) {
     var contents = [
-      _educations[Global.userModel.education - 1] ?? _placerTitles[0],
+      WidgetUnitls().educationStr(Global.userModel.education) ??
+          _placerTitles[0],
       Global.userModel.school ?? _placerTitles[1],
       Global.userModel.major ?? _placerTitles[2],
       Global.userModel.hometown ?? _placerTitles[3],

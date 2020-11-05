@@ -196,11 +196,13 @@ class ApiService {
     }
   }
 
-//获取匹配条件
-  static Future<List<SiftListModel>> getMatchListRequest() async {
+//获取匹配列表
+  static Future<List<SiftListModel>> getMatchListRequest(
+      {Map<String, dynamic> params}) async {
     Response response = await HttpUtils(headers: {
       "Authorization": "Bearer ${Global.tokenModel.accessToken}"
-    }).request(ApiUrl.GET_MATCH_LIST_URL, method: HttpUtils.GET);
+    }).request(ApiUrl.GET_MATCH_LIST_URL,
+        data: params ?? {}, method: HttpUtils.GET);
     if (response != null) {
       var responseData = jsonDecode(response.data);
       List data = responseData['data'];

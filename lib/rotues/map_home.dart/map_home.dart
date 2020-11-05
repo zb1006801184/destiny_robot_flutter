@@ -36,6 +36,8 @@ class _MapHomeState extends State<MapHome> {
   List _persons = [];
   //三分钟一次的位置
   List<LatLng> _locations = [];
+  //当前选择的时间，默认当天
+  DateTime _selectTime = DateTime.now();
 
   //折线数据
   LatLng _centerLatLng1 = LatLng(39.96883870442708, 116.44932074652777);
@@ -65,17 +67,24 @@ class _MapHomeState extends State<MapHome> {
   void _leftClick() async {
     print('left');
 
-    var result = await showDatePicker(
+    DateTime result = await showDatePicker(
       context: context,
       locale: Locale('zh'),
-      initialDate: DateTime.now(),
+      initialDate: _selectTime,
       firstDate: DateTime(2020),
-      lastDate: DateTime(2021),
+      lastDate: DateTime.now(),
       selectableDayPredicate: (DateTime day) {
         return day.difference(DateTime.now()).inDays < 1;
       },
     );
-    print('$result');
+    _selectTime = result;
+
+    ApiService.getMatchListRequest(params: {'matchDate': result.toString()})
+        .then((value) {
+      setState(() {
+        _siftResultList = value;
+      });
+    });
   }
 
 //匹配
@@ -268,15 +277,20 @@ class _MapHomeState extends State<MapHome> {
 
   //地图上的人物点击
   void onMarkerClicked(Marker marker) {
-    marker.iosModel?.get_subtitle().then((value) => print(value));
-    marker.androidModel?.getSnippet().then((value) => print(value));
+    marker.iosModel?.get_subtitle().then((value) => gotoChatPage(value));
+    marker.androidModel?.getSnippet().then((value) => gotoChatPage(value));
+  }
+
+  void gotoChatPage(String value) {
+    Map arg = {"coversationType": 1, "targetId": '97'};
+    Navigator.pushNamed(context, "/conversation", arguments: arg);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: NavBarConfig()
-          .configHomeMapAppBar('匹配', context, _leftClick, _righClick),
+          .configHomeMapAppBar('匹配', context, _leftClick, _righClick,time: _selectTime),
       body: Stack(children: [
         Column(
           children: [

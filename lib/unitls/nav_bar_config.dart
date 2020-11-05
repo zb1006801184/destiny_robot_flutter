@@ -42,7 +42,7 @@ class NavBarConfig {
 
   //首页路由
   AppBar configHomeMapAppBar(String title, BuildContext context,
-      Function leftClick, Function rightClick) {
+      Function leftClick, Function rightClick,{DateTime time}) {
     return AppBar(
       backgroundColor: ThemUntil().mainColor(context),
       elevation: 0, //阴影辐射范围
@@ -55,7 +55,7 @@ class NavBarConfig {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _buildLeftButton(leftClick),
+                    _buildLeftButton(leftClick,time: time),
                     GestureDetector(
                       child: Container(
                         height: 64,
@@ -88,7 +88,7 @@ class NavBarConfig {
   }
 
   //左侧按钮
-  Widget _buildLeftButton(Function leftClick) {
+  Widget _buildLeftButton(Function leftClick,{DateTime time}) {
     return GestureDetector(
       child: Container(
         margin: EdgeInsets.only(left: 19),
@@ -97,7 +97,7 @@ class NavBarConfig {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
-              '2020年09月21日',
+              '${time.year}年${time.month}月${time.day}日',
               style: TextStyle(
                   color: Color(0xFFFF6572),
                   fontSize: 12,

@@ -47,7 +47,7 @@ class _CodePageState extends State<CodePage> {
     map["password"] = 'Zb368464';
     //token信息
     UserInfoModel model =
-        await ApiService.getOauthTokenRequest('15070925726', '1234');
+        await ApiService.getOauthTokenRequest('15070925727', '1234');
     Store.value<UserStateModel>(context, listen: false).savaTokenInfo(model);
     //获取个人信息
     UserInfoModel userModel =
@@ -56,7 +56,7 @@ class _CodePageState extends State<CodePage> {
     });
     Store.value<UserStateModel>(context, listen: false).savaUserInfo(userModel);
     ApiService.getRongYunTokenRequest().then((value) {
-      _saveUserInfo('15070925726', value['data']['rongToken']);
+      _saveUserInfo('15070925727', value['data']['rongToken']);
       Navigator.of(context).pushAndRemoveUntil(
           new MaterialPageRoute(builder: (context) => new HomePage()),
           (route) => route == null);

@@ -33,8 +33,7 @@ class _PersonAuthorPagesState extends State<PersonAuthorPages> {
     var data = await ApiService.getIDCardRequest();
     _peopleImagePath = data['data']['idCardFront'];
     _reverseImagePath = data['data']['idCardReverse'];
-    setState(() {
-    });
+    setState(() {});
   }
 
   //选择照片
@@ -108,7 +107,7 @@ class _PersonAuthorPagesState extends State<PersonAuthorPages> {
         height: 216.0,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          child: image == null
+          child: image == null || image.length < 1
               ? Image.asset(
                   images[index],
                   fit: BoxFit.fill,
