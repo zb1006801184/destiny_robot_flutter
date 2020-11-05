@@ -76,6 +76,7 @@ class UserInfoDataSource {
     user.id = userId;
     user.name = names[Random().nextInt(names.length)];
     user.portraitUrl = urls[Random().nextInt(urls.length)];
+    // user.portraitUrl = 'http://diting-picture.ditingai.com/Default_Avatar%403x.png';
 
     cachedUserMap[userId] = user;
     return user;

@@ -186,13 +186,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       ],
       locale: Locale('zh'),
       onGenerateRoute: onGenerateRoute,
+      // routes:routes,
       themeMode: Store.value<ThemModel>(context).getThemeModel()
           ? ThemeMode.dark
           : ThemeMode.light,
       darkTheme: ThemUntil().darktData,
-      home: HomePage(),
       theme: ThemUntil().linghtData,
-      initialRoute: '/',
     );
   }
 

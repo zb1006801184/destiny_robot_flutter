@@ -158,7 +158,7 @@ class _MineState extends State<Mine> {
               fit: BoxFit.cover,
               imageUrl: Store.value<UserStateModel>(context, listen: true)
                       .userInfoModel()
-                      .headImgUrl ??
+                      ?.headImgUrl ??
                   '',
               placeholder: (context, url) =>
                   Image.asset('assets/images/user_placer_image.jpg'),
@@ -191,14 +191,14 @@ class _MineState extends State<Mine> {
                           maxWidth: Global.ksWidth - 12 * 2 - 111 - 15),
                       margin: EdgeInsets.only(left: 111),
                       child: Text(
-                        Global.userModel.nickname ?? 'unkown',
+                        Global.userModel?.nickname ?? 'unkown',
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Container(
                       width: 15,
                       height: 15,
-                      child: Image.asset(Global.userModel.gender == '0'
+                      child: Image.asset(Global.userModel?.gender == '0'
                           ? 'assets/images/user_icon_male.png'
                           : 'assets/images/user_icon_female.png'),
                     ),

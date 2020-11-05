@@ -54,44 +54,6 @@ class _LoginPageState extends State<LoginPage> {
     initPlatformState();
   }
 
-  void _loginAction() async{
-    Map map = new Map();
-    map["region"] = 86;
-    map["phone"] = int.parse(_assount.text);
-    map["password"] = _password.text;
-
-
-    HttpUtil.post("http://api.sealtalk.im/user/login", (data) {
-      if (data != null) {
-        Map body = data;
-        int errorCode = body["code"];
-        if (errorCode == 200) {
-          Map result = body["result"];
-          String id = result["id"];
-          String token = result["token"];
-          _saveUserInfo(_assount.text, token);
-          developer.log("Login Success, $map", name: pageName);
-          Navigator.of(context).pushAndRemoveUntil(
-              new MaterialPageRoute(builder: (context) => new HomePage()),
-              (route) => route == null);
-        } else if (errorCode == -1) {
-          Fluttertoast.showToast(msg: "网络未连接，请连接网络重试");
-        } else {
-          Fluttertoast.showToast(msg: "服务器登录失败，errorCode： $errorCode");
-        }
-      } else {
-        developer.log("data is null", name: pageName);
-      }
-    }, params: map);
-  }
-
-  void _saveUserInfo(String id, String token) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("id", id);
-    prefs.setString("token", token);
-    prefs.setString("phone", _assount.text);
-    prefs.setString("password", _password.text);
-  }
 
 //获取验证码
   codeButtonClick() {
@@ -110,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     });
 
-    Navigator.of(context).pushNamed('/CodePage');
+    Navigator.of(context).pushNamed('/CodePage',arguments: _assount.text);
   }
 
 //关闭按钮的点击

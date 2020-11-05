@@ -15,6 +15,9 @@ import 'dart:async';
 import 'dart:developer' as developer;
 
 class CodePage extends StatefulWidget {
+  final String arguments;
+  CodePage({Key key, this.arguments}) : super(key: key);
+
   @override
   _CodePageState createState() => _CodePageState();
 }
@@ -24,6 +27,13 @@ class _CodePageState extends State<CodePage> {
   int _count = 0;
   String _codeButtonString = '发送验证码';
   String _code;
+  String _phone = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _phone = widget.arguments;
+  }
 
   codeButtonClick() {
     if (_count > 0) return;
@@ -40,14 +50,12 @@ class _CodePageState extends State<CodePage> {
   }
 
   void _loginAction() async {
-    
     Map map = new Map();
     map["region"] = 86;
     map["phone"] = 15070925726;
     map["password"] = 'Zb368464';
     //token信息
-    UserInfoModel model =
-        await ApiService.getOauthTokenRequest('15070925727', '1234');
+    UserInfoModel model = await ApiService.getOauthTokenRequest(_phone, _code);
     Store.value<UserStateModel>(context, listen: false).savaTokenInfo(model);
     //获取个人信息
     UserInfoModel userModel =
@@ -56,14 +64,12 @@ class _CodePageState extends State<CodePage> {
     });
     Store.value<UserStateModel>(context, listen: false).savaUserInfo(userModel);
     ApiService.getRongYunTokenRequest().then((value) {
-      _saveUserInfo('15070925727', value['data']['rongToken']);
+      _saveUserInfo(_phone, value['data']['rongToken']);
       Navigator.of(context).pushAndRemoveUntil(
           new MaterialPageRoute(builder: (context) => new HomePage()),
           (route) => route == null);
     });
     return;
-
-
 
     //http://api-sealtalk.rongcloud.cn/user/login
     //http://api.sealtalk.im/user/login
@@ -95,8 +101,9 @@ class _CodePageState extends State<CodePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("id", id);
     prefs.setString("token", token);
-    prefs.setString("phone", '15070925726');
-    prefs.setString("password", 'Zb368464');
+    prefs.setString("phone", _phone);
+    print('登录成功');
+    // prefs.setString("password", 'Zb368464');
   }
 
   @override
@@ -122,7 +129,7 @@ class _CodePageState extends State<CodePage> {
             Container(
               margin: EdgeInsets.only(left: 40.0),
               child: Text(
-                '验证码已发送至18612340968',
+                '验证码已发送至${_phone}',
                 style: TextStyle(
                     color: Color(0xFFFF010101),
                     fontSize: 13,
@@ -144,9 +151,11 @@ class _CodePageState extends State<CodePage> {
         codeLength: 4,
         autoFocus: true,
         onSubmit: (code) {
-          print('submit code:$code');
-          //登录
-          _loginAction();
+          if (code.length >= 4) {
+            _code = code;
+            //登录
+            _loginAction();
+          }
         },
       ),
     );

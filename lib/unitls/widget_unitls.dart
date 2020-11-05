@@ -1,4 +1,5 @@
 import 'package:destiny_robot/unitls/global.dart';
+import 'package:flutter/material.dart';
 
 class WidgetUnitls {
   String educationStr(int education) {
@@ -88,14 +89,14 @@ class WidgetUnitls {
 
   String mineAythorStr(String title) {
     if (title == '实名认证') {
-      if (Global.userModel.auditState == 1) {
+      if (Global.userModel?.auditState == 1) {
         return '已认证';
       } else {
         return '未实名认证';
       }
     }
     if (title == '学生认证') {
-      if (Global.userModel.studentAuditState == 1) {
+      if (Global.userModel?.studentAuditState == 1) {
         return '已认证';
       } else {
         return '认证获得优先匹配权利';
