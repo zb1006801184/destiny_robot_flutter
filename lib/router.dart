@@ -58,7 +58,7 @@ final routes = {
   '/PersonalDataIntroductionPage': (context, {arguments}) =>
       PersonalDataIntroductionPage(),
   '/PersonalDataAlbumPage': (context, {arguments}) => PersonalDataAlbumPage(),
-  '/PersonLikePage': (context, {arguments}) => PersonLikePage(),
+  '/PersonLikePage': (context, {arguments}) => PersonLikePage(arguments: arguments,),
   '/PersonAuthorPages': (context, {arguments}) => PersonAuthorPages(),
   '/StudentAuthorPage': (context, {arguments}) => StudentAuthorPage(),
   '/PersonSiftPage': (context, {arguments}) => PersonSiftPage(),

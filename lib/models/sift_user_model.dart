@@ -1,8 +1,11 @@
+import 'package:destiny_robot/unitls/common_tool.dart';
+
 class SiftUserModel {
   int accountId;
   String nickname;
   String headImgUrl;
   int fateValue;
+  String createdTime;
   double lon;
   double lat;
 
@@ -19,6 +22,7 @@ class SiftUserModel {
     nickname = json['nickname'];
     headImgUrl = json['headImgUrl'];
     fateValue = json['fateValue'];
+    createdTime = CommonTool().getHourTime(json['createdTime']);
     lon = json['lon'];
     lat = json['lat'];
   }
@@ -29,6 +33,7 @@ class SiftUserModel {
     data['nickname'] = this.nickname;
     data['headImgUrl'] = this.headImgUrl;
     data['fateValue'] = this.fateValue;
+    data['createdTime'] = this.createdTime;
     data['lon'] = this.lon;
     data['lat'] = this.lat;
     return data;

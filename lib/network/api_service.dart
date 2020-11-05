@@ -294,4 +294,45 @@ class ApiService {
       return null;
     }
   }
+
+  //我喜欢的人列表
+static Future<List<SiftUserModel>> getMineLikePersonsRequest(
+      Map<String, dynamic> map) async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.GET_MINE_LIKE_URL, data: map, method: HttpUtils.GET);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      List data = responseData['data']['records'];
+      List<SiftUserModel> result = [];
+      data.forEach((element) {
+        result.add(SiftUserModel.fromJson(element));
+      });
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+ //喜欢我的人列表
+static Future<List<SiftUserModel>> getLikeMinePersonsRequest(
+      Map<String, dynamic> map) async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.GET_LIKE_MINE_URL, data: map, method: HttpUtils.GET);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
+      List data = responseData['data']['records'];
+      List<SiftUserModel> result = [];
+      data.forEach((element) {
+        result.add(SiftUserModel.fromJson(element));
+      });
+      return result;
+    } else {
+      return null;
+    }
+  }
+
+
+
 }

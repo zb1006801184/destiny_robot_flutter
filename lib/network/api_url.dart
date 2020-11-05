@@ -34,4 +34,10 @@ class ApiUrl {
       '/api-love/account_data/rong/token';
   //获取他人信息
   static const String GET_OTHER_MESSAGE_URL = '/api-love/account_data/other';
+  //我喜欢的人列表
+  static const String GET_MINE_LIKE_URL = '/api-love/account_data/account_like';
+  //喜欢我的人
+
+  static const String GET_LIKE_MINE_URL = '/api-love/account_data/like_account';
+
 }

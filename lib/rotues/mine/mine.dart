@@ -29,7 +29,10 @@ class _MineState extends State<Mine> {
 
   //喜欢我的/我喜欢的 点击
   void _mineLikeClick({String title}) {
-    Navigator.of(context).pushNamed('/PersonLikePage');
+    int index;
+    title == '我喜欢的' ? index = 0 : index = 1;
+
+    Navigator.of(context).pushNamed('/PersonLikePage',arguments: index);
   }
 
   //item点击
