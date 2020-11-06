@@ -227,6 +227,7 @@ class ApiService {
       var responseData = jsonDecode(response.data);
       List data = responseData['data'];
       List<SiftUserModel> result = [];
+      
       data.forEach((element) {
         result.add(SiftUserModel.fromJson(element));
       });

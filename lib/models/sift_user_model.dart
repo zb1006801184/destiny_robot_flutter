@@ -8,6 +8,7 @@ class SiftUserModel {
   String createdTime;
   double lon;
   double lat;
+  String interest;
 
   SiftUserModel(
       {this.accountId,
@@ -15,7 +16,9 @@ class SiftUserModel {
       this.headImgUrl,
       this.fateValue,
       this.lon,
-      this.lat});
+      this.lat,
+      this.interest
+      });
 
   SiftUserModel.fromJson(Map<String, dynamic> json) {
     accountId = json['accountId'];
@@ -25,6 +28,7 @@ class SiftUserModel {
     createdTime = CommonTool().getHourTime(json['createdTime']);
     lon = json['lon'];
     lat = json['lat'];
+    interest = json['interest']??'';
   }
 
   Map<String, dynamic> toJson() {

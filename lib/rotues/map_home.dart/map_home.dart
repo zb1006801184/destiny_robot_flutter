@@ -77,7 +77,7 @@ class _MapHomeState extends State<MapHome> {
         return day.difference(DateTime.now()).inDays < 1;
       },
     );
-    _selectTime = result;
+    _selectTime = result??DateTime.now();
 
     ApiService.getMatchListRequest(params: {'matchDate': result.toString()})
         .then((value) {
@@ -272,6 +272,8 @@ class _MapHomeState extends State<MapHome> {
       await Future.delayed(Duration(seconds: 1), () {});
       _addPersonMarker(lists: value);
       isCanClick = true;
+    }).catchError((e){
+print(e);
     });
   }
 

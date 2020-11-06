@@ -5,12 +5,11 @@ class CommonTool {
     Navigator.of(context).pushNamed('/LoginPage');
   }
 
-
   String getHourTime(String timeStr) {
-    DateTime time = DateTime.parse(timeStr);
-  if (timeStr != null) {
-    return '${time.hour}:${time.minute}';
-  }
+    if (timeStr != null) {
+      DateTime time = DateTime.parse(timeStr);
+      return '${time.hour}:${time.minute}';
+    }
     return '0:00';
   }
 }
