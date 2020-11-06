@@ -2,6 +2,7 @@ import 'package:destiny_robot/im/pages/conversation_list_page.dart';
 import 'package:destiny_robot/im/util/db_manager.dart';
 import 'package:destiny_robot/im/util/event_bus.dart';
 import 'package:destiny_robot/im/util/user_info_datesource.dart';
+import 'package:destiny_robot/network/api_service.dart';
 import 'package:destiny_robot/other/contacts_page.dart';
 import 'package:destiny_robot/rotues/login/login_page.dart';
 import 'package:destiny_robot/rotues/map_home.dart/map_home.dart';
@@ -98,6 +99,7 @@ class _HomePageState extends State<HomePage> {
   // 初始化用户信息缓存
   void _initUserInfoCache() {
     DbManager.instance.openDb();
+
     UserInfoCacheListener cacheListener = UserInfoCacheListener();
     cacheListener.getUserInfo = (String userId) {
       return UserInfoDataSource.generateUserInfo(userId);
@@ -115,15 +117,14 @@ class _HomePageState extends State<HomePage> {
         items: tabbarList,
         type: BottomNavigationBarType.fixed,
         onTap: (int index) {
-
-          if (Store.value<UserStateModel>(context,listen: false).isLogin() != true) {
+          if (Store.value<UserStateModel>(context, listen: false).isLogin() !=
+              true) {
             Navigator.of(context).pushNamed('/LoginPage');
             return;
           }
 
           setState(() {
             curIndex = index;
-            
           });
         },
         currentIndex: curIndex,

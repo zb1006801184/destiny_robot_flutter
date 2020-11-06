@@ -37,7 +37,10 @@ class ApiUrl {
   //我喜欢的人列表
   static const String GET_MINE_LIKE_URL = '/api-love/account_data/account_like';
   //喜欢我的人
-
   static const String GET_LIKE_MINE_URL = '/api-love/account_data/like_account';
+
+  //获取头像和昵称
+  static const String GET_PERON_INFO_URL = '/api-love/account_data';
+
 
 }

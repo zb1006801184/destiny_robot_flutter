@@ -116,7 +116,7 @@ class _ConversationListItemState extends State<ConversationListItem> {
             : "群聊：") +
         (this.info == null || this.info.id == null ? "" : this.info.id);
 
-        title = this.info?.id??'';
+        title = this.info?.name??'';
     String digest = "";
     if (conversation.latestMessageContent != null) {
       if (conversation.latestMessageContent.destructDuration != null &&

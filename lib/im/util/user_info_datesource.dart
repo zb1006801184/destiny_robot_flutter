@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:destiny_robot/network/api_service.dart';
+
 import 'db_manager.dart';
 
 class BaseInfo {
@@ -54,6 +56,9 @@ class UserInfoDataSource {
           info = cacheListener.getUserInfo(userId);
         }
         if (info != null) {
+          var model = await ApiService.getPersonsInfoRequest(userId);
+          info.name = model['data']['nickname'];
+          info.portraitUrl = model['data']['headImgUrl'];
           DbManager.instance.setUserInfo(info);
         }
       }

@@ -114,12 +114,12 @@ class _ConversationListPageState extends State<ConversationListPage>
     RongIMClient.removeConversation(
         conversation.conversationType, conversation.targetId, (bool success) {
       if (success) {
-        updateConversationList();
+        // updateConversationList();
         // // 如果需要删除会话中的消息调用下面的接口
-        // RongIMClient.deleteMessages(
-        //     conversation.conversationType, conversation.targetId, (int code) {
-        //   updateConversationList();
-        // });
+        RongIMClient.deleteMessages(
+            conversation.conversationType, conversation.targetId, (int code) {
+          updateConversationList();
+        });
       }
     });
   }

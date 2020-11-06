@@ -296,7 +296,7 @@ class ApiService {
   }
 
   //我喜欢的人列表
-static Future<List<SiftUserModel>> getMineLikePersonsRequest(
+  static Future<List<SiftUserModel>> getMineLikePersonsRequest(
       Map<String, dynamic> map) async {
     Response response = await HttpUtils(headers: {
       "Authorization": "Bearer ${Global.tokenModel.accessToken}"
@@ -314,8 +314,8 @@ static Future<List<SiftUserModel>> getMineLikePersonsRequest(
     }
   }
 
- //喜欢我的人列表
-static Future<List<SiftUserModel>> getLikeMinePersonsRequest(
+  //喜欢我的人列表
+  static Future<List<SiftUserModel>> getLikeMinePersonsRequest(
       Map<String, dynamic> map) async {
     Response response = await HttpUtils(headers: {
       "Authorization": "Bearer ${Global.tokenModel.accessToken}"
@@ -333,6 +333,18 @@ static Future<List<SiftUserModel>> getLikeMinePersonsRequest(
     }
   }
 
+  //获取头像和昵称
+  static Future<dynamic> getPersonsInfoRequest(String accountId) async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request('${ApiUrl.GET_PERON_INFO_URL}/'+'${accountId}/other',
+        method: HttpUtils.GET);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
 
-
+      return responseData;
+    } else {
+      return null;
+    }
+  }
 }

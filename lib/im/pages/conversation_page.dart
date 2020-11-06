@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:destiny_robot/unitls/global.dart';
 import 'package:destiny_robot/unitls/nav_bar_config.dart';
 import 'package:flutter/material.dart';
 import 'package:rongcloud_im_plugin/rongcloud_im_plugin.dart';
@@ -89,8 +90,6 @@ class _ConversationPageState extends State<ConversationPage>
     //   this.info = example.UserInfoDataSource.getGroupInfo(targetId);
     // }
 
-    titleContent = '与 $targetId 的会话';
-
     //增加 IM 监听
     _addIMHandler();
     //获取默认的历史消息
@@ -106,6 +105,9 @@ class _ConversationPageState extends State<ConversationPage>
         example.UserInfoDataSource.cachedUserMap[targetId];
     example.GroupInfo groupInfo =
         example.UserInfoDataSource.cachedGroupMap[targetId];
+
+    titleContent = '${userInfo.name}';
+
     if (conversationType == RCConversationType.Private) {
       if (userInfo != null) {
         this.info = userInfo;
@@ -994,6 +996,12 @@ class _ConversationPageState extends State<ConversationPage>
     } else {
       TextMessage textMessage = new TextMessage();
       textMessage.content = text;
+
+      UserInfo userInfo = UserInfo();
+      userInfo.name = Global.userModel.nickname;
+      userInfo.portraitUri = Global.userModel.headImgUrl;
+      textMessage.sendUserInfo = userInfo;
+
       msg = textMessage;
     }
 
