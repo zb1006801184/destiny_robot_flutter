@@ -30,6 +30,8 @@ class UserInfoModel {
   int fateValue;
   String parallelId;
   int age;
+  int likeNum;
+  int likeMe;
 
   UserInfoModel({
     this.accessToken,
@@ -62,7 +64,9 @@ class UserInfoModel {
     this.isLike,
     this.fateValue,
     this.parallelId,
-    this.age
+    this.age,
+    this.likeMe,
+    this.likeNum,
   });
 
   UserInfoModel.fromJson(Map<String, dynamic> json) {
@@ -97,6 +101,8 @@ class UserInfoModel {
     fateValue = json['fateValue'];
     parallelId = json['parallelId'];
     age = json['age'];
+    likeMe = json['likeMe'];
+    likeNum = json['likeNum'];
   }
 
   Map<String, dynamic> toJson() {
@@ -132,6 +138,8 @@ class UserInfoModel {
     data['fateValue'] = this.fateValue;
     data['parallelId'] = this.parallelId;
     data['age'] = this.age;
+    data['likeNum'] = this.likeNum;
+    data['likeMe'] = this.likeMe;
     return data;
   }
 }

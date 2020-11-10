@@ -32,7 +32,7 @@ class _MineState extends State<Mine> {
     int index;
     title == '我喜欢的' ? index = 0 : index = 1;
 
-    Navigator.of(context).pushNamed('/PersonLikePage',arguments: index);
+    Navigator.of(context).pushNamed('/PersonLikePage', arguments: index);
   }
 
   //item点击
@@ -210,8 +210,12 @@ class _MineState extends State<Mine> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildLikeWidget(title: '我喜欢的', numString: '2'),
-                    _buildLikeWidget(title: '喜欢我的', numString: '5'),
+                    _buildLikeWidget(
+                        title: '我喜欢的',
+                        numString: '${Global.userModel?.likeNum ?? 0}'),
+                    _buildLikeWidget(
+                        title: '喜欢我的',
+                        numString: '${Global.userModel?.likeMe ?? 0}'),
                   ],
                 ),
               ],

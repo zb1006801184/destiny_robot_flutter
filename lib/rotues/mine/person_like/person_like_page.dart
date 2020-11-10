@@ -65,6 +65,12 @@ class _PersonLikePageState extends State<PersonLikePage>
     }
 
     print(model.nickname);
+    // Map arg = {
+    //   "coversationType": 1,
+    //   "targetId": model?.accountId??'0',
+    //   'name': model?.nickname
+    // };
+    // Navigator.pushNamed(context, "/conversation", arguments: arg);
   }
 
   @override

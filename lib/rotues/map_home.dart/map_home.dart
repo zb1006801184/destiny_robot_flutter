@@ -61,7 +61,7 @@ class _MapHomeState extends State<MapHome> {
   }
 
   void _righClick() {
-    print('right');
+          Navigator.of(context).pushNamed('/ReportPage',arguments: 'targetId');
   }
 
   void _leftClick() async {

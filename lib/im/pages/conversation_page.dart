@@ -21,6 +21,9 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import '../util/dialog_util.dart';
 import 'dart:developer' as developer;
 
+import '../../widgets/more_list_select_widget.dart';
+
+
 enum ConversationStatus {
   Normal, //正常
   VoiceRecorder, //语音输入，页面中间回弹出录音的 gif
@@ -44,6 +47,7 @@ class _ConversationPageState extends State<ConversationPage>
   Map arguments;
   int conversationType;
   String targetId;
+  String title;
 
   List phrasesList = new List(); // 快捷回复，短语数组
   List messageDataSource = new List(); //消息数组
@@ -79,6 +83,7 @@ class _ConversationPageState extends State<ConversationPage>
         messageDataSource, multiSelect, selectedMessageIds, this, burnMsgMap);
     conversationType = arguments["coversationType"];
     targetId = arguments["targetId"];
+    title = arguments['name'];
     currentStatus = ConversationStatus.Normal;
     bottomInputBar = BottomInputBar(this);
     bottomToolBar = BottomToolBar(this);
@@ -106,7 +111,7 @@ class _ConversationPageState extends State<ConversationPage>
     example.GroupInfo groupInfo =
         example.UserInfoDataSource.cachedGroupMap[targetId];
 
-    titleContent = '${userInfo?.name??targetId}';
+    titleContent = '${userInfo?.name??title}';
 
     if (conversationType == RCConversationType.Private) {
       if (userInfo != null) {
@@ -703,10 +708,15 @@ class _ConversationPageState extends State<ConversationPage>
       return bottomInputBar;
     }
   }
-
+  //更多
   void _pushToDebug() {
-    Map arg = {"coversationType": conversationType, "targetId": targetId};
-    Navigator.pushNamed(context, "/chat_debug", arguments: arg);
+    // Map arg = {"coversationType": conversationType, "targetId": targetId};
+    // Navigator.pushNamed(context, "/chat_debug", arguments: arg);
+  MoreListSelectWidget.showSelectWidget(context, (e){
+    if (e == '举报') {
+      Navigator.of(context).pushNamed('/ReportPage',arguments: targetId);
+    }
+  },dataList: ['置顶','解除匹配并屏蔽','举报']);
   }
 
   // AppBar 右侧按钮

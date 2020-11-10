@@ -27,6 +27,7 @@ import 'rotues/mine/person_sift/person_sift_page.dart';
 import 'rotues/mine/mine_set/mine_set_page.dart';
 import 'rotues/mine/mine_set/mine_set_about_page.dart';
 import 'rotues/mine/mine_set/mine_set_notify_page.dart';
+import 'rotues/mine/report/report_page.dart';
 
 import 'rotues/login/code_page.dart';
 import 'rotues/login/once_login_page.dart';
@@ -76,6 +77,9 @@ final routes = {
   '/LoginPage': (context, {arguments}) => LoginPage(),
   '/MineSetNotifyPage': (context, {arguments}) => MineSetNotifyPage(),
   '/PersonHomePage': (context, {arguments}) => PersonHomePage(
+        arguments: arguments,
+      ),
+  '/ReportPage': (context, {arguments}) => ReportPage(
         arguments: arguments,
       ),
 };

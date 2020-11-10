@@ -55,7 +55,7 @@ class _PersonHomePageState extends State<PersonHomePage> {
         _likeNet();
         break;
       case 2:
-        Map arg = {"coversationType": 1, "targetId": _accontId};
+        Map arg = {"coversationType": 1, "targetId": _accontId,'name':_model?.nickname};
         Navigator.pushNamed(context, "/conversation", arguments: arg);
         break;
       default:
