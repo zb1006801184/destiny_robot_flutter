@@ -27,9 +27,12 @@ import 'rotues/mine/person_sift/person_sift_page.dart';
 import 'rotues/mine/mine_set/mine_set_page.dart';
 import 'rotues/mine/mine_set/mine_set_about_page.dart';
 import 'rotues/mine/mine_set/mine_set_notify_page.dart';
+
 import 'rotues/login/code_page.dart';
 import 'rotues/login/once_login_page.dart';
 import 'rotues/login/login_page.dart';
+
+import 'rotues/map_home.dart/person_home_page.dart';
 
 final routes = {
   '/': (context) => HomePage(),
@@ -58,16 +61,23 @@ final routes = {
   '/PersonalDataIntroductionPage': (context, {arguments}) =>
       PersonalDataIntroductionPage(),
   '/PersonalDataAlbumPage': (context, {arguments}) => PersonalDataAlbumPage(),
-  '/PersonLikePage': (context, {arguments}) => PersonLikePage(arguments: arguments,),
+  '/PersonLikePage': (context, {arguments}) => PersonLikePage(
+        arguments: arguments,
+      ),
   '/PersonAuthorPages': (context, {arguments}) => PersonAuthorPages(),
   '/StudentAuthorPage': (context, {arguments}) => StudentAuthorPage(),
   '/PersonSiftPage': (context, {arguments}) => PersonSiftPage(),
   '/MineSetPage': (context, {arguments}) => MineSetPage(),
   '/MineSetAboutPage': (context, {arguments}) => MineSetAboutPage(),
-  '/CodePage': (context, {arguments}) => CodePage(arguments: arguments,),
+  '/CodePage': (context, {arguments}) => CodePage(
+        arguments: arguments,
+      ),
   '/OnceLoginPage': (context, {arguments}) => OnceLoginPage(),
   '/LoginPage': (context, {arguments}) => LoginPage(),
   '/MineSetNotifyPage': (context, {arguments}) => MineSetNotifyPage(),
+  '/PersonHomePage': (context, {arguments}) => PersonHomePage(
+        arguments: arguments,
+      ),
 };
 
 var onGenerateRoute = (RouteSettings settings) {

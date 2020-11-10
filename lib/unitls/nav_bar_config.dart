@@ -87,6 +87,32 @@ class NavBarConfig {
     );
   }
 
+
+  //个人主页
+  AppBar configPersonHomePageAppBar(String title, BuildContext context,
+      {List<Widget> rightWidget = null}) {
+    return AppBar(
+      title: Text(
+        title,
+        style: TextStyle(color: ThemUntil().widgetColor(context), fontSize: 18),
+      ),
+      leading: IconButton(
+          icon: Container(
+            child: Image.asset('assets/images/nav_icon_return.png'),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          }),
+      actions: rightWidget,
+      backgroundColor: Colors.transparent,
+      elevation: 0, //阴影辐射范围
+      brightness: ThemUntil().stateBarColor(context),
+    );
+  }
+
+
+
+
   //左侧按钮
   Widget _buildLeftButton(Function leftClick,{DateTime time}) {
     return GestureDetector(

@@ -227,7 +227,7 @@ class ApiService {
       var responseData = jsonDecode(response.data);
       List data = responseData['data'];
       List<SiftUserModel> result = [];
-      
+
       data.forEach((element) {
         result.add(SiftUserModel.fromJson(element));
       });
@@ -283,14 +283,15 @@ class ApiService {
   }
 
   //获取他人信息
-  static Future<dynamic> getOtherMessageWithIDRequest(
+  static Future<UserInfoModel> getOtherMessageWithIDRequest(
       Map<String, dynamic> map) async {
     Response response = await HttpUtils(headers: {
       "Authorization": "Bearer ${Global.tokenModel.accessToken}"
     }).request(ApiUrl.GET_OTHER_MESSAGE_URL, data: map, method: HttpUtils.GET);
     if (response != null) {
       var responseData = jsonDecode(response.data);
-      return responseData;
+      UserInfoModel model = UserInfoModel.fromJson(responseData['data']);
+      return model;
     } else {
       return null;
     }
@@ -338,11 +339,25 @@ class ApiService {
   static Future<dynamic> getPersonsInfoRequest(String accountId) async {
     Response response = await HttpUtils(headers: {
       "Authorization": "Bearer ${Global.tokenModel.accessToken}"
-    }).request('${ApiUrl.GET_PERON_INFO_URL}/'+'${accountId}/other',
+    }).request('${ApiUrl.GET_PERON_INFO_URL}/' + '${accountId}/other',
         method: HttpUtils.GET);
     if (response != null) {
       var responseData = jsonDecode(response.data);
 
+      return responseData;
+    } else {
+      return null;
+    }
+  }
+
+  //获取
+  static Future<dynamic> addLikeRequest(String accountId) async {
+    Response response = await HttpUtils(headers: {
+      "Authorization": "Bearer ${Global.tokenModel.accessToken}"
+    }).request(ApiUrl.ADD_LIKE_PERSON_URL + '?' + 'accountId=${accountId}',
+        method: HttpUtils.POST);
+    if (response != null) {
+      var responseData = jsonDecode(response.data);
       return responseData;
     } else {
       return null;

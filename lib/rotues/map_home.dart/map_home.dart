@@ -284,8 +284,9 @@ print(e);
   }
 
   void gotoChatPage(String value) {
-    Map arg = {"coversationType": 1, "targetId": '97'};
-    Navigator.pushNamed(context, "/conversation", arguments: arg);
+    Map arg = { "accountId": '${value}'};
+    Navigator.pushNamed(context, "/PersonHomePage", arguments: arg);
+    
   }
 
   @override
@@ -404,7 +405,7 @@ print(e);
                     itemBuilder: (context, index) {
                       return _rightSelectItem(index);
                     },
-                    itemCount: _siftResultList.length ?? 0,
+                    itemCount: _siftResultList?.length ?? 0,
                   ),
                 )
               ],

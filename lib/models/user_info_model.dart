@@ -26,6 +26,10 @@ class UserInfoModel {
   String auditMsg;
   bool matchingState;
   List album;
+  bool isLike;
+  int fateValue;
+  String parallelId;
+  int age;
 
   UserInfoModel({
     this.accessToken,
@@ -55,6 +59,10 @@ class UserInfoModel {
     this.auditMsg,
     this.matchingState,
     this.album,
+    this.isLike,
+    this.fateValue,
+    this.parallelId,
+    this.age
   });
 
   UserInfoModel.fromJson(Map<String, dynamic> json) {
@@ -85,6 +93,10 @@ class UserInfoModel {
     auditMsg = json['auditMsg'];
     matchingState = json['matchingState'];
     album = json['album'];
+    isLike = json['isLike'];
+    fateValue = json['fateValue'];
+    parallelId = json['parallelId'];
+    age = json['age'];
   }
 
   Map<String, dynamic> toJson() {
@@ -116,6 +128,10 @@ class UserInfoModel {
     data['auditMsg'] = this.auditMsg;
     data['matchingState'] = this.matchingState;
     data['album'] = this.album;
+    data['isLike'] = this.isLike;
+    data['fateValue'] = this.fateValue;
+    data['parallelId'] = this.parallelId;
+    data['age'] = this.age;
     return data;
   }
 }
