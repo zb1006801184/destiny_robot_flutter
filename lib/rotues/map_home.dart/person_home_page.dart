@@ -39,7 +39,7 @@ class _PersonHomePageState extends State<PersonHomePage> {
   void _likeNet() async {
     ApiService.addLikeRequest(_accontId).then((value) {
       setState(() {
-        _model.isLike = !_model.isLike??true;
+        _model.isLike = !_model.isLike ?? true;
       });
     });
   }
@@ -52,7 +52,11 @@ class _PersonHomePageState extends State<PersonHomePage> {
         Navigator.of(context).pop();
         break;
       case 1:
-      _likeNet();
+        _likeNet();
+        break;
+      case 2:
+        Map arg = {"coversationType": 1, "targetId": _accontId};
+        Navigator.pushNamed(context, "/conversation", arguments: arg);
         break;
       default:
     }

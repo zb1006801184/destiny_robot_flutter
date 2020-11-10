@@ -106,7 +106,7 @@ class _ConversationPageState extends State<ConversationPage>
     example.GroupInfo groupInfo =
         example.UserInfoDataSource.cachedGroupMap[targetId];
 
-    titleContent = '${userInfo.name}';
+    titleContent = '${userInfo?.name??targetId}';
 
     if (conversationType == RCConversationType.Private) {
       if (userInfo != null) {
