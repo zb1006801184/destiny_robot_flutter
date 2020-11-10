@@ -28,6 +28,7 @@ import 'rotues/mine/mine_set/mine_set_page.dart';
 import 'rotues/mine/mine_set/mine_set_about_page.dart';
 import 'rotues/mine/mine_set/mine_set_notify_page.dart';
 import 'rotues/mine/report/report_page.dart';
+import 'rotues/mine/report/report_submit_detail_page.dart';
 
 import 'rotues/login/code_page.dart';
 import 'rotues/login/once_login_page.dart';
@@ -80,6 +81,9 @@ final routes = {
         arguments: arguments,
       ),
   '/ReportPage': (context, {arguments}) => ReportPage(
+        arguments: arguments,
+      ),
+  '/ReportSubmitDetailPage': (context, {arguments}) => ReportSubmitDetailPage(
         arguments: arguments,
       ),
 };

@@ -25,4 +25,10 @@ class LocalData {
     '汉服',
     '科研'
   ];
+
+  static List<String> reportTitles = ['资料信息作假', '聊天内容'];
+  static List<String> reportSubTitles = [
+    '聊天过程中发布色情、广告、违法等不良信息',
+    '聊天过程中发布色情、广告、违法等不良信息'
+  ];
 }
