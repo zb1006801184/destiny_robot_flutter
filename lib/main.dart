@@ -26,7 +26,7 @@ void main() async {
   //初始化地图
   await AmapService.init(
     iosKey: 'cb185f64c4234f28297b93046d9bb241',
-    androidKey: 'c91e45151b799ec4bd6f73508e7d28ea',
+    androidKey: 'ad22e8e2648160f76366d089eaa881b1',
   );
 
   //初始化定位

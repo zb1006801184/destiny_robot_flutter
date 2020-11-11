@@ -1,4 +1,4 @@
-package com.example.destiny_robot;
+package com.diting.destinySchool;
 
 import io.flutter.embedding.android.FlutterActivity;
 

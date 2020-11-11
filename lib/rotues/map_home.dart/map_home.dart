@@ -7,6 +7,7 @@ import 'package:destiny_robot/models/sift_list_model.dart';
 import 'package:destiny_robot/models/sift_user_model.dart';
 import 'package:destiny_robot/network/api_service.dart';
 import 'package:destiny_robot/unitls/global.dart';
+import 'package:destiny_robot/unitls/platform_unitls.dart';
 import 'package:destiny_robot/unitls/toast_view.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -61,7 +62,7 @@ class _MapHomeState extends State<MapHome> {
   }
 
   void _righClick() {
-          Navigator.of(context).pushNamed('/ReportPage',arguments: 'targetId');
+    Navigator.of(context).pushNamed('/ReportPage', arguments: 'targetId');
   }
 
   void _leftClick() async {
@@ -77,7 +78,7 @@ class _MapHomeState extends State<MapHome> {
         return day.difference(DateTime.now()).inDays < 1;
       },
     );
-    _selectTime = result??DateTime.now();
+    _selectTime = result ?? DateTime.now();
 
     ApiService.getMatchListRequest(params: {'matchDate': result.toString()})
         .then((value) {
@@ -246,7 +247,7 @@ class _MapHomeState extends State<MapHome> {
       return;
     }
     //清理添加物
-    _controller.clear();
+    _controller?.clear();
     SiftListModel model = _siftResultList[index];
     List<LatLng> result = [];
     model.trailDetails.forEach((element) {
@@ -254,12 +255,17 @@ class _MapHomeState extends State<MapHome> {
       result.add(LatLng(localModel.lat, localModel.lon));
     });
     //添加路线图
-    await _controller.addPolyline(PolylineOption(
-      latLngList: result,
-      width: 20,
-      strokeColor: Color(0xFFFC9E7E),
-      lineJoinType: LineJoinType.Round,
-    ));
+    await _controller
+        .addPolyline(PolylineOption(
+          latLngList: result,
+          width: 20,
+          strokeColor: Color(0xFFFC9E7E),
+          lineJoinType: LineJoinType.Round,
+        ))
+        .then((value) => null)
+        .catchError((e) {
+      print(e);
+    });
     setState(() {
       selectItemIndex = index;
     });
@@ -272,28 +278,31 @@ class _MapHomeState extends State<MapHome> {
       await Future.delayed(Duration(seconds: 1), () {});
       _addPersonMarker(lists: value);
       isCanClick = true;
-    }).catchError((e){
-print(e);
+    }).catchError((e) {
+      print(e);
     });
   }
 
   //地图上的人物点击
   void onMarkerClicked(Marker marker) {
-    marker.iosModel?.get_subtitle().then((value) => gotoChatPage(value));
-    marker.androidModel?.getSnippet().then((value) => gotoChatPage(value));
+    if (PlatformUtils.isIOS) {
+      marker.iosModel?.get_subtitle().then((value) => gotoChatPage(value));
+    } else {
+      marker.androidModel?.getSnippet().then((value) => gotoChatPage(value));
+    }
   }
 
   void gotoChatPage(String value) {
-    Map arg = { "accountId": '${value}'};
+    Map arg = {"accountId": '${value}'};
     Navigator.pushNamed(context, "/PersonHomePage", arguments: arg);
-    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBarConfig()
-          .configHomeMapAppBar('匹配', context, _leftClick, _righClick,time: _selectTime),
+      appBar: NavBarConfig().configHomeMapAppBar(
+          '匹配', context, _leftClick, _righClick,
+          time: _selectTime),
       body: Stack(children: [
         Column(
           children: [

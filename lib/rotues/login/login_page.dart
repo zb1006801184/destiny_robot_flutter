@@ -54,6 +54,11 @@ class _LoginPageState extends State<LoginPage> {
     initPlatformState();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    _timer.cancel();
+  }
 
 //获取验证码
   codeButtonClick() {
@@ -64,15 +69,18 @@ class _LoginPageState extends State<LoginPage> {
     _count = 60;
     _timer = Timer.periodic(Duration(milliseconds: 1000), (t) {
       _count--;
-      setState(() {
+      if (mounted) {
+        setState(() {
         _codeButtonString = _count == 0 ? '获取验证码' : '$_count' + '秒后重新获取';
       });
+      }
+      
       if (_count == 0) {
         t.cancel();
       }
     });
 
-    Navigator.of(context).pushNamed('/CodePage',arguments: _assount.text);
+    Navigator.of(context).pushNamed('/CodePage', arguments: _assount.text);
   }
 
 //关闭按钮的点击
